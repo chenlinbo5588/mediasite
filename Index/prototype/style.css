@@ -1,0 +1,17 @@
+#container {margin:0 auto;width:960px;text-align:left;}
+#header {font-size:16px;margin-top:20px;}
+#header ul {float:right; margin-bottom: 5px;}
+#header li {padding-top:16px;display:block; float:left; width:100px;height:40px;}
+
+.logo {float:left;background: url("img/logo.png") no-repeat; width:110px; height:40px;}
+
+.fmain {margin-top:20px;}
+.menu_title {font-size:21px;border-top:2px solid #A7A7AA;border-bottom:2px solid #A7A7AA;padding:20px 0;}
+.menu_title span.jia {display:block;float:left;height:29px;background:url("img/add.png") no-repeat;text-indent:3em;}
+.menu_title span.jian {display:block;float:left;height:29px;background:url("img/sub.png") no-repeat;text-indent:3em;}
+.menu_content {font-size:21px;background-color:#fff; padding:20px;margin:15px 0;}
+.menu_content li {margin-top:10px;}
+.menu_content li label {display:block;float:left; width:200px;text-indent:2em; margin-right:30px;}
+.menu_content input {width: 300px; height:30px;}
+
+.menu_content li .dl {background:url("img/delete.png") no-repeat; text-indent:2em; display:block; height:22px;}
