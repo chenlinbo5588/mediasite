@@ -1,8 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="UTF-8" http-equiv="Content-Type"/>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" rev="stylesheet" type="text/css" href="common.css" />
 	<link rel="stylesheet" rev="stylesheet" type="text/css" href="style.css" />
 </head>
@@ -11,81 +10,38 @@
 		<div id="header">
 			<div class="logo"></div>
 			<ul>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Work</a></li>
-				<li><a href="#">Careers</a></li>
-				<li><a href="#">Contact</a></li>
+				<li><a href="about.html">About</a></li>
+				<li><a href="work.html">Work</a></li>
+				<li><a href="careers.html">Careers</a></li>
+				<li><a href="contact.html">Contact</a></li>
 				<li></li>
-				<li><a href="#">Client Login</a></li>
-				<li><a href="#">EN/CH</a></li>
+				<li class="mw"><a href="client_login.html">Client Login</a></li>
+				<li class="mw"><a href="#">EN/CH</a></li>
 			</ul>
 			<div class="clear"></div>
 		</div>
-		
-		<div class="fmain">
-			<div class="menu_title">
-				<span class="jia">Create New Client/ User</span>
-				<div class="clear"></div>
-			</div>
-
-			<div class="menu_content">
-				<form action="" name="clientForm">
+		<div class="fmain" >
+			<div class="login">
+				<form action="" name="loginForm">
+					<h2>Login</h3>
 					<ul>
 						<li>
-							<label for="ClientName">Client Name</label><input id="ClientName" type="text" name="ClientName"/>
+							<label for="User">User</label><input id="User" type="text" name="User"/>
 						</li>
 						<li>
-							<label for="Password">Password</label><input id="Password" type="text" name="Password"/>
-						</li>
-						<li>
-							<label for="Project">Project</label><input id="Project" type="text" name="Project"/>
-						</li>
-						<li>
-							<label for="Password">Categories</label><input id="Categories" type="text" name="Categories"/>
-						</li>
-						<li>
-							<label for="AccessType">Access Type</label><input id="AccessType" type="text" name="AccessType"/>
-						</li>
+							<label for="Password">Password</label><input id="Password" type="password" name="Password"/>
+						</li>					    
 					</ul>
-					
-					<div>
-						<a href="javascrip:void(0);">Save</a>
-						<a href="javascrip:void(0);">Cancel</a>
-					</div>
+					<div class="clear"></div>
+					<div class="btn"><input id="submit" type="submit"  name="submit" value="Login"/></div>
 				</form>
 			</div>
-
-			<div class="menu_title">
-				<span class="jian">Delete Client/ User</span>
-				<div class="clear"></div>
-			</div>
-
-			<div class="menu_content">
-				<ul>
-					<li><span class="dl">Client Name / Passsword</span></li>
-					<li><span class="dl">Client Name / Passsword</span></li>
-					<li><span class="dl">Client Name / Passsword</span></li>
-					<li><span class="dl">Client Name / Passsword</span></li>
-					<li><span class="dl">Client Name / Passsword</span></li>
-					<li><span class="dl">Client Name / Passsword</span></li>
-					<li><span class="dl">Client Name / Passsword</span></li>
-					<li><span class="dl">Client Name / Passsword</span></li>
-					
-				</ul>
-				<div>
-					<a href="javascrip:void(0);">Save</a>
-					<a href="javascrip:void(0);">Cancel</a>
-					<a href="javascrip:void(0);">Next >>></a><span>
-				</div>
-				
-				
-			</div>
 		</div>
-
-
-
-		<div id="footer">
-		
+		<div id="footer" style="background-color:#fff;">
+		    <div id="ifooter">
+			<h5>GOO MEDIA<sup>TM</sup></h5><div>Hong Kong/Bei Jing/Vancouver</div>
+			<span class="clear"></span>
+		    </div>
 		</div>
 	</div>
 </body>

@@ -1,3 +1,3 @@
 <?php
-header("Location: ./Index/Index");die;
+header("Location: ./Index/");die;
 ?>
