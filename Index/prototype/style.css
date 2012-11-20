@@ -1,9 +1,9 @@
 #container {margin:0 auto;width:960px;text-align:left;}
+#container a {font-style:normal;color:#666666;}
 #header {font-size:16px;margin-top:15px;}
 #header ul {float:right; margin-bottom: 5px;width:800px;}
 #header li {text-align:right;padding-top:16px;display:block; float:left; width:100px;height:40px;}
 #header li.mw {width:140px;font-weight:bold;}
-#header li a {color:#666666;}
 
 .logo {float:left;background: url("img/logo.png") no-repeat; width:110px; height:40px;}
 .logo a {display:block;width:110px;height:40px;}
@@ -15,6 +15,8 @@
 .login input {border:none; background: #ededef; font-size:18px;width: 280px; height:30px;}
 .login .btn {padding-left:400px;padding-top:10px;}
 .login .btn input {width:60px;height:30px;font-size:14px;border-right:1px solid #d6d6d6;border-bottom:1px solid #d6d6d6;}
+
+.searcher {border:none; background: #ededef; font-size:18px;width: 280px; height:30px;}
 
 .menu_title {font-size:21px;border-top:2px solid #A7A7AA;border-bottom:2px solid #A7A7AA;padding:20px 0;}
 .menu_title span.jia {display:block;float:left;height:29px;background:url("img/add.png") no-repeat;text-indent:3em;}
@@ -50,4 +52,17 @@
 .contact {padding:30px;}
 .contact div {font-size:16px;}
 .contact h3 {margin-top:20px;}
-.contact h3 a {font-style:normal;color:#666666;}
+
+#projectList {height:800px;}
+#projectList div {width:480px;float:left;text-align:center;padding-bottom:40px;}
+#projectList div a,#projectList div i{font-size:16px;display:block;with:100%;height:20px;}
+#projectList div a {margin-top:10px;}
+#projectList div i {font-style:italic;font-size:14px;}
+
+table.listdata {font-size:16px;border-collapse:collapse;width:100%;}
+table.listdata tr td{padding-top:15px;text-align:left;}
+table.listdata tr th {text-align:left;}
+
+.pager a {font-size:24px;display:inline-block;height:30px;padding:5px;}
+.pager a.first,.pager a.last,.pager a.prev,.pager a.next {font-size:16px;}
+.pager a.current {border:1px solid #A7A7AA;}
