@@ -14,8 +14,6 @@ define('APP_NAME', 'GOO');
 
 // 加载框架公共入口文件
 require(THINK_PATH . DS . "ThinkPHP.php");
-// Common/extend.php 文件不存在，我注释掉了
-//require(THINK_PATH . DS . "Common/extend.php");
 //实例化一个网站应用实例
 App::run();
 ?>

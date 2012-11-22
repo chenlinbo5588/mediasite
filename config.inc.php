@@ -1,7 +1,7 @@
 <?php
 return array(
 	/* 是否开启调试 */
-	'APP_DEBUG'				=> false, 
+	'APP_DEBUG'				=> true,
 	
 	/* URL 模式 */
 	'URL_DISPATCH_ON'		=> true,
