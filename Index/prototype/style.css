@@ -18,17 +18,21 @@
 
 .searcher {border:none; background: #ededef; font-size:18px;width: 280px; height:30px;}
 
-.menu_title {font-size:21px;border-top:2px solid #A7A7AA;border-bottom:2px solid #A7A7AA;padding:20px 0;}
-.menu_title span.jia {display:block;float:left;height:29px;background:url("img/add.png") no-repeat;text-indent:3em;}
-.menu_title span.jian {display:block;float:left;height:29px;background:url("img/sub.png") no-repeat;text-indent:3em;}
+.menu_title {position:relative;font-size:21px;padding:20px 0;height:40px; line-height:40px; border-top:2px solid #A7A7AA;border-bottom:2px solid #A7A7AA;}
+.menu_title b {margin-left:60px;}
+.menu_title .expand , .menu_title .folder {position:absolute;display:block;float:left;width:29px;height:29px;background:url("img/add.png") no-repeat;top:25px;left:10px;}
+.menu_title .folder {background:url("img/sub.png") no-repeat;width:19px;height:6px;top:36px;}
+
 .menu_content {font-size:21px;background-color:#fff; padding:20px;margin:15px 0;}
 .menu_content li {margin-top:10px;}
 .menu_content li label {display:block;float:left; width:200px;text-indent:2em; margin-right:30px;}
-.menu_content input {width: 300px; height:30px;}
-
+.menu_content input {width: 350px; height:30px;font-size:21px;}
 .menu_content li .dl {background:url("img/delete.png") no-repeat; text-indent:2em; display:block; height:22px;}
+input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:18px;}
+.handlerArea {position:relative;padding-top:15px;}
+.handlerArea a {position:absolute; right:2em;top:30px;}
 
-#footer {font-size:16px;height:60px;}
+#footer {font-size:16px;height:60px;border-top:2px solid #A7A7AA;padding-top:20px;}
 .ifooter {margin:0 auto; width:900px;padding-top:15px;border-top:2px solid #A7A7AA;font-size:16px;}
 #footer h4, .ifooter h4 {float:left;}
 #footer div, .ifooter div {float:right;font-weight:bold;}
@@ -62,6 +66,11 @@
 table.listdata {font-size:16px;border-collapse:collapse;width:100%;}
 table.listdata tr td{padding-top:15px;text-align:left;}
 table.listdata tr th {text-align:left;}
+
+table.listad {font-size:16px;border-collapse:collapse;width:50%;}
+table.listad tr td{padding-top:15px;text-align:left;}
+table.listad tr th {text-align:left;}
+table.listad td a {background:url("img/delete.png") no-repeat;width:17px;height:22px;display:block;}
 
 .pager a {font-size:24px;display:inline-block;height:30px;padding:5px;}
 .pager a.first,.pager a.last,.pager a.prev,.pager a.next {font-size:16px;}
