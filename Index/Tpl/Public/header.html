@@ -16,7 +16,11 @@
                 <li><a href="__APP__/Career">Careers</a></li>
                 <li><a href="__APP__/Contact">Contact</a></li>
                 <li></li>
+                <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">
+                <li class="mw"><a href="__APP__/Login">Admin Login</a></li>
+                <else />
                 <li class="mw"><a href="__APP__/Login">Client Login</a></li>
+                </if>
                 <li class="mw"><a href="#">EN/CH</a></li>
             </ul>
             <div class="clear"></div>
