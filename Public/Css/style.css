@@ -75,3 +75,11 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .pager a {font-size:24px;display:inline-block;height:30px;padding:5px;}
 .pager a.first,.pager a.last,.pager a.prev,.pager a.next {font-size:16px;}
 .pager a.current {border:1px solid #A7A7AA;}
+
+/*overwrite ui*/
+.ui-widget-header {border:0px;background: none;}
+.ui-widget-content {border:0px;}
+.ui-dialog .ui-dialog-titlebar-close{width:30px;height:24px}
+.ui-widget-header .ui-icon {width:30px;height:24px;background:url("../Images/close.png") 0 0 no-repeat;}
+.ui-widget-header .ui-state-hover {background-image:none;border:0px;}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {float:none;text-align:center;}
