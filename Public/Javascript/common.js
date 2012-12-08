@@ -1,4 +1,6 @@
 $(function() {
+	$("#gallery-home").PikaChoose();
+	$("#gallery-contact").PikaChoose();
 	$( "#dialog" ).dialog({
 			autoOpen: false,
 			width: 400,
