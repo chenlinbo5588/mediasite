@@ -10,9 +10,7 @@
 .logo {float:left;background: url("../Images/logo.png") no-repeat; width:84px; height:30px;}
 .logo a {display:block;width:84px; height:30px;}
 .login {font-size:14px;background-color:#fff;height:600px;color:#707070;}
-.login form {padding-left:38px;}
-.login h2 {position:relative;left:0px;top:25px;font-size:25px;color:#707070;}
-.login li {margin-top:5px;}
+.login h2 {position:relative;left:0px;top:35px;font-size:25px;color:#707070;}
 .login li label {display:block;float:left; width:150px;text-indent:2em; margin-right:30px;text-align:right;position:relative;}
 .login input {border:none; background: #ededef; font-size:18px;width: 280px; height:30px;}
 .login .btn {padding-left:400px;padding-top:10px;}
@@ -45,23 +43,23 @@ input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:1
 
 /** 公共属性写在这里 */
 .fmain p {padding:10px 0;font-size:13px;}
-.rowbox {width:906px;background-color:#fff;padding:0px 27px;}
+.rowbox {width:930px;background-color:#fff;padding:0px 15px;}
 .box960 .desc {font-size:18px;font-weight:bold;line-height:35px;padding:27px 0px;}
 .row {margin:5px;text-align: left;}
 .line-2 {border-top:2px solid #f3f3f3;}
 /** 定制box */
-.box960x600 {height:600px;}
+.box960x540 {height:540px;}
 .box960 {margin-top:10px;}
-#homeinfo {padding:0px 20px;color:#707070;}
+#homeinfo {color:#707070;}
 #homeinfo li {display:block;float:left;width:270px; height:200px;padding-top:20px;}
 #homeinfo li strong {font-size:25px;}
-#homeinfo li.s {width:150px;position:relative; top:2px; left:20px;}
-#homeinfo li.s span {display:inline-block;font-size:18px;padding-top:8px;}
-#homeinfo li.sep {width:6px;height:220px;border-right:1px solid #d9d9d9;margin:0 2px;padding:0px;}
-.homelogin {float:left;width:450px;height:150px;}
+#homeinfo li.s {width:150px;}
+#homeinfo li.s span {display:inline-block;font-size:14px;padding-top:8px;color:#7f7f7f;}
+#homeinfo li.sep {width:1px;height:220px;border-left:1px solid #d9d9d9;margin:0 15px;padding:0px;}
+.homelogin {float:left;width:436px;height:150px;}
 .homelogin .login {height:100%;border-right:1px solid #d9d9d9;}
-.homeloc {float:left;width:300px;position:relative; top:25px; left:50px;}
-.homeloc span {margin-right:10px;display:block;float:left;width:150px;height:45px;border-right:1px solid #A7A7AA;font-size:25px;font-weight:bold;}
+.homeloc {float:left;width:300px;margin:20px 0 0 15px;}
+.homeloc span {margin-right:10px;padding-top:15px;display:block;float:left;width:150px;height:45px;border-right:1px solid #A7A7AA;font-size:25px;font-weight:bold;}
 
 .contact {padding:30px;}
 .contact div {font-size:16px;}
@@ -91,7 +89,7 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .tv-gallery-list img{margin-bottom:6px;}
 .tv-gallery-list .title i {font-style:italic;font-size:12px;}
 /*kv*/
-.pika-stage {position: relative; width: 960px; height:600px;}
+.pika-stage {position: relative; width: 960px; height:540px;}
 .pika-stage .pika-aniwrap, .pika-stage .main-image {position: absolute; top: 0; left: 0;}
 .pika-stage .pika-aniwrap{width:100%;}
 .pika-stage .pika-ani {position:relative;display: none;z-index:2;margin:0 auto;}
