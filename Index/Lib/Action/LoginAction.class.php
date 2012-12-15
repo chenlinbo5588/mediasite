@@ -12,11 +12,16 @@ class LoginAction extends CommonAction {
             $retAry = $this->login($account, $password);
         }
         else {
-            $retAry['error'] = 'Login info is null';
-            //Session::set("User", '');
+            $retAry['error'] = L('LOGIN_MSG_NOT_FULL_ERR');
         }
         if($retAry['status']) {
-            $this->redirect('Index/index',1);
+            redirect(__APP__ . '/Index');
         }
+    }
+
+    public function logout() {
+        Session::set("User", '');
+        session_destroy();
+        redirect(__APP__ . '/Login/index');
     }
 }

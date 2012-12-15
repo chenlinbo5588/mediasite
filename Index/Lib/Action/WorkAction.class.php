@@ -4,4 +4,12 @@ class WorkAction extends CommonAction {
         $this->display();
     }
 
+    public function mlist() {
+        $this->display();
+    }
+
+    public function play() {
+        $this->display();
+    }
+
 }

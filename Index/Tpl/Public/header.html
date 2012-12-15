@@ -19,13 +19,25 @@
                 <li><a href="__APP__/Work">Work</a></li>
                 <li><a href="__APP__/Career">Careers</a></li>
                 <li><a href="__APP__/Contact">Contact</a></li>
-                <li class="header-sub"></li>
-                <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">
-                <li class="mw"><a href="__APP__/Login">Admin Login</a></li>
+                <if condition="$userType eq '1'" >
+                    <li><a href="__APP__/Admin">Manage</a></li>
+                    <li class="header-sub-a"></li>
                 <else />
-                <li class="mw"><a href="__APP__/Login">Client Login</a></li>
+                    <li class="header-sub"></li>
                 </if>
-                <li class="mw"><a href="#">EN/CH</a></li>
+                <if condition="$isLogon eq true">
+                    <li class="mw">
+                        Welcome!<span class="pl-5">{$nickName}</span>
+                        <a class="pl-10" href="__APP__/Login/logout/">Logout</a> 
+                    </li>
+                <else />
+                    <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">
+                    <li class="mw"><a href="__APP__/Login"><span>Admin Login</span></a></li>
+                    <else />
+                    <li class="mw"><a href="__APP__/Login"><span>Client Login</span></a></li>
+                    </if>
+                </if>
+                <li class="mw ml"><a href="#"><span>EN/CH</span></a></li>
             </ul>
             <div class="clear"></div>
         </div>
