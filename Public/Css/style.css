@@ -4,8 +4,12 @@
 #header ul {float:right;margin-top:15px;width:855px;}
 #header li {border-left:1px solid #666666;text-align:center;line-height:15px;display:block; float:left; width:84px;height:15px;}
 #header li.first {border:none;}
-#header li.mw {width:100px;font-weight:bold;text-align:right;border:none;}
-#header li.header-sub {width:315px;border:none;}
+#header li.mw {width:180px;text-align:right;border:none;}
+#header li.ml {width:55px;}
+#header li.mw span {font-weight:bold;}
+#header li.mw a:hover{text-decoration:underline;}
+#header li.header-sub {width:280px;border:none;}
+#header li.header-sub-a {width:196px;border:none;}
 
 .logo {float:left;background: url("../Images/logo.png") no-repeat; width:84px; height:30px;}
 .logo a {display:block;width:84px; height:30px;}

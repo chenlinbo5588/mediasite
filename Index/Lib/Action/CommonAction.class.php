@@ -4,6 +4,7 @@
  *
  */
 import("ORG.Util.Session");
+import("ORG.Util.RBAC");
 class CommonAction extends Action {
     protected $_user        = array();
     public function _initialize(){

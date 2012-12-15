@@ -13,10 +13,14 @@
 <body>
     <div id="container">
         <div id="header">
-            <div class="logo"><a href="__APP__/Index"></a></div>
+            <div class="logo"><a href="__APP__"></a></div>
             <ul>
                 <li class="first"><a href="__APP__/About">About</a></li>
-                <li><a href="__APP__/Work">Work</a></li>
+                <if condition="$isLogon eq true">
+                    <li><a href="__APP__/Work/play">Work</a></li>
+                <else />
+                    <li><a href="__APP__/Work">Work</a></li>
+                </if>
                 <li><a href="__APP__/Career">Careers</a></li>
                 <li><a href="__APP__/Contact">Contact</a></li>
                 <if condition="$userType eq '1'" >
