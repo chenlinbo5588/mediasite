@@ -17,6 +17,7 @@ class LoginAction extends CommonAction {
         if($retAry['status']) {
             redirect(__APP__ . '/Index');
         }
+        redirect(__APP__ . '/Login/index');
     }
 
     public function logout() {
