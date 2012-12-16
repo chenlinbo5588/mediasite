@@ -108,5 +108,5 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .ui-widget-content {border:0px;}
 .ui-dialog .ui-dialog-titlebar-close{width:30px;height:24px}
 .ui-widget-header .ui-icon {width:30px;height:24px;background:url("../Images/close.png") 0 0 no-repeat;}
-.ui-widget-header .ui-state-hover {background-image:none;border:0px;}
+.ui-widget-header .ui-state-hover {background-image:none;}
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {float:none;text-align:center;}

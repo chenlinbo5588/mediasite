@@ -4,6 +4,7 @@
 #header ul {float:right;margin-top:15px;width:855px;}
 #header li {border-left:1px solid #666666;text-align:center;line-height:15px;display:block; float:left; width:84px;height:15px;}
 #header li.first {border:none;}
+#header .current{font-weight:bold;}
 #header li.mw {width:180px;text-align:right;border:none;}
 #header li.ml {width:55px;}
 #header li.mw span {font-weight:bold;}
@@ -21,7 +22,7 @@
 .login .btn input {width:60px;height:30px;font-size:14px;border-right:1px solid #d6d6d6;border-bottom:1px solid #d6d6d6;}
 .login-page {padding-top:100px;padding-left:180px;}
 
-.searcher {border:none; background: #ededef; font-size:18px;width: 280px; height:30px;}
+.searcher {border:none; background: #ededef; font-size:18px;width: 200px; height:25px;}
 
 .menu_title {position:relative;font-size:21px;padding:20px 0;height:40px; line-height:40px; border-top:2px solid #A7A7AA;border-bottom:2px solid #A7A7AA;}
 .menu_title b {margin-left:60px;}
@@ -30,12 +31,18 @@
 
 .menu_content {font-size:21px;background-color:#fff; padding:20px;margin:15px 0;}
 .menu_content li {margin-top:10px;}
-.menu_content li label {display:block;float:left; width:200px;text-indent:2em; margin-right:30px;}
+.menu_content li label {color:#6d6e71;display:block;float:left; width:200px;text-indent:2em; margin-right:30px;}
 .menu_content input {width: 350px; height:30px;font-size:21px;}
 .menu_content li .dl {background:url("../Images/delete.png") no-repeat; text-indent:2em; display:block; height:22px;}
 input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:18px;}
 .handlerArea {position:relative;padding-top:15px;}
 .handlerArea a {position:absolute; right:2em;top:30px;}
+
+.sub-menu {width:100%;height:40px;margin-left:-15px;}
+.sub-menu li {font-size:14px;float: left;overflow: hidden;padding-left:10px;display:inline;line-height: 40px;height: 40px;width:80px;text-align:center;}
+.sub-menu li:hover {font-weight:bold;}
+.sub-menu li.first {text-align:left;padding-left:0px;font-size:20px;width:100px;height:40px;background:#EDEDEF;color:#fff;}
+.sub-menu li.current {font-weight:bold;}
 
 #footer {font-size:16px;height:60px;border-top:1px solid #A7A7AA;padding-top:20px;}
 .ifooter {margin:0 auto; width:906px;padding-top:12px;border-top:1px solid #A7A7AA;font-size:12px;}
@@ -69,7 +76,10 @@ input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:1
 .contact div {font-size:16px;}
 .contact h3 {margin-top:20px;}
 
-table.listdata {font-size:16px;border-collapse:collapse;width:100%;}
+.list-search {margin-left:15px;}
+.list-search span {font-weight:bold;}
+.list-search input {font-size:12px;}
+table.listdata ,.list-search span {font-size:16px;border-collapse:collapse;width:100%;}
 table.listdata tr td{padding-top:15px;text-align:left;}
 table.listdata tr th {text-align:left;}
 
@@ -79,9 +89,9 @@ table.listad tr th {text-align:left;}
 table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;height:22px;display:block;}
 
 .pager {text-align:center;padding:30px 0;}
-.pager a {font-size:20px;font-weight:bold;display:inline-block;height:30px;line-height:30px;padding:5px;color:#6d6e71;}
-.pager a.first,.pager a.last,.pager a.prev,.pager a.next {font-size:14px;}
-.pager a.current {border:1px solid #A7A7AA;}
+.pager span,.pager a{font-size:20px;display:inline-block;height:30px;line-height:30px;padding:5px;color:#6d6e71;}
+.pager span.first,.pager span.last,.pager span.prev,.pager span.next {font-size:14px;font-weight:bold;}
+.pager span.current {border:1px solid #A7A7AA;font-weight:bold;}
 
 /*tv gallery list*/
 .tv-gallery{width:906px;float:left;}
@@ -103,10 +113,22 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .pika-textnav, .pika-imgnav {display:none;}
 .pika-counter{display:none;position: absolute;bottom: -20px;left:15px;font-size:11px;}
 
+/* button */
+.button {height:30px;font-size:18px;font-weight:bold;text-indent: 0;outline: 0;}
+.button span  {display:inline-block;height:30px;line-height:30px;margin:0 5px 0 5px;}
+.button span a {display:inline-block;height:30px;line-height:30px;margin:0 5px 0 35px;cursor: pointer;}
+.button span a:hover{text-decoration:underline;}
+.dialog .minbtn a {color:#6d6e71;}
+.button span.add {background:url("../Images/add.png") no-repeat 0 0;}
+/*pop*/
+.dialog {display:none;}
+.dialog .confirm-body {font-size:16px;}
 /*overwrite ui*/
 .ui-widget-header {border:0px;background: none;}
-.ui-widget-content {border:0px;}
+.ui-widget-content {border:0px;overflow: hidden;}
 .ui-dialog .ui-dialog-titlebar-close{width:30px;height:24px}
 .ui-widget-header .ui-icon {width:30px;height:24px;background:url("../Images/close.png") 0 0 no-repeat;}
 .ui-widget-header .ui-state-hover {background-image:none;border:0px;}
-.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {float:none;text-align:center;}
+.ui-dialog .ui-dialog-title {font-size:16px;color:#6d6e71;}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {float:none;text-align:left;padding-left:50px;}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {background:none;border:0px;font-size:22px;color:#bebebe;font-weight:bold;}

@@ -1,0 +1,27 @@
+<if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">
+<div class="sub-menu">
+    <ul>
+    <li class="first">Manage</li>
+    <if condition="strtolower($Think.const.ACTION_NAME) eq 'index'">
+    <li class="current">Client</li>
+    <else />
+    <li><a href="__URL__/index">Client</a></li>
+    </if>
+    <if condition="strtolower($Think.const.ACTION_NAME) eq 'product'">
+    <li class="current">Product</li>
+    <else />
+    <li><a href="__URL__/product">Product</a></li>
+    </if>
+    <if condition="strtolower($Think.const.ACTION_NAME) eq 'project'">
+    <li class="current">Project</li>
+    <else />
+    <li><a href="__URL__/project">Project</a></li>
+    </if>
+    <if condition="strtolower($Think.const.ACTION_NAME) eq 'folder'">
+    <li class="current">Folder</li>
+    <else />
+    <li><a href="__URL__/folder">Folder</a></li>
+    </if>
+    </ul>
+</div>
+</if>

@@ -8,6 +8,7 @@
     <link href="__PUBLIC__/Css/style.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="__PUBLIC__/Javascript/core.js"></script>
     <script type="text/javascript" src="__PUBLIC__/Javascript/pikachoose.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Javascript/form.js"></script>
     <script type="text/javascript" src="__PUBLIC__/Javascript/common.js"></script>
 </head>
 <body>
@@ -15,16 +16,16 @@
         <div id="header">
             <div class="logo"><a href="__APP__"></a></div>
             <ul>
-                <li class="first"><a href="__APP__/About">About</a></li>
+                <li class="first"><a href="__APP__/About" <if condition="strtolower($Think.const.MODULE_NAME) eq 'about'">class="current"</if> >About</a></li>
                 <if condition="$isLogon eq true">
-                    <li><a href="__APP__/Work/play">Work</a></li>
+                    <li><a href="__APP__/Work/play" <if condition="strtolower($Think.const.MODULE_NAME) eq 'work'">class="current"</if> >Work</a></li>
                 <else />
-                    <li><a href="__APP__/Work">Work</a></li>
+                    <li><a href="__APP__/Work" <if condition="strtolower($Think.const.MODULE_NAME) eq 'work'">class="current"</if> >Work</a></li>
                 </if>
-                <li><a href="__APP__/Career">Careers</a></li>
-                <li><a href="__APP__/Contact">Contact</a></li>
+                <li><a href="__APP__/Career" <if condition="strtolower($Think.const.MODULE_NAME) eq 'Career'">class="current"</if> >Career</a></li>
+                <li><a href="__APP__/Contact" <if condition="strtolower($Think.const.MODULE_NAME) eq 'contact'">class="current"</if> >Contact</a></li>
                 <if condition="$userType eq '1'" >
-                    <li><a href="__APP__/Admin">Manage</a></li>
+                    <li><a href="__APP__/Admin" <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">class="current"</if> >Manage</a></li>
                     <li class="header-sub-a"></li>
                 <else />
                     <li class="header-sub"></li>

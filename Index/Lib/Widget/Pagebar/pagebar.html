@@ -1,0 +1,27 @@
+<if condition="$lastPage neq 0">
+<div class="pager">
+	<if condition="$firstPage neq $curPage">
+    <a href="javascript:gotoPage(1);"><span class="first">&lt;&lt;</span></a>
+    <a href="javascript:gotoPage({$prevPage});"><span class="prev">PREV</span></a>
+	<else />
+	<a href="javascript:void(0);"><span class="first">&lt;&lt;</span></a>
+        <a href="javascript:void(0);"><span class="prev">PREV</span></a>
+	</if>
+	<ul class="page-number">
+		<foreach name="pageNumbers" item="row">
+			<if condition="$row.page eq $curPage">
+                <span class="current">{$row.page}</span>
+			<else />
+                <a href="javascript:gotoPage({$row.page});">{$row.page}</a>
+			</if>
+		</foreach>
+	</ul>　／　<span>{%TOTAL_PAGE}</span>
+	<if condition="$lastPage neq $curPage">
+    <a href="javascript:gotoPage({$nextPage});"><span class="next">NEXT</span></a>
+    <a href="javascript:gotoPage({$lastPage});"><span class="last">&gt;&gt;</span></a>
+	<else />
+    <a href="javascript:void(0);"><span class="next">NEXT</span></a>
+    <a href="javascript:void(0);"><span class="last">&gt;&gt;</span></a>
+	</if>
+</div>
+</if>

@@ -3,8 +3,7 @@
  *public Action
  *
  */
-import("ORG.Util.Session");
-import("ORG.Util.RBAC");
+import("@.ORG.Session");
 class CommonAction extends Action {
     protected $_user        = array();
     public function _initialize(){
@@ -57,18 +56,6 @@ class CommonAction extends Action {
     }
 
     /**
-    *direct to page
-    *@param string $url //target url
-    *
-    */
-    public function directTo($url = '') {
-        if($url != '') {
-            $script = "<script>window.top.location.href='".$url."'</script>";
-            die($script);
-        }
-    }
-
-    /**
     *
     *return json data
     *@param array $data 
@@ -78,5 +65,119 @@ class CommonAction extends Action {
         if($isJsonHead)
             header("Content-Type:application/json; charset=utf-8");
          exit(json_encode($data));
+    }
+
+    /*
+    *
+    *show page
+    *
+    */
+    public function showPage($pageObj,$search='') {
+        $pageObj->parameter = ($search != '') ? "search={$search}" : '';
+        $pageObj->setConfig('header', '<div class="pager">');
+        $pageObj->setConfig('end', '</div>');
+        $pageObj->setConfig('first', '<span class="first">&lt;&lt;</span>');
+        $pageObj->setConfig('last', '<span class="last">&gt;&gt;</span>');
+        $pageObj->setConfig('prev', '<span class="prev">PREV</span>');
+        $pageObj->setConfig('next', '<span class="next">NEXT</span>');
+        $pageObj->setConfig('theme', ' %header% %first% %upPage% %prePage% %linkPage% %nextPage% %downPage% %end%');
+        $page = $pageObj->show();
+        return $page;
+    }
+
+    /**
+    *
+    *add data
+    *@param mix $modelName 
+    *@param array $data
+    *@return array $retAry //array('status' => true,'insertid' => 1);
+    *                      //array('status' => false,'error' => 'error message')
+    */
+    protected function _add($modelName,$data) {
+        $retAry = array('status' => false);
+        $model = M($modelName);
+        $model->create($data);
+        $error = $model->getError();
+        if(!empty($error)) {
+            $retAry['error'] = $error;
+        }
+        else {
+            $insertid 	= $model->add();
+            $error	 	= $model->getError();
+            if(empty($error) && $insertid > 0) {
+                $retAry['status'] = true;
+                $retAry['insertid'] = $insertid;
+            }
+            else {
+                $retAry['error'] = $error;
+            }
+        }
+        return $retAry;
+    }
+
+    /**
+    *
+    *delete data
+    *@param mix $modelName 
+    *@param array/string $con
+    *@return array $retAry //array('status' => true);
+    *                      //array('status' => false,'error' => 'error message')
+    */
+    protected function _delete($modelName, $con) {
+        $retAry = array('status' => false);
+        if(empty($con)) return $retAry;
+        if(is_numeric($con)) {
+            $where = "id='{$con}'";
+        }
+        else {
+            $where = $condition;
+        }
+        $model = M($modelName);
+        $flag = $model->where($where)->delete();
+        if($flag) $retAry['status'] = $flag;
+        return $retAry;
+    }
+
+    /**
+    *
+    *update data
+    *@param mix $modelName 
+    *@param array/string $con
+    *@param array $data
+    *@return array $retAry //array('status' => true,'affected' => true);
+    *                      //array('status' => true,'affected' => false);
+    *                      //array('status' => false,'error' => 'error message')
+    */
+    protected function _update($modelName, $con, $data) {
+        $retAry 	= array('status' => false);
+        if(empty($con)) {
+            $ret['error'] = 'condition is null';
+            return $retAry;
+        }
+
+        $flag   = false;
+        $model 	= D($modelName);
+
+        if(is_numeric($con)) {
+            $where = "id='{$con}'";
+        }
+        else {
+            $where = $con;
+        }
+        $flag = $model->where($where)->save($data);
+
+        $error = $model->getError();
+        if(!$error && $flag == true) { 
+            $retAry['status']      = true;
+            $retAry['affected']    = true;
+        }
+        else if(!$error && $flag == false) { 
+            $retAry['status']      = true;
+            $retAry['affected']    = false;
+        }
+        else {
+            $retAry['error']       = $error;
+        }
+        return $retAry;
     }
 }
