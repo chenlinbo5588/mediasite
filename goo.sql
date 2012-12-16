@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 12 月 15 日 22:44
+-- 生成日期: 2012 年 12 月 16 日 23:21
 -- 服务器版本: 5.0.22
 -- PHP 版本: 5.3.5
 
@@ -181,14 +181,25 @@ CREATE TABLE IF NOT EXISTS `user` (
   `type` tinyint(1) NOT NULL default '0' COMMENT 'user type 0：client，1：admin',
   `enable` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- 转存表中的数据 `user`
 --
 
 INSERT INTO `user` (`id`, `account`, `nickname`, `password`, `project`, `category`, `createtime`, `type`, `enable`) VALUES
-(1, 'admin', 'Admin', 'point9*', '', '', '2012-12-15 12:17:00', 1, 1);
+(1, 'admin', 'Admin', 'point9*', '', '', '2012-12-15 12:17:00', 1, 1),
+(2, 'testclient', 'Test Client', '111111', '', '', '2012-12-16 14:33:20', 0, 1),
+(3, 'client2', 'Client2', '111111', '', '', '2012-12-16 15:30:00', 0, 1),
+(4, 'client3', 'Client3', '111111', '', '', '2012-12-16 15:30:00', 0, 1),
+(11, 'bella', 'bella', '111111', '', '', '2012-12-16 21:12:15', 0, 1),
+(12, 'cathy', 'cathy', '111111', '', '', '2012-12-16 21:16:13', 0, 1),
+(13, 'testuser1', 'testuser', '111111', '', '', '2012-12-16 21:31:15', 0, 1),
+(14, 'testuser2', 'testuser2', '111111', '', '', '2012-12-16 21:31:27', 0, 1),
+(15, 'testuser3', 'testuser3', '111111', '', '', '2012-12-16 21:31:48', 0, 1),
+(16, 'testuser4', 'testuser4', '111111', '', '', '2012-12-16 21:32:07', 0, 1),
+(17, 'testuser5', 'testuser5', '111111', '', '', '2012-12-16 21:32:25', 0, 1),
+(18, 'testuser6', 'testuser6', '111111', '', '', '2012-12-16 21:32:44', 0, 2);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
