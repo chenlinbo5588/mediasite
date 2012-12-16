@@ -4,15 +4,13 @@
     <form action="__URL__" method="POST">
         <p class="list-search"><span>Search</span><input class="searcher ml-10" type="text" name="search" value=""/></p>
     </form>
-    <div class="m-10"><div class="button" id="add-user-btn"><span class="add"><a href="javascript:;" >Add Client</span></a></div></div>
+    <div class="m-10"><div class="button" id="add-user-btn"><span class="add"><a href="javascript:;" >Add {$Think.ACTION_NAME|strtolower|ucfirst}</span></a></div></div>
     <div class="sepline"></div>
     <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-30 mt-30" cellpadding="0" cellspacing="0" border="0">
         <thead>
         <tr>
             <th width="15%">ID</th>
-            <th width="20%">Account</th>
-            <th width="20%">Nickname</th>
-            <th width="15%">Password</th>
+            <th width="20%">Name</th>
             <th width="15%">Status</th>
             <th width="15%">Operation</th>
         </tr>
@@ -21,11 +19,9 @@
         <volist name="list" id="vo">
         <tr>
             <td>{$vo.id}</td>
-            <td>{$vo.account}</td>
-            <td>{$vo.nickname}</td>
-            <td>{$vo.password}</td>
+            <td>{$vo.name}</td>
             <td>{$vo.enable}</td>
-            <td>[<a class="edit" href="javascript:;" data="{$vo.id}" title="Edit">Edit</a>]&nbsp;&nbsp;[<a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>]<br />[<a target="_blank" href="__URL__/product/uid/{$vo.id}" title="Products">Products</a>]</td>
+            <td>[<a class="edit" href="javascript:;" data="{$vo.id}" title="Edit">Edit</a>]&nbsp;&nbsp;[<a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>]</td>
         </tr>
         </volist>
         </tbody>
