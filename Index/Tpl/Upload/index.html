@@ -1,0 +1,95 @@
+<include file="Public:header" />
+	<link href="__URL__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
+    <div class="box960x540">
+    
+    </div>
+
+    <div class="rowbox box960">
+        <div class="desc">
+            GOO is always expanding and open to new job ideas and creative challenges. If you are insterested in joining the team please contact us.</p>
+        </div>
+    </div>
+
+    <div class="rowbox">
+        <div>
+            <em class="label"><i>*</i>请视频文件：</em>
+            <span id="UploaderPlaceholder_1"></span>
+            <div class="Uploader" style="display:none;" >请选择音乐文件：</div>
+            <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
+            <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="请上传视频文件" readonly="readonly"/>
+        </div>
+
+        <div id="UploaderProgress_1"></div>
+	<div id="UploaderFeedBack_1"></div>
+    </div>
+    <div class="clear">
+</div>
+<include file="Public:footer" />
+
+<script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.queue.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Javascript/swfup/fileprogress.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Javascript/swfup/handlers.js"></script>
+<script type="text/javascript">
+var uploads = [];
+$(function(){
+    $("div.Uploader").each(function(index){
+        uploads.push(createSwfUpload(index + 1));
+    });
+});
+
+function createSwfUpload(index){
+	var upload = new SWFUpload({
+		// Backend Settings
+		upload_url: "/upload/upload.php?action=upload",
+		post_params: {isajax:"1",cookie:document.cookie},
+		// File Upload Settings
+		file_size_limit : "50MB",
+		file_types : "*.mov;*.3gp;*.mpg;*.mk5;*.avi;",
+		file_types_description : "All Files",
+		file_upload_limit : "0",
+		file_queue_limit : "0",
+		// Event Handler Settings (all my handlers are in the Handler.js file)
+		file_dialog_start_handler : fileDialogStart,
+		file_queued_handler : fileQueued,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_start_handler : uploadStart,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadSuccess,
+		upload_complete_handler : uploadComplete,
+		// Button Settingsimg/fee
+		button_image_url : "__PUBLIC__/Images/XPButtonUploadText_61x22.png",
+		button_placeholder_id : "UploaderPlaceholder_" + index,
+		button_width: 105,
+		button_height: 24,
+		//button_text : '<span class="redText">上传文件</span>',
+		//button_text_style : ".redText {text-align:center;}",
+		button_window_mode:"TRANSPARENT",
+		button_cursor: SWFUpload.CURSOR.HAND,
+		// Flash Settings
+		flash_url : "__PUBLIC__/Flash/swfupload.swf",
+		custom_settings : {
+			progressTarget : "UploaderProgress_" + index,
+			callback : function(file,serverData){
+				var tmp = eval("(" + serverData + ")");
+				if(tmp.code == 200){
+                                    $("#Uploader_Value_" + index).val(tmp.result.id);
+                                    $("#Uploader_Show_Value_" + index).val(tmp.result.path);
+				}else{
+                                    $("#upload_" + index + "_flag").html('<p class="error">附件上传失败，请重新上传!</p>');
+				}
+				
+			}
+		},
+
+		// Debug Settings
+		debug: false
+	});
+
+	return upload;
+}
+
+
+</script>
