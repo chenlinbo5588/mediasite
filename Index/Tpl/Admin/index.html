@@ -52,6 +52,10 @@
                 <label for="Categories">Categories:</label><input type="text" name="Categories"/>
             </li> -->
         </ul>
+        <div class="button-bar">
+            <div class="button"><a href="javascript:;">Save</a></div>
+            <div class="button"><a href="javascript:;">Cancel</a></div>
+        </div>
     </form>
     </div>
 </div>
@@ -61,36 +65,7 @@
 <!--
 $(function() {
     $('#add-user-btn').click(function(){
-        $dialog  = $('#add-client-dialog');
-        $buttons = [{text:'Save' ,click:function(){
-                    var $form   = $(this).find('form').eq(0);
-                    var url     = '__URL__/submitClient';
-                    var options = {
-                        dataType        : 'json',
-                        url             : url,
-                        success         : function(response) { 
-                            if(response.status) {
-                                $dialog.dialog( "close" );
-                                window.location.reload();
-                            }
-                            else {
-                                if(response.error) {
-                                    App.alert('Add Client',response.error);
-                                }
-                                else {
-                                    App.alert('Add Client','Add client fail.');
-                                }
-                            }
-                        }
-                    };
-                    $form.ajaxForm(options); 
-                    $form.submit();
-                }},
-                {text:'Cancel',click:function(){
-                    $dialog.dialog( "close" );
-                }}];
-        $options = {title:'Add Client',width:750,modal:true,buttons:$buttons};
-        $dialog.dialog($options);
+        loadEditDialog('Edit Client');
     });
 
     var $table = $('#table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}');
@@ -120,35 +95,37 @@ function loadEditDialog(title,uid) {
     $dialog  = $('#edit-client-dialog');
     var url     = '__URL__/editClient';
     if(typeof (uid) != 'undefined')url += '/uid/' + uid;
-    $buttons = [{text:'Save' ,click:function(){
-                var $form   = $dialog.find('form').eq(0);
-                var options = {
-                    dataType        : 'json',
-                    url             : url,
-                    success         : function(response) { 
-                        if(response.status) {
-                            $dialog.dialog( "close" );
-                            window.location.reload();
+    $options = {title:title,width:750,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            var subUrl  = '__URL__/submitClient';
+            var options = {
+                dataType        : 'json',
+                url             : subUrl,
+                success         : function(response) { 
+                    if(response.status) {
+                        $dialog.dialog( "close" );
+                        window.location.reload();
+                    }
+                    else {
+                        if(response.error) {
+                            App.alert(title,response.error);
                         }
                         else {
-                            if(response.error) {
-                                App.alert(title,response.error);
-                            }
-                            else {
-                                App.alert(title,'Operate fail.');
-                            }
+                            App.alert(title,'Operate fail.');
                         }
                     }
-                };
-                $form.ajaxForm(options); 
-                $form.submit();
-            }},
-            {text:'Cancel',click:function(){
-                $dialog.dialog( "close" );
-            }}];
-    $options = {title:title,width:750,modal:true,buttons:$buttons};
-    $dialog.dialog($options);
-    $dialog.loadTpl(url,function(){}, false);
+                }
+            };
+            $form.ajaxForm(options); 
+            $form.submit();
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
 }
 //-->
 </script>
