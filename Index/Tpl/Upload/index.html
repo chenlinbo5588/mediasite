@@ -1,9 +1,5 @@
 <include file="Public:header" />
-	<link href="__URL__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
-    <div class="box960x540">
-    
-    </div>
-
+    <link href="__URL__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
     <div class="rowbox box960">
         <div class="desc">
             GOO is always expanding and open to new job ideas and creative challenges. If you are insterested in joining the team please contact us.</p>
@@ -41,11 +37,11 @@ $(function(){
 function createSwfUpload(index){
 	var upload = new SWFUpload({
 		// Backend Settings
-		upload_url: "/upload/upload.php?action=upload",
+		upload_url: "__URL__/upload",
 		post_params: {isajax:"1",cookie:document.cookie},
 		// File Upload Settings
 		file_size_limit : "50MB",
-		file_types : "*.mov;*.3gp;*.mpg;*.mk5;*.avi;",
+		file_types : "*.*;",
 		file_types_description : "All Files",
 		file_upload_limit : "0",
 		file_queue_limit : "0",
@@ -73,14 +69,14 @@ function createSwfUpload(index){
 		custom_settings : {
 			progressTarget : "UploaderProgress_" + index,
 			callback : function(file,serverData){
+                                alert(serverData);
 				var tmp = eval("(" + serverData + ")");
-				if(tmp.code == 200){
-                                    $("#Uploader_Value_" + index).val(tmp.result.id);
-                                    $("#Uploader_Show_Value_" + index).val(tmp.result.path);
+				if(0 == tmp.respcode){
+                                    $("#Uploader_Value_" + index).val(tmp.id);
+                                    $("#Uploader_Show_Value_" + index).val(tmp.path);
 				}else{
-                                    $("#upload_" + index + "_flag").html('<p class="error">附件上传失败，请重新上传!</p>');
+                                   alert('附件上传失败，请重新上传!');
 				}
-				
 			}
 		},
 
