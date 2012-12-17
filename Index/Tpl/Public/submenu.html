@@ -2,10 +2,10 @@
 <div class="sub-menu">
     <ul>
     <li class="first">Manage</li>
-    <if condition="strtolower($Think.const.ACTION_NAME) eq 'index'">
+    <if condition="strtolower($Think.const.ACTION_NAME) eq 'client'">
     <li class="current">Client</li>
     <else />
-    <li><a href="__URL__/index">Client</a></li>
+    <li><a href="__URL__/client">Client</a></li>
     </if>
     <if condition="strtolower($Think.const.ACTION_NAME) eq 'product'">
     <li class="current">Product</li>

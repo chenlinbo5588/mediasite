@@ -1,14 +1,8 @@
 <div class="menu_content">
-    <form action="__URL__/submitClient" name="clientForm" method="POST">
+    <form name="clientForm" method="POST">
         <ul>
             <li>
-                <label for="nickname">Nickname:</label><input type="text" name="nickname" value="{$vo.nickname}" />
-            </li>
-            <li>
-                <label for="account">Account:</label><input type="text" name="account" value="{$vo.account}" />
-            </li>
-            <li>
-                <label for="password">Password:</label><input type="text" name="password" value="{$vo.password}" />
+                <label for="name">Name:</label><input type="text" name="name" value="{$vo.nickname}" />
             </li>
             <!-- <li>
                 <label for="Project">Project:</label><input type="text" name="Project"/>

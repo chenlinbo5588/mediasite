@@ -1,0 +1,69 @@
+<div id="edit-dialog" class="dialog"></div>
+<script type="text/javascript">
+<!--
+$(function() {
+    $('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
+        loadEditDialog('Edit {$Think.ACTION_NAME|strtolower|ucfirst}');
+    });
+
+    var $table = $('#table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}');
+    $('.delete',$table).click(function(){
+        var editId = $(this).attr('data');
+        App.confirm('Delete {$Think.ACTION_NAME|strtolower|ucfirst}','Are you sure to delete this {$Think.ACTION_NAME|strtolower}?',function(){
+            var url = "__URL__/delClient";
+            $.post(url, {uid:editId}, function(response) {
+                if(response.status) {
+                    window.location.reload();
+                } else {
+                    if(response.error) {
+                        App.alert('Delete {$Think.ACTION_NAME|strtolower|ucfirst}','Delete {$Think.ACTION_NAME|strtolower} fail.');
+                    }
+                }
+            });
+        });
+    });
+
+    $('.edit',$table).click(function(){
+        var editId = $(this).attr('data');
+        loadEditDialog('Edit {$Think.ACTION_NAME|strtolower|ucfirst}',editId);
+    });
+});
+
+function loadEditDialog(title,uid) {
+    $dialog  = $('#edit-dialog');
+    var url     = '__URL__/edit{$Think.ACTION_NAME|strtolower|ucfirst}';
+    if(typeof (uid) != 'undefined')url += '/uid/' + uid;
+    $options = {title:title,width:750,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            var subUrl  = '__URL__/submit{$Think.ACTION_NAME|strtolower|ucfirst}';
+            var options = {
+                dataType        : 'json',
+                url             : subUrl,
+                success         : function(response) { 
+                    if(response.status) {
+                        $dialog.dialog( "close" );
+                        window.location.reload();
+                    }
+                    else {
+                        if(response.error) {
+                            App.alert(title,response.error);
+                        }
+                        else {
+                            App.alert(title,'Operate fail.');
+                        }
+                    }
+                }
+            };
+            $form.ajaxForm(options); 
+            $form.submit();
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
+}
+//-->
+</script>

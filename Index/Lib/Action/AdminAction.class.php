@@ -2,6 +2,10 @@
 import("@.ORG.Page");
 class AdminAction extends CommonAction {
     public function index(){
+        redirect(__URL__ . '/client');
+    }
+
+    public function client(){
         $search = $_POST['search'];
         $model = M('User');
         $page     = 1;
@@ -101,6 +105,50 @@ class AdminAction extends CommonAction {
         $this->display();
     }
 
+    public function editProduct() {
+        $editId = $_GET['id'] ? $_GET['id'] : 0;
+        if($editId) {
+            $model = M('Product');
+            $client = $model->where("id={$editId}")->limit(0,1)->select();
+            if(isset($client[0])) {
+                $clientMsg = $client[0];
+                $this->assign('vo',$clientMsg);
+            }
+        }
+        $this->display();
+    }
+
+    public function submitProduct() {
+        $retAry = array('status' => false);
+        if(isset($_POST['id']) && ($_POST['id'] != '')) {
+            $con['id']      = $_POST['id'];
+            $data = $_POST;
+            unset($data['id']);
+            $retAry = $this->_update('User',$con,$data);
+        } else {
+            $data  = $_POST;
+            $data['enable'] = 1;
+            $data['createtime'] = date('Y-m-d H:i:s');
+            $retAry = $this->_add('User',$data);
+        }
+        $this->sendJson($retAry);
+    }
+
+    public function delProduct() {
+        $retAry = array('status' => false);
+        $userId = $_POST['uid'];
+        $con['id']      = $userId;
+        $data['enable'] = 2;
+        $retAry = $this->_update('User',$con,$data);
+        if($retAry['status']) {
+            $pcon['user_id'] = $userId;
+            $this->_update('Prudcut',$pcon,$data);
+            $this->_update('Project',$pcon,$data);
+            $this->_update('Folder',$pcon,$data);
+        }
+        $this->sendJson($retAry);
+    }
+
     public function project(){
         $search = $_POST['search'];
         $model = M('Project');
@@ -129,6 +177,50 @@ class AdminAction extends CommonAction {
         $this->display();
     }
 
+    public function editProject() {
+        $editId = $_GET['id'] ? $_GET['id'] : 0;
+        if($editId) {
+            $model = M('Product');
+            $client = $model->where("id={$editId}")->limit(0,1)->select();
+            if(isset($client[0])) {
+                $clientMsg = $client[0];
+                $this->assign('vo',$clientMsg);
+            }
+        }
+        $this->display();
+    }
+
+    public function submitProject() {
+        $retAry = array('status' => false);
+        if(isset($_POST['id']) && ($_POST['id'] != '')) {
+            $con['id']      = $_POST['id'];
+            $data = $_POST;
+            unset($data['id']);
+            $retAry = $this->_update('User',$con,$data);
+        } else {
+            $data  = $_POST;
+            $data['enable'] = 1;
+            $data['createtime'] = date('Y-m-d H:i:s');
+            $retAry = $this->_add('User',$data);
+        }
+        $this->sendJson($retAry);
+    }
+
+    public function delProject() {
+        $retAry = array('status' => false);
+        $userId = $_POST['uid'];
+        $con['id']      = $userId;
+        $data['enable'] = 2;
+        $retAry = $this->_update('User',$con,$data);
+        if($retAry['status']) {
+            $pcon['user_id'] = $userId;
+            $this->_update('Prudcut',$pcon,$data);
+            $this->_update('Project',$pcon,$data);
+            $this->_update('Folder',$pcon,$data);
+        }
+        $this->sendJson($retAry);
+    }
+
     public function folder(){
         $search = $_POST['search'];
         $model = M('Folder');
@@ -155,6 +247,50 @@ class AdminAction extends CommonAction {
         $this->assign('list',$list);
         $this->assign("page", $page);
         $this->display();
+    }
+
+    public function editFolder() {
+        $editId = $_GET['id'] ? $_GET['id'] : 0;
+        if($editId) {
+            $model = M('Product');
+            $client = $model->where("id={$editId}")->limit(0,1)->select();
+            if(isset($client[0])) {
+                $clientMsg = $client[0];
+                $this->assign('vo',$clientMsg);
+            }
+        }
+        $this->display();
+    }
+
+    public function submitFolder() {
+        $retAry = array('status' => false);
+        if(isset($_POST['id']) && ($_POST['id'] != '')) {
+            $con['id']      = $_POST['id'];
+            $data = $_POST;
+            unset($data['id']);
+            $retAry = $this->_update('User',$con,$data);
+        } else {
+            $data  = $_POST;
+            $data['enable'] = 1;
+            $data['createtime'] = date('Y-m-d H:i:s');
+            $retAry = $this->_add('User',$data);
+        }
+        $this->sendJson($retAry);
+    }
+
+    public function delFolder() {
+        $retAry = array('status' => false);
+        $userId = $_POST['uid'];
+        $con['id']      = $userId;
+        $data['enable'] = 2;
+        $retAry = $this->_update('User',$con,$data);
+        if($retAry['status']) {
+            $pcon['user_id'] = $userId;
+            $this->_update('Prudcut',$pcon,$data);
+            $this->_update('Project',$pcon,$data);
+            $this->_update('Folder',$pcon,$data);
+        }
+        $this->sendJson($retAry);
     }
 
     public function user(){
