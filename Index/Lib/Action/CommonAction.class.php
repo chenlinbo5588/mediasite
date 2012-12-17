@@ -8,8 +8,12 @@ class CommonAction extends Action {
     protected $_user        = array();
     public function _initialize(){
         $this->_user    = Session::get('User');
-        if(!$this->_user['IsLogon']) {
+        $modName     = strtolower(MODULE_NAME);
+        $loginMod    = array('admin','upload');
+        if(!$this->_user['IsLogon'] && in_array($modName,$loginMod)) {
             Session::set('User','');
+            $script = "<script>window.top.location.href='".__ROOT__."/Login'</script>";
+            die($script);
         }
         $userType = 9999;
         $isLogon  = $this->_user['IsLogon'];

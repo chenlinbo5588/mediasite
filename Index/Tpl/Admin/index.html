@@ -61,10 +61,10 @@
 <!--
 $(function() {
     $('#add-user-btn').click(function(){
-        $dialog  = $('#edit-client-dialog');
+        $dialog  = $('#add-client-dialog');
         $buttons = [{text:'Save' ,click:function(){
                     var $form   = $(this).find('form').eq(0);
-                    var url     = '__URL__/addClient';
+                    var url     = '__URL__/submitClient';
                     var options = {
                         dataType        : 'json',
                         url             : url,
