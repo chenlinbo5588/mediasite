@@ -12,7 +12,7 @@ class CommonAction extends Action {
         $loginMod    = array('admin','upload');
         if(!$this->_user['IsLogon'] && in_array($modName,$loginMod)) {
             Session::set('User','');
-            $script = "<script>window.top.location.href='".__ROOT__."/Login'</script>";
+            $script = "<script>window.top.location.href='".__APP__."/Login'</script>";
             die($script);
         }
         $userType = 9999;
