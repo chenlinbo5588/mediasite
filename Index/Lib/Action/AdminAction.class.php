@@ -34,7 +34,7 @@ class AdminAction extends CommonAction {
     }
 
     public function editClient() {
-        $editId = $_GET['uid'] ? $_GET['uid'] : 0;
+        $editId = $_GET['id'] ? $_GET['id'] : 0;
         if($editId) {
             $model = M('User');
             $client = $model->where("id={$editId}")->limit(0,1)->select();
@@ -48,7 +48,7 @@ class AdminAction extends CommonAction {
 
     public function submitClient() {
         $retAry = array('status' => false);
-        if(isset($_POST['id']) && ($_POST['id'] != '')) {
+        if(isset($_POST['id']) && ($_POST['id'] != 0)) {
             $con['id']      = $_POST['id'];
             $data = $_POST;
             unset($data['id']);
@@ -64,13 +64,13 @@ class AdminAction extends CommonAction {
 
     public function delClient() {
         $retAry = array('status' => false);
-        $userId = $_POST['uid'];
-        $con['id']      = $userId;
+        $editId = $_POST['id'];
+        $con['id']      = $editId;
         $data['enable'] = 2;
         $retAry = $this->_update('User',$con,$data);
         if($retAry['status']) {
-            $pcon['user_id'] = $userId;
-            $this->_update('Prudcut',$pcon,$data);
+            $pcon['user_id'] = $editId;
+            $this->_update('Pruduct',$pcon,$data);
             $this->_update('Project',$pcon,$data);
             $this->_update('Folder',$pcon,$data);
         }
@@ -84,20 +84,21 @@ class AdminAction extends CommonAction {
         $pageSize = 10;
         $total    = 0;
         $list = array();
-        $con = array('enable=1');
         if($search != '') {
             $scon = array();
             $scon[] = "id like '%{$search}%'";
-            $scon[] = "account like '%{$search}%'";
-            $scon[] = "nickname like '%{$search}%'";
+            $scon[] = "name like '%{$search}%'";
             $con[] = '('.implode(' OR ',$scon).')';
         }
+        if($_GET['uid'] > 0)$con[] = 'user_id IN ('.$_GET['uid'].')';
         $where = implode(' AND ',$con);
         $total = $model->where($where)->count();
         $pageObj = new Page($total,$pageSize);
-        $list   = $model->where($where)
+        $list   = $model->field('product.id AS ID,product.name AS Name,product.enable AS Enable,user.id AS UserID,user.nickname AS Nickname,user.account AS Account')
+                        ->join('user ON user.id = product.user_id')
+                        ->where($where)
                         ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
-                        ->order('id desc')
+                        ->order('product.id desc')
                         ->select();
         $page = $this->showPage($pageObj,$search);
         $this->assign('list',$list);
@@ -106,45 +107,56 @@ class AdminAction extends CommonAction {
     }
 
     public function editProduct() {
-        $editId = $_GET['id'] ? $_GET['id'] : 0;
+        $editId  = $_GET['id'] ? $_GET['id'] : 0;
+        $editMsg = array();
         if($editId) {
-            $model = M('Product');
-            $client = $model->where("id={$editId}")->limit(0,1)->select();
+            $model  = M('Product');
+            $client = $model->field('product.name AS Name,user.nickname AS Nickname,user.account AS Account')
+                            ->join('user ON user.id = product.user_id')
+                            ->where("product.id={$editId}")
+                            ->limit(0,1)
+                            ->select();
             if(isset($client[0])) {
-                $clientMsg = $client[0];
-                $this->assign('vo',$clientMsg);
+                $editMsg = $client[0];
+                $this->assign('vo',$editMsg);
             }
         }
+        $this->assign('vo',$editMsg);
+        $this->assign('editId',$editId);
+        $userMod = M('User');
+        $list   = $userMod->field('id,nickname,account')
+                          ->where('enable=1 AND type=0')
+                          ->order('id desc')
+                          ->select();
+        $this->assign('userList',$list);
         $this->display();
     }
 
     public function submitProduct() {
         $retAry = array('status' => false);
-        if(isset($_POST['id']) && ($_POST['id'] != '')) {
+        if(isset($_POST['id']) && ($_POST['id'] != 0)) {
             $con['id']      = $_POST['id'];
             $data = $_POST;
             unset($data['id']);
-            $retAry = $this->_update('User',$con,$data);
+            $retAry = $this->_update('Product',$con,$data);
         } else {
             $data  = $_POST;
             $data['enable'] = 1;
-            $data['createtime'] = date('Y-m-d H:i:s');
-            $retAry = $this->_add('User',$data);
+            unset($data['id']);
+            $retAry = $this->_add('Product',$data);
         }
         $this->sendJson($retAry);
     }
 
     public function delProduct() {
         $retAry = array('status' => false);
-        $userId = $_POST['uid'];
-        $con['id']      = $userId;
+        $editId = $_POST['id'];
+        $con['id']      = $editId;
         $data['enable'] = 2;
-        $retAry = $this->_update('User',$con,$data);
+        $retAry = $this->_update('Product',$con,$data);
         if($retAry['status']) {
-            $pcon['user_id'] = $userId;
-            $this->_update('Prudcut',$pcon,$data);
+            $pcon['product_id'] = $editId;
             $this->_update('Project',$pcon,$data);
-            $this->_update('Folder',$pcon,$data);
         }
         $this->sendJson($retAry);
     }

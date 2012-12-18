@@ -120,6 +120,12 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .button span a:hover{text-decoration:underline;}
 .dialog .minbtn a {color:#6d6e71;}
 .button span.add {background:url("../Images/add.png") no-repeat 0 0;}
+
+/*icon*/
+.valid {display:inline-block;width:32px;height:32px;background:url("../Images/icon/check.png") no-repeat 0 0;}
+.paused {display:inline-block;width:32px;height:32px;background:url("../Images/icon/pause.png") no-repeat 0 0;}
+.deleted {display:inline-block;width:32px;height:32px;background:url("../Images/icon/trash.png") no-repeat 0 0;}
+
 /*pop*/
 .dialog {display:none;}
 .dialog .confirm-body {font-size:16px;}
