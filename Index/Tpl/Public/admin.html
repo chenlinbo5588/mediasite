@@ -10,8 +10,8 @@ $(function() {
     $('.delete',$table).click(function(){
         var editId = $(this).attr('data');
         App.confirm('Delete {$Think.ACTION_NAME|strtolower|ucfirst}','Are you sure to delete this {$Think.ACTION_NAME|strtolower}?',function(){
-            var url = "__URL__/delClient";
-            $.post(url, {uid:editId}, function(response) {
+            var url = "__URL__/del{$Think.ACTION_NAME|strtolower|ucfirst}";
+            $.post(url, {id:editId}, function(response) {
                 if(response.status) {
                     window.location.reload();
                 } else {
@@ -29,10 +29,10 @@ $(function() {
     });
 });
 
-function loadEditDialog(title,uid) {
+function loadEditDialog(title,id) {
     $dialog  = $('#edit-dialog');
     var url     = '__URL__/edit{$Think.ACTION_NAME|strtolower|ucfirst}';
-    if(typeof (uid) != 'undefined')url += '/uid/' + uid;
+    if(typeof (id) != 'undefined')url += '/id/' + id;
     $options = {title:title,width:750,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
@@ -42,7 +42,7 @@ function loadEditDialog(title,uid) {
             var options = {
                 dataType        : 'json',
                 url             : subUrl,
-                success         : function(response) { 
+                success         : function(response) {
                     if(response.status) {
                         $dialog.dialog( "close" );
                         window.location.reload();

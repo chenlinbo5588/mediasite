@@ -14,10 +14,22 @@ class LoginAction extends CommonAction {
         else {
             $retAry['error'] = L('LOGIN_MSG_NOT_FULL_ERR');
         }
+        $url = __APP__ . '/Login/index';
         if($retAry['status']) {
-            redirect(__APP__ . '/Index');
+            $userType = $this->_user['Type'];
+            switch($userType) {
+                case '0':
+                    $url = __APP__ . '/Upload';
+                    break;
+                case '1':
+                    $url = __APP__ . '/Admin/client';
+                    break;
+                default:
+                    $url = __APP__ . '/Index';
+                    break;
+            }
         }
-        redirect(__APP__ . '/Login/index');
+        redirect($url);
     }
 
     public function logout() {

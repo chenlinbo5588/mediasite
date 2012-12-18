@@ -2,16 +2,23 @@
     <form name="clientForm" method="POST">
         <ul>
             <li>
-                <label for="name">Name:</label><input type="text" name="name" value="{$vo.nickname}" />
-            </li>
-            <!-- <li>
-                <label for="Project">Project:</label><input type="text" name="Project"/>
+                <label for="user_id">Client:</label>
+                <if condition="$editId gt 0">
+                {$vo.Nickname}({$vo.Account})
+                <else />
+                <select name="user_id">
+                    <volist name="userList" id="row">
+                        <option value="{$row.id}">{$row.nickname}({$row.account})</option>
+                    </volist>
+                </select>
+                </if>
             </li>
             <li>
-                <label for="Categories">Categories:</label><input type="text" name="Categories"/>
-            </li> -->
+                <label for="name">Name:</label>
+                <input type="text" name="name" value="{$vo.Name}" />
+            </li>
         </ul>
-        <input type="hidden" name="id" value="{$vo.id}" />
+        <input type="hidden" name="id" value="{$editId}" />
         <div class="button-bar pt-20">
             <div class="button"><a id="save-btn" href="javascript:;">Save</a></div>
             <div class="button"><a id="cancel-btn" href="javascript:;">Cancel</a></div>

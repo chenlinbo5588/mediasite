@@ -7,6 +7,7 @@
         <tr>
             <th width="15%">ID</th>
             <th width="20%">Name</th>
+            <th width="20%">Client</th>
             <th width="15%">Status</th>
             <th width="15%">Operation</th>
         </tr>
@@ -14,10 +15,11 @@
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.id}</td>
-            <td>{$vo.name}</td>
-            <td>{$vo.enable}</td>
-            <td>[<a class="edit" href="javascript:;" data="{$vo.id}" title="Edit">Edit</a>]&nbsp;&nbsp;[<a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>]</td>
+            <td>{$vo.ID}</td>
+            <td>{$vo.Name}</td>
+            <td>{$vo.Nickname}({$vo.Account})</td>
+            <td><span class="{$vo.Enable|showEnable}">&nbsp;</span></td>
+            <td>[<a class="edit" href="javascript:;" data="{$vo.ID}" title="Edit">Edit</a>]&nbsp;&nbsp;[<a class="delete" href="javascript:;" data="{$vo.ID}" title="Delete">Delete</a>]</td>
         </tr>
         </volist>
         </tbody>
