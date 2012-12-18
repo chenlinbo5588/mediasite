@@ -1,7 +1,8 @@
-<if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">
+<if condition="(strtolower($Think.const.MODULE_NAME) eq 'admin') and ($isLogon eq 1)">
 <div class="sub-menu">
     <ul>
     <li class="first">Manage</li>
+    <eq name="userType" value='1'>
     <if condition="strtolower($Think.const.ACTION_NAME) eq 'client'">
     <li class="current">Client</li>
     <else />
@@ -22,7 +23,7 @@
     <else />
     <li><a href="__URL__/folder">Folder</a></li>
     </if>
-    
+    </eq>
     <if condition="strtolower($Think.const.ACTION_NAME) eq 'upload'">
     <li class="current">Upload</li>
     <else />

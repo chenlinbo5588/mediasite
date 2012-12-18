@@ -8,18 +8,24 @@ class CommonAction extends Action {
     protected $_user        = array();
     public function _initialize(){
         $this->_user    = Session::get('User');
-        $modName     = strtolower(MODULE_NAME);
-        $loginMod    = array('admin','upload');
-        if(!$this->_user['IsLogon'] && in_array($modName,$loginMod)) {
-            Session::set('User','');
-            $script = "<script>window.top.location.href='".__APP__."/Login'</script>";
-            die($script);
-        }
         $userType = 9999;
         $isLogon  = $this->_user['IsLogon'];
         $nickName = $this->_user['NickName'];
         $account  = $this->_user['Account'];
         $userType = $this->_user['Type'];
+        $modName      = strtolower(MODULE_NAME);
+        $actionName   = strtolower(ACTION_NAME);
+        $loginMod     = array('admin');
+        $adminAction = array('client','product','project','folder');
+        if(!$this->_user['IsLogon'] && in_array($modName,$loginMod)) {
+            Session::set('User','');
+            $script = "<script>window.top.location.href='".__APP__."/Login'</script>";
+            die($script);
+        }
+        if(($userType != 1) && in_array($actionName,$adminAction)) {
+            $script = "<script>window.top.location.href='".__APP__."/Index'</script>";
+            die($script);
+        }
         $this->assign('isLogon',$isLogon);
         $this->assign('nickName',$nickName);
         $this->assign('userType',$userType);

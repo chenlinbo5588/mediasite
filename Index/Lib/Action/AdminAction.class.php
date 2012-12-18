@@ -2,7 +2,11 @@
 import("@.ORG.Page");
 class AdminAction extends CommonAction {
     public function index(){
-        redirect(__URL__ . '/client');
+        if($this->_user['Type'] == 1) {
+            redirect(__URL__ . '/client');
+        } else {
+            redirect(__URL__ . '/upload');
+        }
     }
 
     public function client(){
