@@ -220,7 +220,12 @@ class AdminAction extends CommonAction {
         }
         $this->sendJson($retAry);
     }
-
+    
+    public function upload(){
+        $this->assign('sid',Session::detectID());
+        $this->display();
+    }
+    
     public function folder(){
         $search = $_POST['search'];
         $model = M('Folder');

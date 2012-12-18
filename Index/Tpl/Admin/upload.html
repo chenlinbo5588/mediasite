@@ -1,25 +1,23 @@
 <include file="Public:header" />
-    <link href="__PUBLIC__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
-    <div class="rowbox box960">
-        <div class="desc">
-            GOO is always expanding and open to new job ideas and creative challenges. If you are insterested in joining the team please contact us.</p>
-        </div>
-    </div>
+<link href="__PUBLIC__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
+<div class="rowbox box960">
+    <include file="Public:submenu" />
+    <include file="Public:admintop" />
+    
 
-    <div class="rowbox">
-        <div>
-            <em class="label"><i>*</i>请视频文件：</em>
-            <span id="UploaderPlaceholder_1"></span>
-            <div class="Uploader" style="display:none;" >请选择音乐文件：</div>
-            <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
-            <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="请上传视频文件" readonly="readonly"/>
-        </div>
-
-        <div id="UploaderProgress_1"></div>
-	<div id="UploaderFeedBack_1"></div>
+    <div>
+        <strong class="label">请视频文件</strong>
+        <span id="UploaderPlaceholder_1"></span>
+        <div class="Uploader" style="display:none;" >请选择音乐文件：</div>
+        <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
+        <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="请上传视频文件" readonly="readonly"/>
     </div>
-    <div class="clear">
+    
+    <div id="UploaderProgress_1"></div>
+    <div id="UploaderFeedBack_1"></div>
+    <div class="clear"/>
 </div>
+<include file="Public:admin" />
 
 <script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.queue.js"></script>
