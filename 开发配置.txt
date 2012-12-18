@@ -2,17 +2,13 @@
     ServerAdmin admin@media.com
     DocumentRoot "/mnt/hgfs/code/mediasite/"
     ServerName  www.mediasite.com
-    ErrorLog "/mnt/hgfs/code/mediasite/logs/www.mediasite.com_error_log"
-    CustomLog "/mnt/hgfs/code/mediasite/logs/www.mediasite.com_access_log" common
+    #ErrorLog "/mnt/hgfs/code/mediasite/logs/www.mediasite.com_error_log"
+    #CustomLog "/mnt/hgfs/code/mediasite/logs/www.mediasite.com_access_log" common
     DirectoryIndex index.php index.html index.htm
 
-    <Files ~ "^\.ht">
-        Order allow,deny
-        Deny from all
-    </Files>
-
     <Directory "/mnt/hgfs/code/mediasite/">
-        Options None
+        AllowOverride All
+        Options Indexes FollowSymLinks
         Order allow,deny
         Allow from all
     </Directory>
