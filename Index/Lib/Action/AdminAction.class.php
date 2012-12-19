@@ -238,6 +238,25 @@ class AdminAction extends CommonAction {
     }
     
     public function upload(){
+        $productModel = M('Product');
+        $list = array();
+        
+        
+        if('admin' == $this->_user['Account']){
+            $userModel = M('User');
+            $userList = $userModel->where(" enable=1 ")->select();
+            $this->assign('client',$userList);
+        }        
+        
+        $con = array();
+        $con[] = "user_id = " . $this->_user['ID'];
+        $con[] = 'enable=1';
+        
+        $where = implode(' AND ',$con);
+        $list   = $productModel->where($where)
+                        ->order('id desc')
+                        ->select();
+        $this->assign('product',$list);
         $this->assign('sid',Session::detectID());
         $this->display();
     }

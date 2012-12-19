@@ -25,14 +25,6 @@ class UploadAction extends CommonAction {
             'type'		=> $_FILES["Filedata"]["type"]
         );
         
-        /**
-         * @todo db insert ,待完成 需要建表
-         */
-        $insertId = 1;
-        /**
-         * 服务器path 
-         */
-        
         $suffix = substr($attachment['filename'],strrpos($attachment['filename'],'.'));
         $suffix = strtolower($suffix);
         
@@ -50,14 +42,26 @@ class UploadAction extends CommonAction {
         $newfilename = md5($attachment['filename'].$attachment['filesize'].mt_rand(100, 999));
         $newFilePath = $monthDir.'/'.$newfilename.$suffix;
         
-        /**
-         * 多级目录按照 层级存放 
-         */
-        $retAry = array('respcode' => 1,'id'=> $insertId ,'path' => $newFilePath,"source_filename" => $attachment['filename']);
-        if(!move_uploaded_file($_FILES['Filedata']['tmp_name'],$userPath.'/'.$newFilePath)){
-            $retAry = array('respcode' => 0,"source_filename" => $attachment['filename']);
-        }
+        $data['file_name'] = $attachment['filename'];
+        $data['file_size'] = $attachment['filesize'];
+        $data['file_suffix'] = $suffix;
+        $data['path_name'] = $this->_user['Account'].'/'.$newFilePath;
+        $data['createtime'] = date('Y-m-d H:i:s');
+        $data['user_account'] = $this->_user['Account'];
         
-        $this->sendJson($retAry);
+        $result = $this->_add('Attachment',$data);
+        if(isset($result['error'])){
+            $this->sendJson(array('respcode' => 0,"source_filename" => $attachment['filename']));
+        }else{
+            /**
+            * 多级目录按照 层级存放 
+            */
+            $retAry = array('respcode' => 1,'id'=> $result['insertid'] ,'path' => $newFilePath,"source_filename" => $attachment['filename']);
+            if(!move_uploaded_file($_FILES['Filedata']['tmp_name'],$userPath.'/'.$newFilePath)){
+                $retAry = array('respcode' => 0,"source_filename" => $attachment['filename']);
+            }
+            
+            $this->sendJson($retAry);
+        }
     }
 }

@@ -4,18 +4,55 @@
     <include file="Public:submenu" />
     <include file="Public:admintop" />
     
-
-    <div>
-        <strong class="label">请视频文件</strong>
-        <span id="UploaderPlaceholder_1"></span>
-        <div class="Uploader" style="display:none;" >请选择音乐文件：</div>
-        <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
-        <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="请上传视频文件" readonly="readonly"/>
-    </div>
-    
-    <div id="UploaderProgress_1"></div>
-    <div id="UploaderFeedBack_1"></div>
-    <div class="clear"/>
+    <form name="uploadForm" action="/upload/saveupload/" method="post">
+        <ul>
+            <li>
+                <div>
+                    <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
+                    <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="Please Click Right Button To Choose File" readonly="readonly"/>
+                    <span id="UploaderPlaceholder_1"></span>
+                    <!--<input type="button" name="UploaderCancelBtn_1" id="UploaderCancelBtn_1" value="Cancel Upload" onclick="uploads[0].stopUpload();"/>-->
+                    <span class="Uploader" style="display:none;" >请选择音乐文件：</span>
+                </div>
+            </li>
+            <li>
+                <div id="UploaderProgress_1"></div>
+                <div id="UploaderFeedBack_1"></div>
+            </li>
+            <if condition="count($client) gt 0">
+            <li>
+                <label>Choose Client</label><select name="client">
+                    <option value="">Please Select</option>
+                    <volist name="client" id="vo">
+                    <option value="{$vo.id}">{$vo.account}</option>
+                    </volist>
+                </select>
+            </li>
+            </if>
+            
+            
+            <li>
+                <label>Choose Product</label><select name="product">
+                    <option value="">Please Select</option>
+                    <volist name="product" id="vo">
+                    <option value="{$vo.id}">{$vo.name}</option>
+                    </volist>
+                </select>
+            </li>
+            
+            <li>
+                <label>Choose Project</label><select name="projct">
+                    <option value=""></option>
+                </select>
+            </li>
+            <li>
+                <label>Choose Folder</label><select name="folder">
+                    <option value=""></option>
+                </select>
+            </li>
+        </ul>
+        
+    </form>
 </div>
 <include file="Public:admin" />
 
@@ -27,7 +64,7 @@
 var uploads = [];
 var sid = '{$sid}';
 $(function(){
-    $("div.Uploader").each(function(index){
+    $(".Uploader").each(function(index){
         uploads.push(createSwfUpload(index + 1));
     });
 });
@@ -54,25 +91,26 @@ function createSwfUpload(index){
 		upload_success_handler : uploadSuccess,
 		upload_complete_handler : uploadComplete,
 		// Button Settingsimg/fee
-		//button_image_url : "__PUBLIC__/Images/XPButtonUploadText_61x22.png",
+		button_image_url : "__PUBLIC__/Images/XPButtonUploadText_61x22.png",
 		button_placeholder_id : "UploaderPlaceholder_" + index,
 		button_width: 105,
 		button_height: 24,
-		button_text : '<span class="redText">上传文件</span>',
-		button_text_style : ".redText {text-align:center;}",
+		//button_text : '<span class="redText">上传文件</span>',
+		//button_text_style : ".redText {text-align:center;}",
 		button_window_mode:"TRANSPARENT",
 		button_cursor: SWFUpload.CURSOR.HAND,
 		// Flash Settings
 		flash_url : "__PUBLIC__/Flash/swfupload.swf",
 		custom_settings : {
 			progressTarget : "UploaderProgress_" + index,
+                        cancelButtonId : "UploaderCancelBtn_" + index,
 			callback : function(file,serverData){
 				var tmp = eval("(" + serverData + ")");
 				if(1 == tmp.respcode){
                                     $("#Uploader_Value_" + index).val(tmp.id);
                                     $("#Uploader_Show_Value_" + index).val(tmp.path);
 				}else{
-                                   alert('附件上传失败，请重新上传!');
+                                   alert('Attachment Upload Failed，Please try it again!');
 				}
 			}
 		},
