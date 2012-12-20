@@ -1,8 +1,12 @@
 <include file="Public:header" />
-    <div class="box960x540">
-        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
-    </div>
 
+    <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
+    <div class="box960x540" >
+        <div id="videoCanvas">
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
+        </div>
+    </div>
+    
     <div class="rowbox box960">
         <div class="tv-gallery pt-20">
             <h3 class="mb-15">Selected Portfolio Work</h3>
@@ -50,4 +54,25 @@
             <a class="last" href="javascript:void(0);">&gt;&gt;</a>
         </div>
 </div>
+
+<script type="text/javascript">
+var playervars = {    
+    //contentpath: "../flvplayer/content",
+    //video: "demo-video.flv",
+    contentpath: "",
+    video: "http://hcflv.yinyuetai.com/uploads/videos/common/meng_qian.flv",
+    //preview: "demo-preview.jpg",
+    preview: "http://img4.cache.netease.com/photo/0005/2012-12-20/8J4NEEA728F90005.jpg",
+    //preview: "demo-preview.jpg",							
+    skin: "skin-videoflash.swf",
+    skincolor: "0xFF0000"
+    // ...
+    //see documentation for all the parameters		
+};
+
+var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor: "#ffffff", base: "."};  	
+var attributes = { align: "left" };
+swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
+</script>
+
 <include file="Public:footer" />
