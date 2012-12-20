@@ -194,15 +194,28 @@ class AdminAction extends CommonAction {
     }
 
     public function editProject() {
-        $editId = $_GET['id'] ? $_GET['id'] : 0;
+        $editId  = $_GET['id'] ? $_GET['id'] : 0;
+        $editMsg = array();
         if($editId) {
-            $model = M('Product');
-            $client = $model->where("id={$editId}")->limit(0,1)->select();
+            $model  = M('Project');
+            $client = $model->field('project.name AS Name,user.nickname AS Nickname,user.account AS Account')
+                            ->join('user ON user.id = product.user_id')
+                            ->where("product.id={$editId}")
+                            ->limit(0,1)
+                            ->select();
             if(isset($client[0])) {
-                $clientMsg = $client[0];
-                $this->assign('vo',$clientMsg);
+                $editMsg = $client[0];
+                $this->assign('vo',$editMsg);
             }
         }
+        $this->assign('vo',$editMsg);
+        $this->assign('editId',$editId);
+        $userMod = M('Product');
+        $list   = $userMod->field('id,nickname,account')
+                          ->where('enable=1 AND type=0')
+                          ->order('id desc')
+                          ->select();
+        $this->assign('userList',$list);
         $this->display();
     }
 
