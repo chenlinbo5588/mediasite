@@ -132,6 +132,7 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .dialog .button {display:inline-block;font-weight:bold;}
 .dialog .button a {display:block;color:#bebebe;padding: .4em 1em;line-height: 1.4;font-size:22px;}
 .dialog .button-bar {text-align:left;padding-left:20px;}
+.dialog input, .dialog select {font-size:12px;}
 /*overwrite ui*/
 .ui-widget-header {border:0px;background: none;}
 .ui-widget-content {border:0px;overflow: hidden;}

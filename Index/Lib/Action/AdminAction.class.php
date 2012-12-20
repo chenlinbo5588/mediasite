@@ -90,8 +90,8 @@ class AdminAction extends CommonAction {
         $list = array();
         if($search != '') {
             $scon = array();
-            $scon[] = "id like '%{$search}%'";
-            $scon[] = "name like '%{$search}%'";
+            $scon[] = "product.id like '%{$search}%'";
+            $scon[] = "product.name like '%{$search}%'";
             $con[] = '('.implode(' OR ',$scon).')';
         }
         if($_GET['uid'] > 0)$con[] = 'user_id IN ('.$_GET['uid'].')';
@@ -171,22 +171,23 @@ class AdminAction extends CommonAction {
         $page     = 1;
         $pageSize = 10;
         $total    = 0;
-        $list = array();
-        $con = array('enable=1');
         if($search != '') {
             $scon = array();
-            $scon[] = "id like '%{$search}%'";
-            $scon[] = "account like '%{$search}%'";
-            $scon[] = "nickname like '%{$search}%'";
+            $scon[] = "project.id like '%{$search}%'";
+            $scon[] = "project.name like '%{$search}%'";
             $con[] = '('.implode(' OR ',$scon).')';
         }
+        if($_GET['pid'] > 0)$con[] = 'product_id IN ('.$_GET['pid'].')';
         $where = implode(' AND ',$con);
         $total = $model->where($where)->count();
         $pageObj = new Page($total,$pageSize);
-        $list   = $model->where($where)
-                        ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
-                        ->order('id desc')
-                        ->select();
+        $list   = $model->field('project.id AS ID,project.name AS Name,product.name AS ProductName,user.nickname AS Nickname,user.account AS Account')
+                            ->join('product ON product.id = project.product_id')
+                            ->join('user ON user.id = project.user_id')
+                            ->where($where)
+                            ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
+                            ->order('project.id desc')
+                            ->select();
         $page = $this->showPage($pageObj,$search);
         $this->assign('list',$list);
         $this->assign("page", $page);
@@ -198,9 +199,10 @@ class AdminAction extends CommonAction {
         $editMsg = array();
         if($editId) {
             $model  = M('Project');
-            $client = $model->field('project.name AS Name,user.nickname AS Nickname,user.account AS Account')
-                            ->join('user ON user.id = product.user_id')
-                            ->where("product.id={$editId}")
+            $client = $model->field('project.name AS Name,product.name AS ProductName,user.nickname AS Nickname,user.account AS Account')
+                            ->join('product ON product.id = project.product_id')
+                            ->join('user ON user.id = project.user_id')
+                            ->where('project.id={$editId}')
                             ->limit(0,1)
                             ->select();
             if(isset($client[0])) {
@@ -211,6 +213,12 @@ class AdminAction extends CommonAction {
         $this->assign('vo',$editMsg);
         $this->assign('editId',$editId);
         $userMod = M('Product');
+        $list   = $userMod->field('id,name')
+                          ->where('enable=1')
+                          ->order('id desc')
+                          ->select();
+        $this->assign('productList',$list);
+        $userMod = M('User');
         $list   = $userMod->field('id,nickname,account')
                           ->where('enable=1 AND type=0')
                           ->order('id desc')
@@ -225,12 +233,11 @@ class AdminAction extends CommonAction {
             $con['id']      = $_POST['id'];
             $data = $_POST;
             unset($data['id']);
-            $retAry = $this->_update('User',$con,$data);
+            $retAry = $this->_update('Project',$con,$data);
         } else {
             $data  = $_POST;
             $data['enable'] = 1;
-            $data['createtime'] = date('Y-m-d H:i:s');
-            $retAry = $this->_add('User',$data);
+            $retAry = $this->_add('Project',$data);
         }
         $this->sendJson($retAry);
     }

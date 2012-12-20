@@ -2,14 +2,32 @@
     <form name="clientForm" method="POST">
         <ul>
             <li>
-                <label for="name">Name:</label><input type="text" name="name" value="{$vo.nickname}" />
-            </li>
-            <!-- <li>
-                <label for="Project">Project:</label><input type="text" name="Project"/>
+                <label for="user_id">Client:</label>
+                <if condition="$editId gt 0">
+                {$vo.Nickname}({$vo.Account})
+                <else />
+                <select name="user_id">
+                    <volist name="userList" id="row">
+                        <option value="{$row.id}">{$row.nickname}({$row.account})</option>
+                    </volist>
+                </select>
+                </if>
             </li>
             <li>
-                <label for="Categories">Categories:</label><input type="text" name="Categories"/>
-            </li> -->
+                <label for="product_id">Product:</label>
+                <if condition="$editId gt 0">
+                {$vo.ProductName}
+                <else />
+                <select name="product_id">
+                    <volist name="productList" id="row">
+                        <option value="{$row.id}">{$row.name}</option>
+                    </volist>
+                </select>
+                </if>
+            </li>
+            <li>
+                <label for="name">Name:</label><input type="text" name="name" value="{$vo.Name}" />
+            </li>
         </ul>
         <input type="hidden" name="id" value="{$vo.id}" />
         <div class="button-bar pt-20">
