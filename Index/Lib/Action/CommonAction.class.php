@@ -76,6 +76,31 @@ class CommonAction extends Action {
             header("Content-Type:application/json; charset=utf-8");
          exit(json_encode($data));
     }
+    
+    
+    /**
+     *
+     * @param type $respCode
+     * @param type $body
+     * @param type $redirectUrl
+     * @param type $isJsonHead 
+     */
+    public function sendFormatJson($respCode,$body,$redirectUrl = '',$isJsonHead = true){
+	if($isJsonHead)
+            header("Content-Type:application/json; charset=utf-8");
+	
+	$data = array(
+	    'code' => $respCode,
+	    'body' => $body
+	);
+	
+	//重定向URL
+	if('' != $redirectUrl){
+	    $data['redirectUrl'] = $redirectUrl;
+	}
+	
+	exit(json_encode($data));
+    }
 
     /*
     *

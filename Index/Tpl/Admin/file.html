@@ -1,0 +1,34 @@
+<include file="Public:header" />
+<div class="rowbox box960">
+    <include file="Public:submenu" />
+    <include file="Public:admintop" />
+    
+    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-30 mt-30" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+        <tr>
+            <th width="15%">ID</th>
+            <th width="20%">Account</th>
+            <th width="20%">Nickname</th>
+            <th width="15%">Password</th>
+            <th width="15%">Status</th>
+            <th width="15%">Operation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo">
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.account}</td>
+            <td>{$vo.nickname}</td>
+            <td>{$vo.password}</td>
+            <td><span class="{$vo.enable|showEnable}">&nbsp;</span></td>
+            <td>[<a class="edit" href="javascript:;" data="{$vo.id}" title="Edit">Edit</a>]&nbsp;&nbsp;[<a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>]<br />[<a href="__URL__/product/uid/{$vo.id}" title="Products">Products</a>]</td>
+        </tr>
+        </volist>
+        </tbody>
+    </table>
+    {$page}
+</div>
+<include file="Public:admin" />
+
+<include file="Public:footer" />

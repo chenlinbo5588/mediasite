@@ -257,16 +257,98 @@ class AdminAction extends CommonAction {
         $this->sendJson($retAry);
     }
     
-    public function upload(){
-        $productModel = M('Product');
-        $list = array();
+    public function file(){
         
+        $this->display();
+    }
+    
+    
+    public function submitFile() {
+        $retAry = array('status' => false);
+
+	/*
+	Uploader_Show_Value_1	IMG_29112012_104101.png
+	Uploader_Show_Value_2	meng_qian.flv
+	Uploader_Value_1	{"respcode":1,"id":18,"width":664,"height":276,"path":"201212\/3888d7b2b545b1866aa3a6f9d098106b.png","source_filename":"IMG_29112012_104101.png"}
+	Uploader_Value_2	{"respcode":1,"id":19,"width":0,"height":0,"path":"201212\/f68e9be04317f278b192fd2e52d9815c.flv","source_filename":"meng_qian.flv"}
+	client	1,admin
+	fid	编辑时才有
+	file_type	1,movie
+	height	450
+	product	1,Product1
+	projct	1,Project1
+	width	600
+	*/
+	
+	$data = array();
+	
+	$data['account'] = addslashes(substr($_POST['client'],strpos($_GET['client'],',') + 1));
+	$data['title'] = addslashes($_POST['Uploader_Show_Value_2']);
+	$data['file_name'] = addslashes($_POST['Uploader_Show_Value_2']);
+	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_2'],strrpos($_POST['Uploader_Show_Value_2'],'.'));
+	
+	/**
+	 * 如果 magic_quotes_gpc = On ,则需要处理 
+	 */
+	if(MAGIC_QUOTES_GPC){
+	    //$_POST['Uploader_Value_1'] = str_replace(array("\\\\", "\\\""), array("\\", "\""), $_POST['Uploader_Value_1']); 
+	    //$_POST['Uploader_Value_2'] = str_replace(array("\\\\", "\\\""), array("\\", "\""), $_POST['Uploader_Value_2']);
+	    $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
+	    $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
+	    
+	}
+	$image = json_decode($_POST['Uploader_Value_1'],true);
+	$video = json_decode($_POST['Uploader_Value_2'],true);
+	
+	$data['video_path'] = $video['path'];
+	$data['video_size'] = $video['size'];
+	$data['video_width'] = $video['width'];
+	$data['video_height'] = $video['height'];
+	
+	$data['img_path'] = $image['path'];
+	$data['img_size'] = $image['size'];
+	$data['img_width'] = $image['width'];
+	$data['img_height'] = $image['height'];
+	
+	
+	$data['product_id'] = addslashes(substr($_POST['product'],0,strpos($_POST['product'],',')));
+	$data['product_name'] = addslashes(substr($_POST['product'],strpos($_POST['product'],',') + 1));
+	
+	$data['project_id'] = addslashes(substr($_POST['project'],0,strpos($_POST['project'],',')));
+	$data['project_name'] = addslashes(substr($_POST['project'],strpos($_POST['project'],',') + 1));
+	
+	$data['category_id'] = addslashes(substr($_POST['file_type'],0,strpos($_POST['file_type'],',')));
+	$data['category_name'] = addslashes(substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1));
+	
+	$now = date('Y-m-d H:i:s');
+	
+        if(isset($_POST['fid']) && ($_POST['fid'] != 0)) {
+            $con['fid']      = $_POST['fid'];
+	    $data['updatetime'] = $now;
+	    $data['update_user'] = $this->_user['Account'];
+            $retAry = $this->_update('Files',$con,$data);
+        } else {
+            $data['createtime'] = $now;
+            $data['updatetime'] = $now;
+	    $data['create_user'] = $this->_user['Account'];
+            $retAry = $this->_add('Files',$data);
+        }
+        $this->sendJson($retAry);
+    }
+    
+    public function editFile(){
+	
+	$fileTypeModel = M('FileType');
+	$fileTypeList = $fileTypeModel->where(" enable=1 ")->select();
+	
+	$productModel = M('Product');
+        $list = array();
         
         if('admin' == $this->_user['Account']){
             $userModel = M('User');
             $userList = $userModel->where(" enable=1 ")->select();
             $this->assign('client',$userList);
-        }        
+        }
         
         $con = array();
         $con[] = "user_id = " . $this->_user['ID'];
@@ -276,6 +358,8 @@ class AdminAction extends CommonAction {
         $list   = $productModel->where($where)
                         ->order('id desc')
                         ->select();
+	
+	$this->assign('fileType',$fileTypeList);
         $this->assign('product',$list);
         $this->assign('sid',Session::detectID());
         $this->display();

@@ -160,6 +160,40 @@ CREATE TABLE `user` (
   UNIQUE KEY `u_account` (`account`)
 ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE `files` (
+  `fid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `account` varchar(50) NOT NULL DEFAULT '' COMMENT '账号',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '视频名称',
+  `tag` varchar(50) NOT NULL DEFAULT '' COMMENT '视频标签',
+  `play_sec` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '播放时间,预留',
+  `file_name` varchar(200) NOT NULL DEFAULT '原文件名称',
+  `file_suffix` varchar(10) NOT NULL COMMENT '文件名后缀',
+  `video_path` varchar(100) NOT NULL DEFAULT '' COMMENT '视频路径',
+  `video_size` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '视频大小',
+  `video_width` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '视频宽度',
+  `video_height` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '视频高度',
+  `img_path` varchar(100) NOT NULL DEFAULT '' COMMENT '图片路径',
+  `img_size` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '图片大小',
+  `img_width` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '图片宽度',
+  `img_height` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '图片高度',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
+  `product_name` varchar(100) NOT NULL DEFAULT '' COMMENT '产品名称',
+  `project_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '项目ID',
+  `project_name` varchar(100) NOT NULL DEFAULT '' COMMENT '项目名称',
+  `category_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分类ID',
+  `category_name` varchar(100) NOT NULL DEFAULT '' COMMENT '分类名称',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '1=新增,2=审核中,3=审核通过,4=审核失败',
+  `remark` varchar(50) NOT NULL DEFAULT '' COMMENT '审核备注',
+  `is_delete` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '1 表示删除',
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  `updatetime` datetime NOT NULL COMMENT '更新时间',
+  `create_user` varchar(50) NOT NULL DEFAULT '' COMMENT '创建者',
+  `update_user` varchar(50) NOT NULL DEFAULT '' COMMENT '更新者',
+  PRIMARY KEY (`fid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 -- ----------------------------
 -- Records 
 -- ----------------------------

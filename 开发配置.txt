@@ -19,3 +19,12 @@
 添加hosts
 
 192.168.152.129  www.mediasite.com
+
+
+
+php.ini 修改
+
+magic_quotes_gpc = Off
+
+post_max_size = 50M
+upload_max_filesize = 50M
