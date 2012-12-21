@@ -19,8 +19,8 @@ class ProjectAction extends CommonAction {
 	    die();
 	}
 	
-	$_GET['user_id'] = addslashes(substr($_GET['user_id'],0,strpos($_GET['user_id'],',')));
-	$_GET['product_id'] = addslashes(substr($_GET['product_id'],0,strpos($_GET['product_id'],',')));
+	$_GET['user_id'] = substr($_GET['user_id'],0,strpos($_GET['user_id'],','));
+	$_GET['product_id'] = substr($_GET['product_id'],0,strpos($_GET['product_id'],','));
 	
 	$where[] = "enable = 1";
 	$where[] = "user_id = " .intval($_GET['user_id']);

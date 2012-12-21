@@ -259,51 +259,57 @@ class AdminAction extends CommonAction {
     
     public function file(){
         
+        $search = $_POST['search'];
+        $model = M('Files');
+        $page     = 1;
+        $pageSize = 10;
+        $total    = 0;
+        $list = array();
+        $con = array('1=1');
+        if($search != '') {
+            $scon = array();
+            $scon[] = "title like '%{$search}%'";
+            $scon[] = "account like '%{$search}%'";
+            $con[] = '('.implode(' OR ',$scon).')';
+        }
+        $where = implode(' AND ',$con);
+        $total = $model->where($where)->count();
+        $pageObj = new Page($total,$pageSize);
+        $list   = $model->where($where)
+                        ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
+                        ->order('fid desc')
+                        ->select();
+        $page = $this->showPage($pageObj,$search);
+        $this->assign('list',$list);
+        $this->assign("page", $page);
         $this->display();
+        
     }
     
     
     public function submitFile() {
         $retAry = array('status' => false);
 
-	/*
-	Uploader_Show_Value_1	IMG_29112012_104101.png
-	Uploader_Show_Value_2	meng_qian.flv
-	Uploader_Value_1	{"respcode":1,"id":18,"width":664,"height":276,"path":"201212\/3888d7b2b545b1866aa3a6f9d098106b.png","source_filename":"IMG_29112012_104101.png"}
-	Uploader_Value_2	{"respcode":1,"id":19,"width":0,"height":0,"path":"201212\/f68e9be04317f278b192fd2e52d9815c.flv","source_filename":"meng_qian.flv"}
-	client	1,admin
-	fid	编辑时才有
-	file_type	1,movie
-	height	450
-	product	1,Product1
-	projct	1,Project1
-	width	600
-	*/
-	
 	$data = array();
-	
-	$data['account'] = addslashes(substr($_POST['client'],strpos($_GET['client'],',') + 1));
-	$data['title'] = addslashes($_POST['Uploader_Show_Value_2']);
-	$data['file_name'] = addslashes($_POST['Uploader_Show_Value_2']);
+	$data['account'] = substr($_POST['client'],strpos($_POST['client'],',') + 1);
+	$data['title'] = $_POST['Uploader_Show_Value_2'];
+	$data['file_name'] = $_POST['Uploader_Show_Value_2'];
 	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_2'],strrpos($_POST['Uploader_Show_Value_2'],'.'));
 	
 	/**
 	 * 如果 magic_quotes_gpc = On ,则需要处理 
 	 */
 	if(MAGIC_QUOTES_GPC){
-	    //$_POST['Uploader_Value_1'] = str_replace(array("\\\\", "\\\""), array("\\", "\""), $_POST['Uploader_Value_1']); 
-	    //$_POST['Uploader_Value_2'] = str_replace(array("\\\\", "\\\""), array("\\", "\""), $_POST['Uploader_Value_2']);
 	    $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
 	    $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
-	    
 	}
 	$image = json_decode($_POST['Uploader_Value_1'],true);
 	$video = json_decode($_POST['Uploader_Value_2'],true);
 	
 	$data['video_path'] = $video['path'];
 	$data['video_size'] = $video['size'];
-	$data['video_width'] = $video['width'];
-	$data['video_height'] = $video['height'];
+	$data['video_width'] = $_POST['width'];
+	$data['video_height'] = $_POST['height'];
 	
 	$data['img_path'] = $image['path'];
 	$data['img_size'] = $image['size'];
@@ -311,14 +317,14 @@ class AdminAction extends CommonAction {
 	$data['img_height'] = $image['height'];
 	
 	
-	$data['product_id'] = addslashes(substr($_POST['product'],0,strpos($_POST['product'],',')));
-	$data['product_name'] = addslashes(substr($_POST['product'],strpos($_POST['product'],',') + 1));
+	$data['product_id'] = substr($_POST['product'],0,strpos($_POST['product'],','));
+	$data['product_name'] = substr($_POST['product'],strpos($_POST['product'],',') + 1);
 	
-	$data['project_id'] = addslashes(substr($_POST['project'],0,strpos($_POST['project'],',')));
-	$data['project_name'] = addslashes(substr($_POST['project'],strpos($_POST['project'],',') + 1));
+	$data['project_id'] = substr($_POST['project'],0,strpos($_POST['project'],','));
+	$data['project_name'] = substr($_POST['project'],strpos($_POST['project'],',') + 1);
 	
-	$data['category_id'] = addslashes(substr($_POST['file_type'],0,strpos($_POST['file_type'],',')));
-	$data['category_name'] = addslashes(substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1));
+	$data['category_id'] = substr($_POST['file_type'],0,strpos($_POST['file_type'],','));
+	$data['category_name'] = substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1);
 	
 	$now = date('Y-m-d H:i:s');
 	

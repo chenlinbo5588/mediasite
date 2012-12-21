@@ -20,7 +20,7 @@ class ProductAction extends CommonAction {
 	    die();
 	}
 	
-	$_GET['user_id'] = addslashes(substr($_GET['user_id'],0,strpos($_GET['user_id'],',')));
+	$_GET['user_id'] = substr($_GET['user_id'],0,strpos($_GET['user_id'],','));
 	
 	$where[] = "enable = 1";
 	$where[] = "user_id = " .intval($_GET['user_id']);
