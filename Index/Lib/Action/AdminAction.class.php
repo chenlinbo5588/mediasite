@@ -24,6 +24,7 @@ class AdminAction extends CommonAction {
             $scon[] = "nickname like '%{$search}%'";
             $con[] = '('.implode(' OR ',$scon).')';
         }
+        $con[] = 'enable IN (0,1)';
         $where = implode(' AND ',$con);
         $total = $model->where($where)->count();
         $pageObj = new Page($total,$pageSize);
@@ -57,6 +58,12 @@ class AdminAction extends CommonAction {
             $data = $_POST;
             unset($data['id']);
             $retAry = $this->_update('User',$con,$data);
+            if(($data['enable'] == '0') && $retAry['status']) {
+                $pcon['enable'] = $data['enable'];
+                $pcon['user_id'] = $data['id'];
+                $this->_update('Pruduct',$pcon,$data);
+                $this->_update('Project',$pcon,$data);
+            }
         } else {
             $data  = $_POST;
             $data['enable'] = 1;
@@ -76,7 +83,6 @@ class AdminAction extends CommonAction {
             $pcon['user_id'] = $editId;
             $this->_update('Pruduct',$pcon,$data);
             $this->_update('Project',$pcon,$data);
-            $this->_update('Folder',$pcon,$data);
         }
         $this->sendJson($retAry);
     }
@@ -94,7 +100,8 @@ class AdminAction extends CommonAction {
             $scon[] = "product.name like '%{$search}%'";
             $con[] = '('.implode(' OR ',$scon).')';
         }
-        if($_GET['uid'] > 0)$con[] = 'user_id IN ('.$_GET['uid'].')';
+        if($_GET['uid'] > 0)$con[] = 'product.user_id IN ('.$_GET['uid'].')';
+        $con[] = 'product.enable IN (0,1)';
         $where = implode(' AND ',$con);
         $total = $model->where($where)->count();
         $pageObj = new Page($total,$pageSize);
@@ -115,7 +122,7 @@ class AdminAction extends CommonAction {
         $editMsg = array();
         if($editId) {
             $model  = M('Product');
-            $client = $model->field('product.name AS Name,user.nickname AS Nickname,user.account AS Account')
+            $client = $model->field('product.name AS Name,product.enable AS Enable,user.nickname AS Nickname,user.account AS Account')
                             ->join('user ON user.id = product.user_id')
                             ->where("product.id={$editId}")
                             ->limit(0,1)
@@ -177,11 +184,12 @@ class AdminAction extends CommonAction {
             $scon[] = "project.name like '%{$search}%'";
             $con[] = '('.implode(' OR ',$scon).')';
         }
-        if($_GET['pid'] > 0)$con[] = 'product_id IN ('.$_GET['pid'].')';
+        if($_GET['pid'] > 0)$con[] = 'project.product_id IN ('.$_GET['pid'].')';
+        $con[] = 'project.enable IN (0,1)';
         $where = implode(' AND ',$con);
         $total = $model->where($where)->count();
         $pageObj = new Page($total,$pageSize);
-        $list   = $model->field('project.id AS ID,project.name AS Name,product.name AS ProductName,user.nickname AS Nickname,user.account AS Account')
+        $list   = $model->field('project.id AS ID,project.name AS Name,project.enable AS Enable,product.name AS ProductName,user.nickname AS Nickname,user.account AS Account')
                             ->join('product ON product.id = project.product_id')
                             ->join('user ON user.id = project.user_id')
                             ->where($where)
@@ -199,10 +207,10 @@ class AdminAction extends CommonAction {
         $editMsg = array();
         if($editId) {
             $model  = M('Project');
-            $client = $model->field('project.name AS Name,product.name AS ProductName,user.nickname AS Nickname,user.account AS Account')
+            $client = $model->field('project.name AS Name,project.enable AS Enable,product.name AS ProductName,user.nickname AS Nickname,user.account AS Account')
                             ->join('product ON product.id = project.product_id')
                             ->join('user ON user.id = project.user_id')
-                            ->where('project.id={$editId}')
+                            ->where("project.id={$editId}")
                             ->limit(0,1)
                             ->select();
             if(isset($client[0])) {
@@ -244,16 +252,10 @@ class AdminAction extends CommonAction {
 
     public function delProject() {
         $retAry = array('status' => false);
-        $userId = $_POST['uid'];
-        $con['id']      = $userId;
+        $editId = $_POST['id'];
+        $con['id']      = $editId;
         $data['enable'] = 2;
-        $retAry = $this->_update('User',$con,$data);
-        if($retAry['status']) {
-            $pcon['user_id'] = $userId;
-            $this->_update('Prudcut',$pcon,$data);
-            $this->_update('Project',$pcon,$data);
-            $this->_update('Folder',$pcon,$data);
-        }
+        $retAry = $this->_update('Project',$con,$data);
         $this->sendJson($retAry);
     }
     

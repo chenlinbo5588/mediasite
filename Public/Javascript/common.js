@@ -13,8 +13,8 @@ App.alert = function(title, body, fn, options) {
 	var settings = $.extend({
 		modal: true,
 		title: title,
-		width: 350,
-		height: 150,
+		width: 400,
+		height: 170,
 		msgType: 'alert'
 	}, options);
 
@@ -48,8 +48,8 @@ App.confirm = function(title, body, fn, options) {
 	var settings = $.extend({
 		modal: true,
 		title: title,
-		width: 350,
-		height: 140,
+		width: 400,
+		height: 170,
 		open: function(){
 			var thisCloseObj = $(this).prev('.ui-dialog-titlebar').find('.ui-dialog-titlebar-close');
 			thisCloseObj.hide();

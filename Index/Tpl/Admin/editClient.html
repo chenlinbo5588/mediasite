@@ -10,12 +10,18 @@
             <li>
                 <label for="password">Password:</label><input type="text" name="password" value="{$vo.password}" />
             </li>
-            <!-- <li>
-                <label for="Project">Project:</label><input type="text" name="Project"/>
-            </li>
             <li>
-                <label for="Categories">Categories:</label><input type="text" name="Categories"/>
-            </li> -->
+                <label for="enable">Status:</label>
+                <select name="enable">
+                    <if condition="$vo.enable eq 0">
+                    <option value="0" selected>Invalid</option>
+                    <option value="1">Valid</option>
+                    <else />
+                    <option value="0">Invalid</option>
+                    <option value="1" selected>Valid</option>
+                    </if>
+                </select>
+            </li>
         </ul>
         <input type="hidden" name="id" value="{$vo.id}" />
         <div class="button-bar pt-20">

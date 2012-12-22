@@ -28,6 +28,18 @@
             <li>
                 <label for="name">Name:</label><input type="text" name="name" value="{$vo.Name}" />
             </li>
+            <li>
+                <label for="enable">Status:</label>
+                <select name="enable">
+                    <if condition="$vo.Enable eq 0">
+                    <option value="0" selected>Invalid</option>
+                    <option value="1">Valid</option>
+                    <else />
+                    <option value="0">Invalid</option>
+                    <option value="1" selected>Valid</option>
+                    </if>
+                </select>
+            </li>
         </ul>
         <input type="hidden" name="id" value="{$vo.id}" />
         <div class="button-bar pt-20">

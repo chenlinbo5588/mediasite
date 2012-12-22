@@ -55,6 +55,7 @@ class CommonAction extends Action {
                              'Type'          => $userMsg['type'],       //user type
                              'Remember'      => false                   //default
                          ));
+                $this->_user    = Session::get('User');
                 $retAry['status'] = true;
             } else {
                 $retAry['error'] = L('LOGIN_USER_PWD_ERR');
@@ -199,7 +200,7 @@ class CommonAction extends Action {
         else {
             $where = $con;
         }
-        $flag = $model->where($where)->save($data);
+        $flag = $model->where($where)->save($data);print_r($model->getLastSql());
 
         $error = $model->getError();
         if(!$error && $flag == true) { 
