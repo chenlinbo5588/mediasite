@@ -105,6 +105,24 @@ class WorkAction extends CommonAction {
         $this->display();
     }
 
+    public function share() {
+        $editId        = $_GET['id'] ? $_GET['id'] : 0;
+        $userType      = $this->_user['Type'];
+        if($editId > 0) {
+            $fileTypeModel = M('Files');
+            $con   = array();
+            $con[] = "id={$editId}";
+            if($userType != 1) {
+                $con[]    = "account = '{$account}'";
+                $con[]    = "status = 3";
+            }
+            $where = implode(' AND ',$con);
+            $fileMsg  = $fileTypeModel->where($where)->select();
+            $this->assign('fileMsg',$fileMsg[0]);
+        }
+        $this->display();
+    }
+
     public function saveFiles() {
         $retAry = array('status' => false);
         $editId        = $_POST['id'] ? $_POST['id'] : 0;

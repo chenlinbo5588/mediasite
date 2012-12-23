@@ -24,8 +24,8 @@
         <tr>
             <td>{$vo.product_name}</td>
             <td>{$vo.project_name}</td>
-            <td><a href="" title="Download">Download</a></td>
-            <td><a href="" title="Share">Share</a></td>
+            <td><a href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
+            <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
             <td><a href="__URL__/play/id/{$vo.id}" target="_blank" title="View">View</a></td>
             <td><a class="upload-btn" href="javascript:;" title="Upload" data="{$vo.id}">Upload</a></td>
         </tr>
@@ -45,6 +45,9 @@ $(function() {
     $('.upload-btn').click(function(){
         openUpload($(this).attr('data'));
     });
+    $('.share-btn').click(function(){
+        openShare($(this).attr('data'));
+    });
 });
 
 function openUpload(id) {
@@ -55,7 +58,48 @@ function openUpload(id) {
     $options = {title:title,width:650,height:400,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
-        $(".Uploader").each(function(index){	
+        $(".Uploader").each(function(index){
+            uploads.push(createSwfUpload(index + 1,$(this).attr("allowSize"),$(this).attr("allowFile")));
+        });
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            var subUrl  = '__URL__/saveFiles';
+            var options = {
+                dataType        : 'json',
+                url             : subUrl,
+                success         : function(response) {
+                    if(response.status) {
+                        $dialog.dialog( "close" );
+                        window.location.reload();
+                    }
+                    else {
+                        if(response.error) {
+                            App.alert(title,response.error);
+                        }
+                        else {
+                            App.alert(title,'Operate fail.');
+                        }
+                    }
+                }
+            };
+            $form.ajaxForm(options); 
+            $form.submit();
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
+}
+
+function openShare(id) {
+    $dialog  = $('#upload-dialog');
+    if((typeof (id) == 'undefined') || (id == ''))return;
+    var url     = '__URL__/upload/id/'+id;
+    var title   = 'Share File';
+    $options = {title:title,width:650,height:400,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $(".Uploader").each(function(index){
             uploads.push(createSwfUpload(index + 1,$(this).attr("allowSize"),$(this).attr("allowFile")));
         });
         $('#save-btn').click(function(){
