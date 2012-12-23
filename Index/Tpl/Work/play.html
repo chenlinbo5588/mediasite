@@ -1,5 +1,4 @@
 <include file="Public:header" />
-
     <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
     <div class="box960x540" >
         <div id="videoCanvas">
@@ -10,69 +9,33 @@
     <div class="rowbox box960">
         <div class="tv-gallery pt-20">
             <h3 class="mb-15">Selected Portfolio Work</h3>
+            <if condition="$list|count eq 0">
             <ul class="tv-gallery-list">
-                <li>    
-                    <a href="#" title="Project Title" target="_blank"><img src="__PUBLIC__/Images/video_bg.jpg" width="400" height="214" alt=""></a>
+                <volist name="list" id="vo">
+                <li>
+                    <a href="__URL__/play/id/{$vo.id}" title="Project Title"><img src="__PUBLIC__/Files/{$vo['img_path']}" width="400" height="214" alt="{$vo.project_name}"></a>
                     <p class="title">
-                        <a href="#" title="Project Title" target="_blank" class="lh-18">Project Title</a><br />
-                        <i>Category Tag</i>
+                        <a href="#" title="Project Title" target="_blank" class="lh-18">{$vo.project_name}</a><br />
+                        <i>{$vo.category_name}</i>
                     </p>
                 </li>
-                <li>    
-                    <a href="#" title="Project Title" target="_blank"><img src="__PUBLIC__/Images/video_bg.jpg" width="400" height="214" alt=""></a>
-                    <p class="title ml-5">
-                        <a href="#" title="Project Title" target="_blank" class="lh-18">Project Title</a><br />
-                        <i>Category Tag</i>
-                    </p>
-                </li>
-                <li>    
-                    <a href="#" title="Project Title" target="_blank"><img src="__PUBLIC__/Images/video_bg.jpg" width="400" height="214" alt=""></a>
-                    <p class="title ml-5">
-                        <a href="#" title="Project Title" target="_blank" class="lh-18">Project Title</a><br />
-                        <i>Category Tag</i>
-                    </p>
-                </li>
-                <li>    
-                    <a href="#" title="Project Title" target="_blank"><img src="__PUBLIC__/Images/video_bg.jpg" width="400" height="214" alt=""></a>
-                    <p class="title ml-5">
-                        <a href="#" title="Project Title" target="_blank" class="lh-18">Project Title</a><br />
-                        <i>Category Tag</i>
-                    </p>
-                </li>
+                </volist>
             </ul>
-            <span class="clear"></span>
+            </if>
         </div>
-        <div class="pager">
-            <a class="first" href="javascript:void(0);">&lt;&lt;</a>
-            <a class="prev" href="javascript:void(0);">PREV</a>
-            <a class="current" href="javascript:void(0);">1</a>
-            <a href="javascript:void(0);">2</a>
-            <a href="javascript:void(0);">3</a>
-            <a href="javascript:void(0);">4</a>
-            <a href="javascript:void(0);">5</a>
-            <a class="next" href="javascript:void(0);">NEXT</a>
-            <a class="last" href="javascript:void(0);">&gt;&gt;</a>
-        </div>
-</div>
-
+        {$page}
+        <div class="clear"></div>
+    </div>
+<include file="Public:footer" />
 <script type="text/javascript">
-var playervars = {    
-    //contentpath: "../flvplayer/content",
-    //video: "demo-video.flv",
+var playervars = {
     contentpath: "",
-    video: "http://hcflv.yinyuetai.com/uploads/videos/common/meng_qian.flv",
-    //preview: "demo-preview.jpg",
-    preview: "http://img4.cache.netease.com/photo/0005/2012-12-20/8J4NEEA728F90005.jpg",
-    //preview: "demo-preview.jpg",							
+    video: "__PUBLIC__/Files/{$videoMsg['video_path']}",
+    preview: "__PUBLIC__/Files/{$videoMsg['img_path']}",
     skin: "skin-videoflash.swf",
     skincolor: "0xFF0000"
-    // ...
-    //see documentation for all the parameters		
 };
-
-var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor: "#ffffff", base: "."};  	
+var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor: "#ffffff", base: "."};
 var attributes = { align: "left" };
 swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
 </script>
-
-<include file="Public:footer" />
