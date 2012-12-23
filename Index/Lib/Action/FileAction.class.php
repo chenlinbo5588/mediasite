@@ -81,18 +81,12 @@ class FileAction extends CommonAction {
      * Add or Edit
      */
     public function edit(){
-	
-	$fileTypeModel = M('FileType');
-	$fileTypeList = $fileTypeModel->where(" enable=1 ")->select();
-	
-	$productModel = M('Product');
+        $fileTypeModel = M('FileType');
+        $fileTypeList = $fileTypeModel->where(" enable=1 ")->select();
+
+        $productModel = M('Product');
         $list = array();
-        
-        
-        if(1 == $this->_user['Type']){
-           /**
-            * 管理员 
-            */
+        if(1 == $this->_user['Type']){//管理员 
             $userModel = M('User');
             $userList = $userModel->where(" enable=1 ")->select();
             $this->assign('client',$userList);

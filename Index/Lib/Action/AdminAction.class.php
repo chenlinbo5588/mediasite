@@ -260,14 +260,18 @@ class AdminAction extends CommonAction {
     }
     
     public function file(){
-        
         $search = $_POST['search'];
         $model = M('Files');
         $page     = 1;
         $pageSize = 10;
         $total    = 0;
+        $userType = $this->_user['Type'];
+        $account  = $this->_user['Account'];
         $list = array();
-        $con = array('1=1');
+        $con = array();
+        if($userType != 1) {
+            $con[]    = "account = '{$account}'";
+        }
         if($search != '') {
             $scon = array();
             $scon[] = "title like '%{$search}%'";
@@ -284,6 +288,7 @@ class AdminAction extends CommonAction {
         $page = $this->showPage($pageObj,$search);
         $this->assign('list',$list);
         $this->assign("page", $page);
+        $this->assign("userType", $userType);
         $this->display();
         
     }

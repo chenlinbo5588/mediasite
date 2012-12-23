@@ -24,7 +24,7 @@
         <tr>
             <td>{$vo.product_name}</td>
             <td>{$vo.project_name}</td>
-            <td><a href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
+            <td><a class="download-btn" href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
             <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
             <td><a href="__URL__/play/id/{$vo.id}" target="_blank" title="View">View</a></td>
             <td><a class="upload-btn" href="javascript:;" title="Upload" data="{$vo.id}">Upload</a></td>
@@ -35,6 +35,7 @@
     {$page}
 </div>
 <div id="upload-dialog" class="dialog"></div>
+<form id="download-form" action="__URL__/download" method="POST"></form>
 <script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.queue.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Javascript/swfup/fileprogress.js"></script>
@@ -48,6 +49,9 @@ $(function() {
     $('.share-btn').click(function(){
         openShare($(this).attr('data'));
     });
+    $('.download-btn').click(function(){
+        download($(this).attr('data'));
+    });
 });
 
 function openUpload(id) {
@@ -55,7 +59,7 @@ function openUpload(id) {
     if((typeof (id) == 'undefined') || (id == ''))return;
     var url     = '__URL__/upload/id/'+id;
     var title   = 'Upload File';
-    $options = {title:title,width:650,height:400,modal:true};
+    $options = {title:title,width:650,height:320,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
         $(".Uploader").each(function(index){
@@ -91,20 +95,25 @@ function openUpload(id) {
     }, false);
 }
 
+function download(id) {
+    if((typeof (id) == 'undefined') || (id == ''))return;
+    var $form       = $("#download-form");
+    $form.append('<input type="hidden" name="id" value="' + id + '" />');
+    $form.submit();
+    $form.empty();
+}
+
 function openShare(id) {
     $dialog  = $('#upload-dialog');
     if((typeof (id) == 'undefined') || (id == ''))return;
-    var url     = '__URL__/upload/id/'+id;
+    var url     = '__URL__/share/id/'+id;
     var title   = 'Share File';
-    $options = {title:title,width:650,height:400,modal:true};
+    $options = {title:title,width:650,height:385,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
-        $(".Uploader").each(function(index){
-            uploads.push(createSwfUpload(index + 1,$(this).attr("allowSize"),$(this).attr("allowFile")));
-        });
         $('#save-btn').click(function(){
             var $form   = $dialog.find('form').eq(0);
-            var subUrl  = '__URL__/saveFiles';
+            var subUrl  = '__URL__/submitShare';
             var options = {
                 dataType        : 'json',
                 url             : subUrl,

@@ -30,7 +30,11 @@
                 <if condition="$vo.status eq 3">Pass</if>
                 <if condition="$vo.status eq 4">No Pass</if>
             </td>
-            <td>[<a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>]&nbsp;&nbsp;[<a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a>]</td>
+            <td>
+            <if condition="$userType eq 1">
+            [<a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>]&nbsp;&nbsp;
+            </if>
+            [<a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a>]</td>
         </tr>
         </volist>
         </tbody>
@@ -57,7 +61,7 @@ $('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
 
 function loadDialog(title,url) {
     $dialog  = $('#dialog');
-    $options = {title:title,width:750,modal:true};
+    $options = {title:title,width:750,height:450,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
         $('#save-btn').click(function(){

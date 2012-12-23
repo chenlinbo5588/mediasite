@@ -87,8 +87,9 @@ class WorkAction extends CommonAction {
     }
 
     public function upload() {
-        $editId        = $_GET['id'] ? $_GET['id'] : 0;
-        $userType      = $this->_user['Type'];
+        $editId   = $_GET['id'] ? $_GET['id'] : 0;
+        $userType = $this->_user['Type'];
+        $account  = $this->_user['Account'];
         if($editId > 0) {
             $fileTypeModel = M('Files');
             $con   = array();
@@ -106,8 +107,9 @@ class WorkAction extends CommonAction {
     }
 
     public function share() {
-        $editId        = $_GET['id'] ? $_GET['id'] : 0;
-        $userType      = $this->_user['Type'];
+        $editId   = $_GET['id'] ? $_GET['id'] : 0;
+        $userType = $this->_user['Type'];
+        $account  = $this->_user['Account'];
         if($editId > 0) {
             $fileTypeModel = M('Files');
             $con   = array();
@@ -153,6 +155,44 @@ class WorkAction extends CommonAction {
         $data['update_user'] = $this->_user['Account'];
         $retAry = $this->_update('Files',array('id'=>$editId),$data);
         $this->sendJson($retAry);
+    }
+
+    public function submitShare() {
+        $retAry = array('status' => false);
+        $this->sendJson($retAry);
+    }
+
+    public function download() {
+        $editId   = $_POST['id'] ? $_POST['id'] : 0;
+        $userType = $this->_user['Type'];
+        $account  = $this->_user['Account'];
+        if($editId <= 0)die;
+        $fileTypeModel = M('Files');
+        $con   = array();
+        $con[] = "id={$editId}";
+        if($userType != 1) {
+            $con[]    = "account = '{$account}'";
+            $con[]    = "status = 3";
+        }
+        $where = implode(' AND ',$con);
+        $fileMsg  = $fileTypeModel->where($where)->select();
+        $fileMsg  = $fileMsg[0];
+
+        $fileName = $fileMsg['video_path']; 
+        $fileDir  = __PUBLIC__."/Files/"; 
+        $filePath = $fileDir . $file_name;
+        if (!file_exists($filePath)) {
+            die("File is not exist"); 
+        } else { 
+            $file = fopen($filePath,"r");
+            Header("Content-type: application/octet-stream"); 
+            Header("Accept-Ranges: bytes"); 
+            Header("Accept-Length: ".filesize($filePath)); 
+            Header("Content-Disposition: attachment; filename=" . $fileName);
+            echo fread($file,filesize($filePath)); 
+            fclose($file); 
+            exit;
+        }
     }
 
 }
