@@ -1,24 +1,42 @@
 <div class="menu_content">
-    <form action="__APP__/File/submitVerify" name="fileForm" method="POST">
+    <form action="__APP__/File/verifySubmit" name="fileForm" method="POST" onsubmit="return validationForm(this);">
         <ul>
+            <li><label>Current Status:</label>
+                <if condition="$data['status'] eq 1">New</if>
+                <if condition="$data['status'] eq 2">Checking</if>
+                <if condition="$data['status'] eq 3">Pass</if>
+                <if condition="$data['status'] eq 3">No Pass</if>
+            </li>
             <li>
-                <label for="status">Status:</label>
+                <label for="status">Set Status:</label>
                 <select name="status" id="status">
-                    <option value="2"></option>
-                    <option value="1">Valid</option>
-                    <option value="1">Valid</option>
-                    <option value="1">Valid</option>
+                    <option value="1">New</option>
+                    <option value="2">Checking</option>
+                    <option value="3">Pass</option>
+                    <option value="4">No Pass</option>
                 </select>
             </li>
             <li>
-                <label for="remark">Remark</label><textarea type="text" name="remark" id="remark" rows="5" cols="20"></textarea>
+                <label for="remark">Remark</label><input type="text" name="remark" id="remark" rows="5" cols="20"/>
             </li>
             
         </ul>
-        <input type="hidden" name="id" value="{$vo.id}" />
+        <input type="hidden" name="id" value="{$data['id']}" />
         <div class="button-bar pt-20">
             <div class="button"><a id="save-btn" href="javascript:;">Save</a></div>
             <div class="button"><a id="cancel-btn" href="javascript:;">Cancel</a></div>
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+function validationForm(form){
+    if('' == $("#remark").val()){
+	alert("Pleas enter some remark text");
+	$("#remark").focus();
+	return false;
+    }
+    return true;
+}
+    
+</script>

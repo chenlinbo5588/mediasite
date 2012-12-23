@@ -12,8 +12,8 @@
             <th width="20%">Title</th>
             <th width="15%">Product</th>
             <th width="13%">Project</th>
-            <th width="12%">Category</th>
-            <th width="15%">Operator</th>
+            <th width="12%">Status</th>
+            <th width="15%">Operation</th>
         </tr>
         </thead>
         <tbody>
@@ -24,7 +24,12 @@
             <td>{$vo.title}</td>
             <td>{$vo.product_name}</td>
             <td>{$vo.project_name}</td>
-            <td>{$vo.category_name}</td>
+            <td>
+                <if condition="$vo.status eq 1">New</if>
+                <if condition="$vo.status eq 2">Checking</if>
+                <if condition="$vo.status eq 3">Pass</if>
+                <if condition="$vo.status eq 3">No Pass</if>
+            </td>
             <td>[<a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>]&nbsp;&nbsp;[<a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a>]</td>
         </tr>
         </volist>
@@ -32,6 +37,63 @@
     </table>
     {$page}
 </div>
-<include file="Public:admin" />
+<div id="dialog" class="dialog"></div>
+<script type="text/javascript">
+    
+$('.specify').click(function(){
+    var data = $(this).attr('data');
+    var action = $(this).attr('action');
+    var title = $(this).attr('title');
+    
+    var url = action + '/id/' + data;    
+    loadDialog(title,url);
+});
 
+
+$('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
+    loadDialog('Add {$Think.ACTION_NAME|strtolower|ucfirst}',"__APP__/File/add");
+});
+
+
+function loadDialog(title,url) {
+    $dialog  = $('#dialog');
+    $options = {title:title,width:750,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            var subUrl  = $form.attr("action");
+            var options = {
+                dataType        : 'json',
+                url             : subUrl,
+                success         : function(response) {
+                   
+                    if(response.status) {
+                        $dialog.dialog( "close" );
+                        window.location.reload();
+                    }
+                    else {
+                        if(response.error) {
+                            App.alert(title,response.error);
+                        }
+                        else {
+                            App.alert(title,'Operate fail.');
+                        }
+                    }
+                }
+            };
+            $form.ajaxForm(options); 
+            if(validationForm($form)){
+                $form.submit();
+            }
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
+}
+    
+
+  
+</script>
 <include file="Public:footer" />

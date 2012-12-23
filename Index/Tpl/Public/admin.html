@@ -28,11 +28,6 @@ $(function() {
         loadEditDialog('Edit {$Think.ACTION_NAME|strtolower|ucfirst}',editId);
     });
     
-    $('.specify',$table).click(function(){
-        var editId = $(this).attr('data');
-        var action = $(this).attr('action');
-        loadEditDialog('View {$Think.ACTION_NAME|strtolower|ucfirst}',editId,action);
-    });
 });
 
 function loadEditDialog(title,id ,action) {
@@ -44,7 +39,7 @@ function loadEditDialog(title,id ,action) {
         var url     = '__URL__/edit{$Think.ACTION_NAME|strtolower|ucfirst}';
     }
     
-    if(typeof (id) != 'undefined')url += '/id/' + id;
+    if(typeof (id) != 'undefined');
     $options = {title:title,width:750,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
