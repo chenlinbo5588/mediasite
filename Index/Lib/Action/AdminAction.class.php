@@ -279,7 +279,7 @@ class AdminAction extends CommonAction {
         $pageObj = new Page($total,$pageSize);
         $list   = $model->where($where)
                         ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
-                        ->order('fid desc')
+                        ->order('id desc')
                         ->select();
         $page = $this->showPage($pageObj,$search);
         $this->assign('list',$list);
@@ -293,7 +293,13 @@ class AdminAction extends CommonAction {
         $retAry = array('status' => false);
 
 	$data = array();
-	$data['account'] = substr($_POST['client'],strpos($_POST['client'],',') + 1);
+        
+        if(1 == $this->_user['Type']){
+            $data['account'] = substr($_POST['client'],strpos($_POST['client'],',') + 1);
+        }else{
+            // 普通账户只能给自己加
+            $data['account']  = $this->_user['Account'];
+        }
 	$data['title'] = $_POST['Uploader_Show_Value_2'];
 	$data['file_name'] = $_POST['Uploader_Show_Value_2'];
 	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_2'],strrpos($_POST['Uploader_Show_Value_2'],'.'));
@@ -352,10 +358,20 @@ class AdminAction extends CommonAction {
 	$productModel = M('Product');
         $list = array();
         
-        if('admin' == $this->_user['Account']){
+        
+        if(1 == $this->_user['Type']){
+           /**
+            * 管理员 
+            */
             $userModel = M('User');
             $userList = $userModel->where(" enable=1 ")->select();
             $this->assign('client',$userList);
+            $this->assign('showClient',true);
+        }else{
+            $this->assign('client',array(
+                array('id' => $this->_user['ID'] ,'account' => $this->_user['Account'])
+            ));
+             $this->assign('showClient',false);
         }
         
         $con = array();

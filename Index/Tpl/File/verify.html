@@ -1,0 +1,24 @@
+<div class="menu_content">
+    <form action="__APP__/File/submitVerify" name="fileForm" method="POST">
+        <ul>
+            <li>
+                <label for="status">Status:</label>
+                <select name="status" id="status">
+                    <option value="2"></option>
+                    <option value="1">Valid</option>
+                    <option value="1">Valid</option>
+                    <option value="1">Valid</option>
+                </select>
+            </li>
+            <li>
+                <label for="remark">Remark</label><textarea type="text" name="remark" id="remark" rows="5" cols="20"></textarea>
+            </li>
+            
+        </ul>
+        <input type="hidden" name="id" value="{$vo.id}" />
+        <div class="button-bar pt-20">
+            <div class="button"><a id="save-btn" href="javascript:;">Save</a></div>
+            <div class="button"><a id="cancel-btn" href="javascript:;">Cancel</a></div>
+        </div>
+    </form>
+</div>

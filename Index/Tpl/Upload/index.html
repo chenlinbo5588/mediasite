@@ -40,8 +40,8 @@
 		    <span>Height:</span><input type="text" style="width:50px;" name="height" value="450"/>
 	    </li>
 	    
-	    <if condition="count($client) gt 0">
-	    <li>
+	    
+	    <li <if condition="$showClient eq 0">style="display:none;"</if>>
 		<label>Client:</label><select name="client" id="client">
 		    <option value="">Please Choose</option>
 		    <volist name="client" id="vo">
@@ -49,7 +49,6 @@
 		    </volist>
 		</select>
 	    </li>
-	    </if>
 	    <li>
 		<label>Product:</label><select name="product" id="product">
 		    <option value="" >Please Choose</option>

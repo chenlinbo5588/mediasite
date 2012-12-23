@@ -1,4 +1,5 @@
 <include file="Public:header" />
+<script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
 <div class="rowbox box960">
     <include file="Public:submenu" />
     <include file="Public:admintop" />
@@ -18,13 +19,13 @@
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.fid}</td>
+            <td>{$vo.id}</td>
             <td>{$vo.account}</td>
             <td>{$vo.title}</td>
             <td>{$vo.product_name}</td>
             <td>{$vo.project_name}</td>
             <td>{$vo.category_name}</td>
-            <td>[<a class="edit" href="javascript:;" data="{$vo.id}" title="Verify">Verify</a>]&nbsp;&nbsp;[<a href="/Work/play?fid={$vo.fid}" title="Products">View</a>]</td>
+            <td>[<a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>]&nbsp;&nbsp;[<a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a>]</td>
         </tr>
         </volist>
         </tbody>
