@@ -1,6 +1,6 @@
 <link href="__PUBLIC__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
 <div class="menu_content">
-    <form name="uploadForm" action="/upload/saveupload/" method="post" onsubmit="return validationForm(this);">
+    <form name="fileForm" id="fileForm" action="__APP__/File/submitFile/" method="post" onsubmit="return validationForm(this);">
 	
 	
 	<ul class="upload">
@@ -39,9 +39,8 @@
 		    <span>Width:</span><input type="text" style="width:50px;" name="width" value="600"/>
 		    <span>Height:</span><input type="text" style="width:50px;" name="height" value="450"/>
 	    </li>
-	    
-	    
-	    <li <if condition="$showClient eq 0">style="display:none;"</if>>
+
+	    <li>
 		<label>Client:</label><select name="client" id="client">
 		    <option value="">Please Choose</option>
 		    <volist name="client" id="vo">
@@ -71,7 +70,7 @@
 	    </li>
 	    -->
 	</ul>
-	<input type="hidden" name="fid" value="{$vo.fid}" />
+	<input type="hidden" name="id" value="{$video_id}" />
         <div class="button-bar pt-20">
             <div class="button"><a id="save-btn" href="javascript:;">Save</a></div>
             <div class="button"><a id="cancel-btn" href="javascript:;">Cancel</a></div>
