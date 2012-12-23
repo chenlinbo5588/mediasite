@@ -13,7 +13,13 @@
             <ul class="tv-gallery-list">
                 <volist name="list" id="vo">
                 <li>
-                    <a href="__URL__/play/id/{$vo.id}" title="Project Title"><img src="__PUBLIC__/Files/{$vo['img_path']}" width="400" height="214" alt="{$vo.project_name}"></a>
+                    <a href="__URL__/play/id/{$vo.id}" title="Project Title">
+                        <if condition="$vo['img_path'] neq ''">
+                        <img src="__PUBLIC__/Files/{$vo['img_path']}" width="400" height="214" alt="{$vo.project_name}">
+                        <else />
+                        <img src="__PUBLIC__/Files/work_top.jpg" width="400" height="214" alt="{$vo.project_name}">
+                        </if>
+                    </a>
                     <p class="title">
                         <a href="#" title="Project Title" target="_blank" class="lh-18">{$vo.project_name}</a><br />
                         <i>{$vo.category_name}</i>
@@ -22,9 +28,10 @@
                 </volist>
             </ul>
             </if>
+            <div class="clear"></div>
         </div>
-        {$page}
         <div class="clear"></div>
+        {$page}
     </div>
 <include file="Public:footer" />
 <script type="text/javascript">
@@ -34,10 +41,13 @@ var playervars = {
     video: "__PUBLIC__/Files/{$videoMsg['video_path']}",
     preview: "__PUBLIC__/Files/{$videoMsg['img_path']}",
     skin: "skin-videoflash.swf",
-    skincolor: "0xFF0000"
+    skincolor: "0xFF0000",
+    autoscale:false,
+    videowidth:960,
+    videoheight:540
 };
 var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor: "#ffffff", base: "."};
-var attributes = { align: "left" };
+var attributes = { align: "center" };
 swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
 </if>
 </script>

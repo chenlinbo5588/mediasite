@@ -27,23 +27,40 @@
             <td><a href="" title="Download">Download</a></td>
             <td><a href="" title="Share">Share</a></td>
             <td><a href="__URL__/play/id/{$vo.id}" target="_blank" title="View">View</a></td>
-            <td><a href="" title="Upload">Upload</a></td>
+            <td><a class="upload-btn" href="javascript:;" title="Upload" data="{$vo.id}">Upload</a></td>
         </tr>
         </volist>
         </tbody>
     </table>
     {$page}
 </div>
+<div id="upload-dialog" class="dialog"></div>
+<script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.queue.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Javascript/swfup/fileprogress.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Javascript/swfup/handlers.js"></script>
 <script type="text/javascript">
-$dialog  = $('#edit-dialog');
-    var url     = '__URL__/edit{$Think.ACTION_NAME|strtolower|ucfirst}';
-    if(typeof (id) != 'undefined')url += '/id/' + id;
-    $options = {title:title,width:750,modal:true};
+var uploads = [],sid = '';
+$(function() {
+    $('.upload-btn').click(function(){
+        openUpload($(this).attr('data'));
+    });
+});
+
+function openUpload(id) {
+    $dialog  = $('#upload-dialog');
+    if((typeof (id) == 'undefined') || (id == ''))return;
+    var url     = '__URL__/upload/id/'+id;
+    var title   = 'Upload File';
+    $options = {title:title,width:650,height:400,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
+        $(".Uploader").each(function(index){	
+            uploads.push(createSwfUpload(index + 1,$(this).attr("allowSize"),$(this).attr("allowFile")));
+        });
         $('#save-btn').click(function(){
             var $form   = $dialog.find('form').eq(0);
-            var subUrl  = '__URL__/submit{$Think.ACTION_NAME|strtolower|ucfirst}';
+            var subUrl  = '__URL__/saveFiles';
             var options = {
                 dataType        : 'json',
                 url             : subUrl,
@@ -69,5 +86,49 @@ $dialog  = $('#edit-dialog');
             $dialog.dialog( "close" );
         });
     }, false);
+}
+
+function createSwfUpload(index,allowSize, allowFile){
+    var upload = new SWFUpload({
+	upload_url: "__APP__/Upload/upload",
+	post_params: {"PHPSESSID" : sid},
+	file_size_limit : allowSize ,
+	file_types : allowFile ,
+	file_types_description : "Choose Files",
+	file_upload_limit : "0",
+	file_queue_limit : "0",
+	file_dialog_start_handler : fileDialogStart,
+	file_queued_handler : fileQueued,
+	file_queue_error_handler : fileQueueError,
+	file_dialog_complete_handler : fileDialogComplete,
+	upload_start_handler : uploadStart,
+	upload_progress_handler : uploadProgress,
+	upload_error_handler : uploadError,
+	upload_success_handler : uploadSuccess,
+	upload_complete_handler : uploadComplete,
+	button_image_url : "__PUBLIC__/Images/XPButtonUploadText_61x22.png",
+	button_placeholder_id : "UploaderPlaceholder_" + index,
+	button_width: 61,
+	button_height: 22,
+	button_window_mode:"TRANSPARENT",
+	button_cursor: SWFUpload.CURSOR.HAND,
+	flash_url : "__PUBLIC__/Flash/swfupload.swf",
+	custom_settings : {
+		progressTarget : "UploaderProgress_" + index,
+		cancelButtonId : "UploaderCancelBtn_" + index,
+		callback : function(file,serverData){
+			var tmp = eval("(" + serverData + ")");
+			if(1 == tmp.respcode){
+			    $("#Uploader_Value_" + index).val(serverData);
+			    $("#Uploader_Show_Value_" + index).val(tmp.source_filename);
+			}else{
+			    alert('Attachment Upload Failed，Please try it again!');
+			}
+		}
+	},
+	debug: false
+    });
+    return upload;
+}
 </script>
 <include file="Public:footer" />
