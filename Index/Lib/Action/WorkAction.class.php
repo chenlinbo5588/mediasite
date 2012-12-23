@@ -42,6 +42,7 @@ class WorkAction extends CommonAction {
     public function play() {
         $editId   = $_GET['id'] ? $_GET['id'] : 0;
         $category = '';
+        $infoMsg  = array();
         $model = M('Files');
         $userType = $this->_user['Type'];
         $account  = $this->_user['Account'];
@@ -57,9 +58,9 @@ class WorkAction extends CommonAction {
             if(isset($info[0])) {
                 $infoMsg  = $info[0];
                 $category = $infoMsg['category_name'];
-                $this->assign('videoMsg',$infoMsg);
             }
         }
+        $this->assign('videoMsg',$infoMsg);
         if($category != '') {
             $page     = 1;
             $pageSize = 4;

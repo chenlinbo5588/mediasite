@@ -24,14 +24,50 @@
         <tr>
             <td>{$vo.product_name}</td>
             <td>{$vo.project_name}</td>
-            <td><a href="" >Download</a></td>
-            <td><a href="" >Share</a></td>
-            <td><a href="__URL__/play/id/{$vo.id}">View</a></td>
-            <td><a href="" >Upload</a></td>
+            <td><a href="" title="Download">Download</a></td>
+            <td><a href="" title="Share">Share</a></td>
+            <td><a href="__URL__/play/id/{$vo.id}" target="_blank" title="View">View</a></td>
+            <td><a href="" title="Upload">Upload</a></td>
         </tr>
         </volist>
         </tbody>
     </table>
     {$page}
 </div>
+<script type="text/javascript">
+$dialog  = $('#edit-dialog');
+    var url     = '__URL__/edit{$Think.ACTION_NAME|strtolower|ucfirst}';
+    if(typeof (id) != 'undefined')url += '/id/' + id;
+    $options = {title:title,width:750,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            var subUrl  = '__URL__/submit{$Think.ACTION_NAME|strtolower|ucfirst}';
+            var options = {
+                dataType        : 'json',
+                url             : subUrl,
+                success         : function(response) {
+                    if(response.status) {
+                        $dialog.dialog( "close" );
+                        window.location.reload();
+                    }
+                    else {
+                        if(response.error) {
+                            App.alert(title,response.error);
+                        }
+                        else {
+                            App.alert(title,'Operate fail.');
+                        }
+                    }
+                }
+            };
+            $form.ajaxForm(options); 
+            $form.submit();
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
+</script>
 <include file="Public:footer" />

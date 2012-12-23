@@ -9,7 +9,7 @@
     <div class="rowbox box960">
         <div class="tv-gallery pt-20">
             <h3 class="mb-15">Selected Portfolio Work</h3>
-            <if condition="$list|count eq 0">
+            <if condition="$list|count gt 0">
             <ul class="tv-gallery-list">
                 <volist name="list" id="vo">
                 <li>
@@ -28,6 +28,7 @@
     </div>
 <include file="Public:footer" />
 <script type="text/javascript">
+<if condition="$videoMsg['id'] gt 0">
 var playervars = {
     contentpath: "",
     video: "__PUBLIC__/Files/{$videoMsg['video_path']}",
@@ -38,4 +39,5 @@ var playervars = {
 var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor: "#ffffff", base: "."};
 var attributes = { align: "left" };
 swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
+</if>
 </script>
