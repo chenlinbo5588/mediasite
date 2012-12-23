@@ -200,7 +200,7 @@ class CommonAction extends Action {
         else {
             $where = $con;
         }
-        $flag = $model->where($where)->save($data);print_r($model->getLastSql());
+        $flag = $model->where($where)->save($data);
 
         $error = $model->getError();
         if(!$error && $flag == true) { 
