@@ -1,127 +1,37 @@
 <include file="Public:header" />
-<!-- <div id="dialog" title="Dialog Title">
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-</div> -->
-<!-- <p><a href="#" id="dialog-link" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-newwin"></span>Open Dialog</a></p> -->
 <div class="box960x540">
     <img src="__PUBLIC__/Images/top/work-top.jpg" width="960" height="540"/>
 </div>
 
 <div class="rowbox box960">
-<p class="list-search"><span>Search</span><input class="searcher ml-10" type="text" name="keyword" value=""/></p>
-<div class="sepline"></div>
-<table class="listdata" style="margin-left:30px;margin-top:30px;">
-    <thead>
-    <tr>
-        <th width="15%">Product Name</th>
-        <th width="25%">Folder</th>
-        <th width="15%">Download</th>
-        <th width="15%">Share</th>
-        <th width="15%">View</th>
-        <th width="15%">Upload</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>S8800</td>
-        <td><a href="__URL__/play" style="color:blue;">Porject Name</a></td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>A490</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>V495</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>B490</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>S230u</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>V480</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>S8800</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>A490</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>V495</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>B490</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    <tr>
-        <td>S230u</td>
-        <td>Porject Name</td>
-        <td>Download</td>
-        <td>Share</td>
-        <td>View</td>
-        <td>Upload</td>
-    </tr>
-    </tbody>
-</table>
-    <div class="pager">
-        <a class="first" href="javascript:void(0);">&lt;&lt;</a>
-        <a class="prev" href="javascript:void(0);">PREV</a>
-        <a class="current" href="javascript:void(0);">1</a>
-        <a href="javascript:void(0);">2</a>
-        <a href="javascript:void(0);">3</a>
-        <a href="javascript:void(0);">4</a>
-        <a href="javascript:void(0);">5</a>
-        <a class="next" href="javascript:void(0);">NEXT</a>
-        <a class="last" href="javascript:void(0);">&gt;&gt;</a>
-    </div>
+    <form action="__URL__/{$Think.ACTION_NAME|strtolower}" method="POST">
+        <p class="list-search"><span>Search</span><input class="searcher ml-10" type="text" name="search" value=""/></p>
+    </form>
+    <div class="sepline"></div>
+    <table class="listdata" style="margin-left:30px;margin-top:30px;">
+        <thead>
+        <tr>
+            <th width="15%">Product</th>
+            <th width="25%">Project</th>
+            <th width="15%">Download</th>
+            <th width="15%">Share</th>
+            <th width="15%">View</th>
+            <th width="15%">Upload</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo">
+        <tr>
+            <td>{$vo.product_name}</td>
+            <td><a href="__URL__/play/id/{$vo.id}" style="color:blue;">{$vo.project_name}</a></td>
+            <td><a href="" >Download</a></td>
+            <td><a href="" >Share</a></td>
+            <td><a href="" >View</a></td>
+            <td><a href="" >Upload</a></td>
+        </tr>
+        </volist>
+        </tbody>
+    </table>
+    {$page}
 </div>
 <include file="Public:footer" />

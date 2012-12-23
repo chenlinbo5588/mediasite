@@ -67,7 +67,7 @@ CREATE TABLE `file_type` (
 -- Table structure for files
 -- ----------------------------
 CREATE TABLE `files` (
-  `fid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `account` varchar(50) NOT NULL DEFAULT '' COMMENT '账号',
   `title` varchar(100) NOT NULL DEFAULT '' COMMENT '视频名称',
   `tag` varchar(50) NOT NULL DEFAULT '' COMMENT '视频标签',
