@@ -28,7 +28,7 @@
                 <if condition="$vo.status eq 1">New</if>
                 <if condition="$vo.status eq 2">Checking</if>
                 <if condition="$vo.status eq 3">Pass</if>
-                <if condition="$vo.status eq 3">No Pass</if>
+                <if condition="$vo.status eq 4">No Pass</if>
             </td>
             <td>[<a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>]&nbsp;&nbsp;[<a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a>]</td>
         </tr>
