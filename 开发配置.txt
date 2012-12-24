@@ -26,5 +26,7 @@ php.ini 修改
 
 magic_quotes_gpc = Off
 
-post_max_size = 50M
+post_max_size = 60M
 upload_max_filesize = 50M
+
+同时需要注意  max_execution_time  有的时候网速慢的时候 可能超过最大执行时间导致上传失败

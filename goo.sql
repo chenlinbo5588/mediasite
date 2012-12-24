@@ -95,7 +95,7 @@ CREATE TABLE `files` (
   `updatetime` datetime NOT NULL COMMENT '更新时间',
   `create_user` varchar(50) NOT NULL DEFAULT '' COMMENT '创建者',
   `update_user` varchar(50) NOT NULL DEFAULT '' COMMENT '更新者',
-  PRIMARY KEY (`fid`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
