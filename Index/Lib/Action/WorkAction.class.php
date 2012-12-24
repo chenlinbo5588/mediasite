@@ -177,9 +177,10 @@ class WorkAction extends CommonAction {
         $where = implode(' AND ',$con);
         $fileMsg  = $fileTypeModel->where($where)->select();
         $fileMsg  = $fileMsg[0];
+        $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
 
         $fileName = $fileMsg['video_path']; 
-        $fileDir  = __PUBLIC__."/Files/"; 
+        $fileDir  = ROOT_PATH . '/Public/Files/'; 
         $filePath = $fileDir . $file_name;
         if (!file_exists($filePath)) {
             die("File is not exist"); 
@@ -188,10 +189,10 @@ class WorkAction extends CommonAction {
             Header("Content-type: application/octet-stream"); 
             Header("Accept-Ranges: bytes"); 
             Header("Accept-Length: ".filesize($filePath)); 
-            Header("Content-Disposition: attachment; filename=" . $fileName);
+            Header("Content-Disposition: attachment; filename=" . $downloadName);
             echo fread($file,filesize($filePath)); 
             fclose($file); 
-            exit;
+            die;
         }
     }
 
