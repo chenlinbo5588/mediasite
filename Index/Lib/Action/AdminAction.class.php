@@ -1,5 +1,4 @@
 <?php
-import("@.ORG.Page");
 class AdminAction extends CommonAction {
     public function index(){
         if($this->_user['Type'] == 1) {

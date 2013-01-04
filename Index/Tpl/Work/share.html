@@ -1,20 +1,20 @@
 <div class="menu_content">
     <form action="__URL__/submitShare" name="shareForm" method="POST">
-        <div class="row">
+        <!-- <div class="row">
             <label class="field-label" for="url">URL:</label>
             <div class="field-box"><input type="text" name="url" value="__PUBLIC__/Files/{$videoMsg['video_path']}" /></div>
+        </div> -->
+        <div class="row">
+            <label class="field-label" for="target_email">Email:</label>
+            <div class="field-box"><input type="text" name="target_email" value="" /></div>
         </div>
         <div class="row">
-            <label class="field-label" for="email">Email:</label>
+            <label class="field-label" for="email">My Email:</label>
             <div class="field-box"><input type="text" name="email" value="" /></div>
         </div>
         <div class="row">
-            <label class="field-label" for="memail">My Email:</label>
-            <div class="field-box"><input type="text" name="memail" value="" /></div>
-        </div>
-        <div class="row">
             <label class="field-label" for="message">Message:</label>
-            <div class="field-box"><textarea rows="3" cols="26"></textarea></div>
+            <div class="field-box"><textarea name="message" rows="3" cols="26"></textarea></div>
         </div>
         <input type="hidden" name="id" value="{$fileMsg.id}" />
         <div class="button-bar pt-20">

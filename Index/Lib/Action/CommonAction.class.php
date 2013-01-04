@@ -3,7 +3,9 @@
  *public Action
  *
  */
-import("@.ORG.Session");
+import("@.ORG.Util.Session");
+import("@.ORG.Util.Page");
+import("@.ORG.Crypt.Rsa");
 class CommonAction extends Action {
     protected $_user        = array();
     public function _initialize(){
@@ -215,5 +217,27 @@ class CommonAction extends Action {
             $retAry['error']       = $error;
         }
         return $retAry;
+    }
+
+    /*
+     *加密信息
+    */
+    protected function encodeInfo($str) {
+		$rsa = new Rsa();//加密数据
+		$pub = $rsa->hex2dec(C('SYSTEM_RSA_PUB'));
+		$mod = $rsa->hex2dec(C('SYSTEM_RSA_MOD'));
+		$encodeStr = $rsa->rsa_encode($str,$pub,$mod);
+		return $encodeStr;
+    }
+
+    /*
+     *解密信息
+    */
+    protected function decodeInfo($str) {
+        $rsa = new Rsa();//解密数据
+        $pri = $rsa->hex2dec(C('SYSTEM_RSA_PRI'));
+        $mod = $rsa->hex2dec(C('SYSTEM_RSA_MOD'));
+        $decodeStr = $rsa->rsa_decode($str,$pri,$mod);
+        return $decodeStr;
     }
 }

@@ -1,5 +1,6 @@
 <?php
-import("@.ORG.Page");
+import("@.ORG.Util.Page");
+import("@.ORG.Net.SendMail");
 class WorkAction extends CommonAction {
     public function index(){
         $this->display();
@@ -41,6 +42,7 @@ class WorkAction extends CommonAction {
 
     public function play() {
         $editId   = $_GET['id'] ? $_GET['id'] : 0;
+        $share    = $_GET['share'] ? $_GET['share'] : 0;
         $category = '';
         $infoMsg  = array();
         $model = M('Files');
@@ -59,6 +61,7 @@ class WorkAction extends CommonAction {
                 $infoMsg  = $info[0];
                 $category = $infoMsg['category_name'];
             }
+        } else if($share) {
         }
         $this->assign('videoMsg',$infoMsg);
         if($category != '') {
@@ -159,6 +162,21 @@ class WorkAction extends CommonAction {
 
     public function submitShare() {
         $retAry = array('status' => false);
+        $shareID    = $_POST['id'];
+        if($shareID <= 0) {$this->sendJson($retAry);}
+        $encodeStr = $this->encodeInfo($shareID);
+        $fileUrl = 'http://'.$_SERVER['HTTP_HOST'].__ROOT__."/Index/Work/play/share/{$encodeStr}";
+        $targetMail = $_POST['target_email'];
+        $mail       = $_POST['email'];
+        $message    = $_POST['message'];
+        //$mail = new SendMail();
+        //$retAry     = $mail->sendmail('test','testbody','lichungao.2007@163.com',$name='bella');
+        $shareData = array('url'          => $fileUrl,
+                           'email'        => $mail,
+                           'target_email' => $targetMail,
+                           'message'      => $message,
+                           'user_id'      => $this->_user['ID']);
+        $retAry = $this->_add('ShareFiles',$shareData);
         $this->sendJson($retAry);
     }
 
@@ -181,10 +199,10 @@ class WorkAction extends CommonAction {
 
         $fileName = $fileMsg['video_path']; 
         $fileDir  = ROOT_PATH . '/Public/Files/'; 
-        $filePath = $fileDir . $file_name;
+        $filePath = $fileDir . $fileName;
         if (!file_exists($filePath)) {
             die("File is not exist"); 
-        } else { 
+        } else {
             $file = fopen($filePath,"r");
             Header("Content-type: application/octet-stream"); 
             Header("Accept-Ranges: bytes"); 

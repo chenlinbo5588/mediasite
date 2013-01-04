@@ -27,6 +27,20 @@ return array(
     'TOKEN_TYPE'			=> 'md5',  //令牌哈希验证规则默认为MD5
 
     'USER_AUTH_ON'          => true,
-    'VAR_PAGE'              => 'page'
+    'VAR_PAGE'              => 'page',
+
+    //加密
+    'SYSTEM_RSA_NUM'        => '256',
+    'SYSTEM_RSA_PUB'        => '116AB',
+    'SYSTEM_RSA_PRI'        => '1A1DB84E5A2AAF865DF28C1F4F50BA5016648AC96BE25D50EF0197E865EA7D73',
+    'SYSTEM_RSA_MOD'        => '850A4F6550AA07716D231EBD8D1E710AB14DA34206A4AC2825624014F81672C9',
+
+    //邮件配置
+    'SYSTEM_EMAIL' => array(
+        'SMTP_HOST'   => 'mail.adsame.com', //SMTP服务器
+        'SMTP_PORT'   => '25', //SMTP服务器端口
+        'SMTP_USER'   => 'bella_gao@adsame.com', //SMTP服务器用户名
+        'SMTP_PASS'   => '200322544' //SMTP服务器密码
+    )
 );
 ?>
