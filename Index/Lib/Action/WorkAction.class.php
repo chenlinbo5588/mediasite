@@ -1,6 +1,5 @@
 <?php
 import("@.ORG.Util.Page");
-import("@.ORG.Net.SendMail");
 class WorkAction extends CommonAction {
     public function index(){
         $this->display();
@@ -169,14 +168,20 @@ class WorkAction extends CommonAction {
         $targetMail = $_POST['target_email'];
         $mail       = $_POST['email'];
         $message    = $_POST['message'];
-        //$mail = new SendMail();
-        //$retAry     = $mail->sendmail('test','testbody','lichungao.2007@163.com',$name='bella');
-        $shareData = array('url'          => $fileUrl,
-                           'email'        => $mail,
-                           'target_email' => $targetMail,
-                           'message'      => $message,
-                           'user_id'      => $this->_user['ID']);
-        $retAry = $this->_add('ShareFiles',$shareData);
+        $mailSubject = "Share Files From {$mail}";
+        $mailTpl     = $this->loadMailTpl('shareMail');
+        $mailBody    = str_replace(array('{TARGETMAIL}','{MESSAGE}','{SHAREURL}'),array($mail,$message,$fileUrl),$mailTpl);
+        $retAry['error'] = $mailBody;
+        $this->sendJson($retAry);
+        $retAry     = sendmail($mailSubject,$mailBody,array(array($targetMail,$targetMail)),array($mail,$mail));
+        if($retAry['status']) {
+            $shareData = array('url'          => $fileUrl,
+                               'email'        => $mail,
+                               'target_email' => $targetMail,
+                               'message'      => $message,
+                               'user_id'      => $this->_user['ID']);
+            $retAry = $this->_add('ShareFiles',$shareData);
+        }
         $this->sendJson($retAry);
     }
 

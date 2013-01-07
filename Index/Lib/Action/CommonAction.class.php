@@ -240,4 +240,14 @@ class CommonAction extends Action {
         $decodeStr = $rsa->rsa_decode($str,$pri,$mod);
         return $decodeStr;
     }
+
+    public function loadMailTpl($name) {
+        $content = '';
+        $dsign   = DIRECTORY_SEPARATOR;
+        $tplFile = APP_PATH . 'Public'. $dsign . 'mailTpl' . $dsign . $name . '.tpl';
+        if(is_file($tplFile)) {
+            $content = getUrlCon($tplFile);
+        }
+        return $content;
+    }
 }

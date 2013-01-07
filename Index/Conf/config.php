@@ -37,10 +37,11 @@ return array(
 
     //邮件配置
     'SYSTEM_EMAIL' => array(
-        'SMTP_HOST'   => 'mail.adsame.com', //SMTP服务器
+        'SMTP_HOST'   => 'smtp.mail.yahoo.com.cn', //SMTP服务器
         'SMTP_PORT'   => '25', //SMTP服务器端口
-        'SMTP_USER'   => 'bella_gao@adsame.com', //SMTP服务器用户名
-        'SMTP_PASS'   => '200322544' //SMTP服务器密码
+        'SMTP_USER'   => 'gooteam@yahoo.cn', //SMTP服务器用户名
+        'SMTP_NAME'   => 'Goo Team', //SMTP服务器用户名
+        'SMTP_PASS'   => 'test098goo' //SMTP服务器密码
     )
 );
 ?>
