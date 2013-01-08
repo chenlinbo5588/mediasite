@@ -31,7 +31,7 @@
 
 .menu_content {font-size:21px;background-color:#fff; padding:20px;margin:15px 0;}
 .menu_content li {margin-top:10px;display:block;}
-.menu_content label {color:#6d6e71;display:block;float:left; width:220px;text-indent:2em;text-align:right;}
+.menu_content label {color:#6d6e71;display:inline-block;width:180px;text-indent:2em;text-align:right;}
 .menu_content input {width: 260px; height:30px;font-size:21px;}
 .menu_content li .dl {background:url("../Images/delete.png") no-repeat; text-indent:2em; display:block; height:22px;}
 
@@ -63,7 +63,7 @@ input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:1
 .row {margin:5px;margin: 12px 5px\9; /* for ie 9 */text-align: left;}
 .line-2 {border-top:2px solid #f3f3f3;}
 .menu_content label.field-label {width:140px;height:30px;text-align:right;padding-right:15px;line-height:30px;}
-.menu_content .field-box {position: relative;display: inline-block;text-indent: 0;text-align:left;}
+.menu_content .field-box {position: relative;display: inline-block;text-indent: 0;text-align:left;font-size:12px;}
 .menu_content .field-box input {height:28px;line-height:25px;}
 /** 定制box */
 .box960x540 {height:540px;}

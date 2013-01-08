@@ -41,29 +41,33 @@ class WorkAction extends CommonAction {
 
     public function play() {
         $editId   = $_GET['id'] ? $_GET['id'] : 0;
-        $share    = $_GET['share'] ? $_GET['share'] : 0;
+        $share    = $_GET['share'] ? $_GET['share'] : '';
         $category = '';
         $infoMsg  = array();
         $model = M('Files');
         $userType = $this->_user['Type'];
         $account  = $this->_user['Account'];
+        $con      = '';
         if($editId > 0) {
-            $con      = array();
             $con[] = "id={$editId}";
             if($userType != 1) {
                 $con[]    = "account = '{$account}'";
                 $con[]    = "status = 3";
             }
+        } else if($share) {
+            $shareId = $this->decodeInfo($share);
+            $con[] = "id={$shareId}";
+        }
+        if($con != '') {
             $where = implode(' AND ',$con);
             $info = $model->where($where)->limit(0,1)->select();
             if(isset($info[0])) {
                 $infoMsg  = $info[0];
                 $category = $infoMsg['category_name'];
             }
-        } else if($share) {
         }
         $this->assign('videoMsg',$infoMsg);
-        if($category != '') {
+        if($category != '' && $editId) {
             $page     = 1;
             $pageSize = 4;
             $total    = 0;
@@ -164,15 +168,17 @@ class WorkAction extends CommonAction {
         $shareID    = $_POST['id'];
         if($shareID <= 0) {$this->sendJson($retAry);}
         $encodeStr = $this->encodeInfo($shareID);
-        $fileUrl = 'http://'.$_SERVER['HTTP_HOST'].__ROOT__."/Index/Work/play/share/{$encodeStr}";
+        $fileUrl = 'http://'.$_SERVER['HTTP_HOST'].__ROOT__."/Work/play/share/{$encodeStr}";
         $targetMail = $_POST['target_email'];
         $mail       = $_POST['email'];
         $message    = $_POST['message'];
+        if($targetMail == '' || $mail == '') {
+            $retAry['error'] = 'Please input emails.';
+            $this->sendJson($retAry);
+        }
         $mailSubject = "Share Files From {$mail}";
         $mailTpl     = $this->loadMailTpl('shareMail');
         $mailBody    = str_replace(array('{TARGETMAIL}','{MESSAGE}','{SHAREURL}'),array($mail,$message,$fileUrl),$mailTpl);
-        $retAry['error'] = $mailBody;
-        $this->sendJson($retAry);
         $retAry     = sendmail($mailSubject,$mailBody,array(array($targetMail,$targetMail)),array($mail,$mail));
         if($retAry['status']) {
             $shareData = array('url'          => $fileUrl,

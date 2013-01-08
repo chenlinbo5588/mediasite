@@ -1,8 +1,9 @@
 <div class="menu_content">
-    <form name="clientForm" method="POST">
+    <form name="projectForm" method="POST">
         <ul>
             <li>
-                <label for="user_id">Client:</label>
+                <label class="field-label" for="user_id">Client:</label>
+                <div class="field-box">
                 <if condition="$editId gt 0">
                 {$vo.Nickname}({$vo.Account})
                 <else />
@@ -12,9 +13,11 @@
                     </volist>
                 </select>
                 </if>
+                </div>
             </li>
             <li>
-                <label for="product_id">Product:</label>
+                <label class="field-label" for="product_id">Product:</label>
+                <div class="field-box">
                 <if condition="$editId gt 0">
                 {$vo.ProductName}
                 <else />
@@ -24,13 +27,15 @@
                     </volist>
                 </select>
                 </if>
+                </div>
             </li>
             <li>
-                <label for="name">Name:</label><input type="text" name="name" value="{$vo.Name}" />
+                <label class="field-label" for="name">Name:</label>
+                <div class="field-box"><input type="text" name="name" value="{$vo.Name}" /></div>
             </li>
             <li>
-                <label for="enable">Status:</label>
-                <select name="enable">
+                <label class="field-label" for="enable">Status:</label>
+                <div class="field-box"><select name="enable">
                     <if condition="$vo.Enable eq 0">
                     <option value="0" selected>Invalid</option>
                     <option value="1">Valid</option>
@@ -38,7 +43,7 @@
                     <option value="0">Invalid</option>
                     <option value="1" selected>Valid</option>
                     </if>
-                </select>
+                </select></div>
             </li>
         </ul>
         <input type="hidden" name="id" value="{$vo.id}" />

@@ -59,7 +59,7 @@ function openUpload(id) {
     if((typeof (id) == 'undefined') || (id == ''))return;
     var url     = '__URL__/upload/id/'+id;
     var title   = 'Upload File';
-    $options = {title:title,width:650,height:320,modal:true};
+    $options = {title:title,width:600,height:310,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
         $(".Uploader").each(function(index){
@@ -108,7 +108,7 @@ function openShare(id) {
     if((typeof (id) == 'undefined') || (id == ''))return;
     var url     = '__URL__/share/id/'+id;
     var title   = 'Share File';
-    $options = {title:title,width:650,height:335,modal:true};
+    $options = {title:title,width:550,height:310,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
         $('#save-btn').click(function(){

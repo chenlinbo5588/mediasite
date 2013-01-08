@@ -246,7 +246,7 @@ class CommonAction extends Action {
         $dsign   = DIRECTORY_SEPARATOR;
         $tplFile = APP_PATH . 'Public'. $dsign . 'mailTpl' . $dsign . $name . '.tpl';
         if(is_file($tplFile)) {
-            $content = getUrlCon($tplFile);
+            $content = file_get_contents($tplFile);
         }
         return $content;
     }
