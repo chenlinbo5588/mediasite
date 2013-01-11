@@ -2,28 +2,44 @@
 <div class="menu_content">
     <form name="uploadForm" method="post">
         <ul class="upload">
-            <li><label>File Type:</label><span>{$fileMsg.category_name}</span></li>
+            <li>
+                <label class="field-label">File Type:</label>
+                <div class="field-box">
+                    <span>{$fileMsg.category_name}</span>
+                </div>
+            </li>
             
             <!-- when choose type movie -->
-            <li id="uploadImageFile"><label>Cover Image:</label>
-            <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
-            <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="" readonly="readonly"/>
-            <span id="UploaderPlaceholder_1"></span>
-            <span class="Uploader" allowSize="512KB" allowFile="*.jpg;*.jpeg;*.png;" style="display:none;" >Please Choose Files</span>
-            </li>
-            <li><label></label>
-            <div id="UploaderProgress_1"></div>
-            <div id="UploaderFeedBack_1"></div>
-            </li>
-            <li><label>Video File:</label>
-            <input type="hidden" name="Uploader_Value_2" id="Uploader_Value_2" value=""/>
-            <input type="text" name="Uploader_Show_Value_2" id="Uploader_Show_Value_2" value="" readonly="readonly"/>
-            <span id="UploaderPlaceholder_2"></span>
-            <span class="Uploader" allowSize="50MB" allowFile="*.flv;*.mp4;*.avi;" style="display:none;" >Please Choose Files</span>
+            <li id="uploadImageFile">
+                <label class="field-label">Cover Image:</label>
+                <div class="field-box">
+                    <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
+                    <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="" readonly="readonly"/>
+                    <span id="UploaderPlaceholder_1"></span>
+                    <span class="Uploader" allowSize="512KB" allowFile="*.jpg;*.jpeg;*.png;" style="display:none;" >Please Choose Files</span>
+                </div>
             </li>
             <li>
-            <div id="UploaderProgress_2"></div>
-            <div id="UploaderFeedBack_2"></div>
+                <label class="field-label">&nbsp;</label>
+                <div class="field-box">
+                    <div id="UploaderProgress_1"></div>
+                    <div id="UploaderFeedBack_1"></div>
+                </div>
+            </li>
+            <li>
+                <label class="field-label">Video File:</label>
+                <div class="field-box">
+                    <input type="hidden" name="Uploader_Value_2" id="Uploader_Value_2" value=""/>
+                    <input type="text" name="Uploader_Show_Value_2" id="Uploader_Show_Value_2" value="" readonly="readonly"/>
+                    <span id="UploaderPlaceholder_2"></span>
+                    <span class="Uploader" allowSize="50MB" allowFile="*.flv;*.mp4;*.avi;" style="display:none;" >Please Choose Files</span>
+                </div>
+            </li>
+            <li><label class="field-label">&nbsp;</label>
+                <div class="field-box">
+                    <div id="UploaderProgress_2"></div>
+                    <div id="UploaderFeedBack_2"></div>
+                </div>
             </li>
         </ul>
         <div class="button-bar pt-20">

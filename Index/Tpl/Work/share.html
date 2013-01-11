@@ -4,22 +4,24 @@
             <label class="field-label" for="url">URL:</label>
             <div class="field-box"><input type="text" name="url" value="__PUBLIC__/Files/{$videoMsg['video_path']}" /></div>
         </div> -->
-        <div class="row">
-            <label class="field-label" for="target_email">Email:</label>
-            <div class="field-box"><input type="text" name="target_email" value="" /></div>
-        </div>
-        <div class="row">
-            <label class="field-label" for="email">My Email:</label>
-            <div class="field-box"><input type="text" name="email" value="" /></div>
-        </div>
-        <div class="row">
-            <label class="field-label" for="message">Message:</label>
-            <div class="field-box"><textarea name="message" rows="3" cols="40"></textarea></div>
-        </div>
-        <input type="hidden" name="id" value="{$fileMsg.id}" />
-        <div class="button-bar pt-20">
-            <div class="button"><a id="save-btn" href="javascript:;">Save</a></div>
-            <div class="button"><a id="cancel-btn" href="javascript:;">Cancel</a></div>
-        </div>
+        <ul>
+            <li>
+                <label class="field-label" for="target_email">Email:</label>
+                <div class="field-box"><input type="text" name="target_email" value="" /></div>
+            </li>
+            <li>
+                <label class="field-label" for="email">My Email:</label>
+                <div class="field-box"><input type="text" name="email" value="" /></div>
+            </li>
+            <li>
+                <label class="field-label" for="message">Message:</label>
+                <div class="field-box"><textarea name="message" rows="8" cols="41"></textarea></div>
+            </li>
+            <input type="hidden" name="id" value="{$fileMsg.id}" />
+            <div class="button-bar pt-20">
+                <div class="button"><a id="save-btn" href="javascript:;">Save</a></div>
+                <div class="button"><a id="cancel-btn" href="javascript:;">Cancel</a></div>
+            </div>
+        </ul>
     </form>
 </div>

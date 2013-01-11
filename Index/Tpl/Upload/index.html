@@ -4,63 +4,84 @@
 	
 	
 	<ul class="upload">
-	    <li><label>File Type:</label><select name="file_type" id="file_type">
+	    <li><label class="field-label">File Type:</label>
+                <div class="field-box"><select name="file_type" id="file_type">
 		    <option value="">Please Select</option>
 		    <volist name="fileType" id="vo">
 		    <option value="{$vo.id},{$vo.name}">{$vo.title}</option>
 		    </volist>
-		</select>
+		</select></div>
 	    </li>
 	    
 	    <!-- when choose type movie -->
-	    <li id="uploadImageFile"><label>Cover Image:</label>
-		<input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
-		<input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="" readonly="readonly"/>
-		<span id="UploaderPlaceholder_1"></span>
-		<span class="Uploader" allowSize="512KB" allowFile="*.jpg;*.jpeg;*.png;" style="display:none;" >Please Choose Files</span>
-	    </li>
-	    <li><label></label>
-		<div id="UploaderProgress_1"></div>
-		<div id="UploaderFeedBack_1"></div>
+	    <li id="uploadImageFile">
+                <label class="field-label">Cover Image:</label>
+                <div class="field-box">
+                    <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
+                    <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="" readonly="readonly"/>
+                    <span id="UploaderPlaceholder_1"></span>
+                    <span class="Uploader" allowSize="512KB" allowFile="*.jpg;*.jpeg;*.png;" style="display:none;" >Please Choose Files</span>
+                </div>
+            </li>
+	    <li><label class="field-label"></label>
+                <div class="field-box">
+                    <div id="UploaderProgress_1"></div>
+                    <div id="UploaderFeedBack_1"></div>
+                </div>
 	    </li>
 	    
-	    <li><label>Video File:</label>
-		<input type="hidden" name="Uploader_Value_2" id="Uploader_Value_2" value=""/>
-		<input type="text" name="Uploader_Show_Value_2" id="Uploader_Show_Value_2" value="" readonly="readonly"/>
-		<span id="UploaderPlaceholder_2"></span>
-		<span class="Uploader" allowSize="50MB" allowFile="*.flv;*.mp4;*.avi;" style="display:none;" >Please Choose Files</span>
+	    <li><label class="field-label">Video File:</label>
+                <div class="field-box">
+                    <input type="hidden" name="Uploader_Value_2" id="Uploader_Value_2" value=""/>
+                    <input type="text" name="Uploader_Show_Value_2" id="Uploader_Show_Value_2" value="" readonly="readonly"/>
+                    <span id="UploaderPlaceholder_2"></span>
+                    <span class="Uploader" allowSize="50MB" allowFile="*.flv;*.mp4;*.avi;" style="display:none;" >Please Choose Files</span>
+                </div>
+            </li>
+	    <li><label class="field-label">&nbsp;</label>
+                <div class="field-box">
+                    <div id="UploaderProgress_2"></div>
+                    <div id="UploaderFeedBack_2"></div>
+                </div>
 	    </li>
 	    <li>
-		<div id="UploaderProgress_2"></div>
-		<div id="UploaderFeedBack_2"></div>
-	    </li>
-	    <li>
-		<label>Video Parameter:</label>
+		<label class="field-label">Parameter:</label>
+                <div class="field-box">
 		    <span>Width:</span><input type="text" style="width:50px;" name="width" value="600"/>
 		    <span>Height:</span><input type="text" style="width:50px;" name="height" value="450"/>
+                </div>
+            </li>
+
+	    <li>
+		<label class="field-label">Client:</label>
+                <div class="field-box">
+                    <select name="client" id="client">
+                        <option value="">Please Choose</option>
+                        <volist name="client" id="vo">
+                        <option value="{$vo.id},{$vo.account}">{$vo.account}</option>
+                        </volist>
+                    </select>
+                </div>
+	    </li>
+	    <li>
+		<label class="field-label">Product:</label>
+                <div class="field-box">
+                    <select name="product" id="product">
+                        <option value="">Please Choose</option>
+                        <volist name="product" id="vo">
+                        <option value="{$vo.id}">{$vo.name}</option>
+                        </volist>
+                    </select>
+                </div>
 	    </li>
 
 	    <li>
-		<label>Client:</label><select name="client" id="client">
-		    <option value="">Please Choose</option>
-		    <volist name="client" id="vo">
-		    <option value="{$vo.id},{$vo.account}">{$vo.account}</option>
-		    </volist>
-		</select>
-	    </li>
-	    <li>
-		<label>Product:</label><select name="product" id="product">
-		    <option value="" >Please Choose</option>
-		    <volist name="product" id="vo">
-		    <option value="{$vo.id}">{$vo.name}</option>
-		    </volist>
-		</select>
-	    </li>
-
-	    <li>
-		<label>Project:</label><select name="project" id="project">
-		    <option value="" >Please Choose</option>
-		</select>
+		<label class="field-label">Project:</label>
+                <div class="field-box">
+                    <select name="project" id="project">
+                        <option value="" >Please Choose</option>
+                    </select>
+                </div>
 	    </li>
 	    <!--
 	    <li>

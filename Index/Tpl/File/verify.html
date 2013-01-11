@@ -1,23 +1,31 @@
 <div class="menu_content">
     <form action="__APP__/File/verifySubmit" name="fileForm" method="POST" onsubmit="return validationForm(this);">
         <ul>
-            <li><label>Current Status:</label>
-                <if condition="$data['status'] eq 1">New</if>
-                <if condition="$data['status'] eq 2">Checking</if>
-                <if condition="$data['status'] eq 3">Pass</if>
-                <if condition="$data['status'] eq 3">No Pass</if>
+            <li>
+                <label class="field-label">Current Status:</label>
+                <div class="field-box">
+                    <if condition="$data['status'] eq 1">New</if>
+                    <if condition="$data['status'] eq 2">Checking</if>
+                    <if condition="$data['status'] eq 3">Pass</if>
+                    <if condition="$data['status'] eq 3">No Pass</if>
+                </div>
             </li>
             <li>
-                <label for="status">Set Status:</label>
-                <select name="status" id="status">
-                    <option value="1">New</option>
-                    <option value="2">Checking</option>
-                    <option value="3">Pass</option>
-                    <option value="4">No Pass</option>
-                </select>
+                <label class="field-label" for="status">Set To Status:</label>
+                <div class="field-box">
+                    <select name="status" id="status">
+                        <option value="1">New</option>
+                        <option value="2">Checking</option>
+                        <option value="3">Pass</option>
+                        <option value="4">No Pass</option>
+                    </select>
+                </div>
             </li>
             <li>
-                <label for="remark">Remark</label><input type="text" name="remark" id="remark" rows="5" cols="20"/>
+                <label class="field-label" for="remark">Remark</label>
+                <div class="field-box">
+                    <input type="text" name="remark" id="remark" rows="5" cols="20"/>
+                </div>
             </li>
             
         </ul>
