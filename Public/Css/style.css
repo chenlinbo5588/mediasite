@@ -1,8 +1,9 @@
 #container {margin:0 auto;width:960px;text-align:left;}
 #container a {font-style:normal;color:#666666;}
-#header {font-size:14px;margin:35px 0 15px 0;}
+#header {font-size:14px;margin:35px 0 25px 0;}
 #header ul {float:right;margin-top:15px;width:855px;}
 #header li {border-left:1px solid #666666;text-align:center;line-height:15px;display:block; float:left; width:84px;height:15px;}
+#header li a:hover {font-weight:bold;}
 #header li.first {border:none;}
 #header .current{font-weight:bold;}
 #header li.mw {width:180px;text-align:right;border:none;}
@@ -11,6 +12,9 @@
 #header li.mw a:hover{text-decoration:underline;}
 #header li.header-sub {width:280px;border:none;}
 #header li.header-sub-a {width:196px;border:none;}
+#header li .down-menu {width:95px;padding:5px 0;background:#f4f4f4;position:relative;top:-999em;visibility:hidden;}
+#header li .down-menu a {text-align:left;display:block;width:80px;height:25px;line-height:25px;padding-left:12px;}
+#header li:hover .down-menu {visibility:visible;top:0;}
 
 .logo {float:left;background: url("../Images/logo.png") no-repeat; width:84px; height:30px;}
 .logo a {display:block;width:84px; height:30px;}
@@ -57,7 +61,7 @@ input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:1
 .foot-fix {height:60px;}
 
 /** 公共属性写在这里 */
-.fmain p {padding:10px 0;font-size:13px;}
+.fmain p {padding:10px 0;font-size:14px;}
 .rowbox {width:930px;background-color:#fff;padding:0px 15px;}
 .box960 .desc {font-size:18px;font-weight:bold;line-height:35px;padding:27px 0px;}
 .row {margin:5px;margin: 12px 5px\9; /* for ie 9 */text-align: left;}
