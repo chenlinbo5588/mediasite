@@ -12,7 +12,7 @@
 #header li.mw a:hover{text-decoration:underline;}
 #header li.header-sub {width:280px;border:none;}
 #header li.header-sub-a {width:196px;border:none;}
-#header li .down-menu {width:95px;padding:5px 0;background:#f4f4f4;position:relative;top:-999em;visibility:hidden;}
+#header li .down-menu {width:95px;padding:5px 0;background:#f4f4f4;position:relative;top:-999em;visibility:hidden;z-index:999;}
 #header li .down-menu a {text-align:left;display:block;width:80px;height:25px;line-height:25px;padding-left:12px;}
 #header li:hover .down-menu {visibility:visible;top:0;}
 
