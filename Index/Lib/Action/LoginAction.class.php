@@ -19,7 +19,7 @@ class LoginAction extends CommonAction {
             $userType = $this->_user['Type'];
             switch($userType) {
                 case '0':
-                    $url = __APP__ . '/Upload';
+                    $url = __APP__ . '/Admin/file';
                     break;
                 case '1':
                     $url = __APP__ . '/Admin/client';
