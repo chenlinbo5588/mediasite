@@ -15,7 +15,7 @@
                 <li>
                     <a href="__URL__/play/id/{$vo.id}" title="Project Title">
                         <if condition="$vo['img_path'] neq ''">
-                        <img src="__PUBLIC__/Files/{$vo['img_path']}" width="400" height="214" alt="{$vo.project_name}">
+                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['img_path']}" width="400" height="214" alt="{$vo.project_name}">
                         <else />
                         <img src="__PUBLIC__/Files/work_top.jpg" width="400" height="214" alt="{$vo.project_name}">
                         </if>
