@@ -18,19 +18,30 @@ class CommonAction extends Action {
         $modName      = strtolower(MODULE_NAME);
         $actionName   = strtolower(ACTION_NAME);
         $loginMod     = array('admin');
-        $adminAction = array('client','product','project','folder');
+        $adminAction = array('client','product','project','file');
+	$script = '';
         if(!$this->_user['IsLogon'] && in_array($modName,$loginMod)) {
             Session::set('User','');
             $script = "<script>window.top.location.href='".__APP__."/Login'</script>";
-            die($script);
-        }
-        if(($userType != 1) && in_array($actionName,$adminAction)) {
+        }elseif(($userType != 1) && in_array($actionName,$adminAction)) {
             $script = "<script>window.top.location.href='".__APP__."/Index'</script>";
-            die($script);
         }
-        $this->assign('isLogon',$isLogon);
-        $this->assign('nickName',$nickName);
-        $this->assign('userType',$userType);
+	
+	if('' != $script){
+	    die($script);
+	}
+	
+	if('upload' == $modName && 'upload' == $actionName){
+	    $this->assign('isLogon',true);
+	    $this->assign('nickName',empty($this->_user['NickName']) ? $this->_user['NickName'] : 'unkown');
+	    $this->assign('userType',0);
+	}else{
+	    $this->assign('isLogon',$isLogon);
+	    $this->assign('nickName',$nickName);
+	    $this->assign('userType',$userType);
+	}
+  
+        
     }
 
     /**

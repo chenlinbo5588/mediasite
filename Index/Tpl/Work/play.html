@@ -38,8 +38,8 @@
 <if condition="$videoMsg['id'] gt 0">
 var playervars = {
     contentpath: "",
-    video: "__PUBLIC__/Files/{$videoMsg['video_path']}",
-    preview: "__PUBLIC__/Files/{$videoMsg['img_path']}",
+    video: "http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}",
+    preview: "http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['img_path']}",
     skin: "skin-videoflash.swf",
     skincolor: "0x000000",
     autoscale:false,

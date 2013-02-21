@@ -7,6 +7,9 @@ define('APP_DEBUG',TRUE);
 
 define('ROOT_PATH',  realpath(dirname(__FILE__)));
 
+define('UPLOAD_DOMAIN',$_SERVER['SERVER_NAME']);
+//define('UPLOAD_DOMAIN','www.mediasite.com');
+define('UPLOAD_TARGET','http://'.UPLOAD_DOMAIN.'/Upload/upload');
 /**
  * 修复 swfupload 中固有的 cookie bug 
  */

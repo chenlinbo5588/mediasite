@@ -201,7 +201,7 @@ function validationForm(form){
 function createSwfUpload(index,allowSize, allowFile){
     var upload = new SWFUpload({
 	// Backend Settings
-	upload_url: "__APP__/Upload/upload",
+	upload_url: "{$Think.const.UPLOAD_TARGET}",
 	post_params: {"PHPSESSID" : sid},
 	// File Upload Settings
 	//file_size_limit : "50MB",
