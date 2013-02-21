@@ -24,7 +24,7 @@
                 </if>
                 <li>
                     <a href="__APP__/Services" <if condition="strtolower($Think.const.MODULE_NAME) eq 'services'">class="current"</if> >Services</a>
-                    <div class="down-menu">
+                    <!-- <div class="down-menu">
                         <if condition="(strtolower($Think.const.MODULE_NAME) eq 'services') and (strtolower($Think.const.ACTION_NAME) eq 'index')">
                         <a href="__APP__/Services" class="current">Creative</a>
                         <a href="__APP__/Services/production">Production</a>
@@ -35,7 +35,7 @@
                         <a href="__APP__/Services">Creative</a>
                         <a href="__APP__/Services/production">Production</a>
                         </if>
-                    </div>
+                    </div> -->
                 </li>
                 <li><a href="__APP__/Contact" <if condition="strtolower($Think.const.MODULE_NAME) eq 'contact'">class="current"</if> >Contact</a></li>
                 <if condition="$isLogon eq true" >
