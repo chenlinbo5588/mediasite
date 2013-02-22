@@ -65,7 +65,7 @@ class UploadAction extends CommonAction {
         $data['width'] = $width;
         $data['height'] = $height;
         $data['createtime'] = date('Y-m-d H:i:s');
-        $data['user_account'] = $this->_user['Account'];
+        $data['user_account'] = empty($this->_user['Account']) ? 'remote' : $this->_user['Account'];
         
         $result = $this->_add('Attachment',$data);
         if(isset($result['error'])){
