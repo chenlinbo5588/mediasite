@@ -1,22 +1,22 @@
 <if condition="(strtolower($Think.const.MODULE_NAME) eq 'admin') and ($isLogon eq 1)">
 <div class="sub-menu">
     <ul>
-    <li class="first">Manage</li>
+    <!-- <li class="first">Manage</li> -->
     <eq name="userType" value='1'>
-    <if condition="strtolower($Think.const.ACTION_NAME) eq 'client'">
-    <li class="current">Client</li>
+    <if condition="strtolower($Think.const.ACTION_NAME) eq 'user'">
+    <li class="current">User</li>
     <else />
-    <li><a href="__URL__/client">Client</a></li>
+    <li><a href="__URL__/user">User</a></li>
     </if>
     <if condition="strtolower($Think.const.ACTION_NAME) eq 'product'">
     <li class="current">Product</li>
     <else />
     <li><a href="__URL__/product">Product</a></li>
     </if>
-    <if condition="strtolower($Think.const.ACTION_NAME) eq 'project'">
-    <li class="current">Project</li>
+    <if condition="strtolower($Think.const.ACTION_NAME) eq 'folder'">
+    <li class="current">Folder</li>
     <else />
-    <li><a href="__URL__/project">Project</a></li>
+    <li><a href="__URL__/folder">Folder</a></li>
     </if>
     </eq>
     <if condition="strtolower($Think.const.ACTION_NAME) eq 'file'">

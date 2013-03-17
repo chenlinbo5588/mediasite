@@ -2,20 +2,20 @@
 class AdminAction extends CommonAction {
     public function index(){
         if($this->_user['Type'] == 1) {
-            redirect(__URL__ . '/client');
+            redirect(__URL__ . '/user');
         } else {
             redirect(__URL__ . '/file');
         }
     }
 
-    public function client(){
+    public function user(){
         $search = $_POST['search'];
         $model = M('User');
         $page     = 1;
         $pageSize = 10;
         $total    = 0;
         $list = array();
-        $con = array('enable=1','type=0');
+        $con = array('enable=1');
         if($search != '') {
             $scon = array();
             $scon[] = "id like '%{$search}%'";
@@ -37,7 +37,7 @@ class AdminAction extends CommonAction {
         $this->display();
     }
 
-    public function editClient() {
+    public function editUser() {
         $editId = $_GET['id'] ? $_GET['id'] : 0;
         if($editId) {
             $model = M('User');
@@ -50,7 +50,7 @@ class AdminAction extends CommonAction {
         $this->display();
     }
 
-    public function submitClient() {
+    public function submitUser() {
         $retAry = array('status' => false);
         if(isset($_POST['id']) && ($_POST['id'] != 0)) {
             $con['id']      = $_POST['id'];
@@ -72,7 +72,7 @@ class AdminAction extends CommonAction {
         $this->sendJson($retAry);
     }
 
-    public function delClient() {
+    public function delUser() {
         $retAry = array('status' => false);
         $editId = $_POST['id'];
         $con['id']      = $editId;
@@ -171,7 +171,7 @@ class AdminAction extends CommonAction {
         $this->sendJson($retAry);
     }
 
-    public function project(){
+    public function folder(){
         $search = $_POST['search'];
         $model = M('Project');
         $page     = 1;
@@ -201,7 +201,7 @@ class AdminAction extends CommonAction {
         $this->display();
     }
 
-    public function editProject() {
+    public function editFolder() {
         $editId  = $_GET['id'] ? $_GET['id'] : 0;
         $editMsg = array();
         if($editId) {
@@ -234,7 +234,7 @@ class AdminAction extends CommonAction {
         $this->display();
     }
 
-    public function submitProject() {
+    public function submitFolder() {
         $retAry = array('status' => false);
         if(isset($_POST['id']) && ($_POST['id'] != '')) {
             $con['id']      = $_POST['id'];
@@ -249,7 +249,7 @@ class AdminAction extends CommonAction {
         $this->sendJson($retAry);
     }
 
-    public function delProject() {
+    public function delFolder() {
         $retAry = array('status' => false);
         $editId = $_POST['id'];
         $con['id']      = $editId;
@@ -291,7 +291,7 @@ class AdminAction extends CommonAction {
         $this->display();
         
     }
-    
+/*
     public function folder(){
         $search = $_POST['search'];
         $model = M('Folder');
@@ -367,5 +367,5 @@ class AdminAction extends CommonAction {
     public function user(){
         $this->display();
     }
-
+*/
 }

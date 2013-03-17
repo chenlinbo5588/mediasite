@@ -4,16 +4,16 @@
         $show = '';
         switch($key) {
             case '0':
-                $show = 'paused';
+                $show = 'Paused';
                 break;
             case '1':
-                $show = 'valid';
+                $show = 'Valid';
                 break;
             case '2':
-                $show = 'deleted';
+                $show = 'Deleted';
                 break;
             default:
-                $show = 'valid';
+                $show = 'Valid';
                 break;
         }
         return $show;

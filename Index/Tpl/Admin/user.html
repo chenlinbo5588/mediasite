@@ -2,26 +2,30 @@
 <div class="rowbox box960">
     <include file="Public:submenu" />
     <include file="Public:admintop" />
-    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-30 mt-30" cellpadding="0" cellspacing="0" border="0">
+    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-20 mt-15" cellpadding="0" cellspacing="0" border="0">
         <thead>
         <tr>
-            <th width="15%">ID</th>
-            <th width="20%">Account</th>
-            <th width="20%">Nickname</th>
-            <th width="15%">Password</th>
-            <th width="15%">Status</th>
-            <th width="15%">Operation</th>
+            <th width="20%">User Type</th>
+            <th width="40%">User Name</th>
+            <!-- <th width="20%">Nickname</th>
+            <th width="15%">Password</th> -->
+            <th width="20%">Status</th>
+            <th width="20%">Manage</th>
         </tr>
         </thead>
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.id}</td>
+            <if condition="$vo['type'] eq '1'">
+            <td>Power User</td>
+            <else />
+            <td>Client User</td>
+            </if>
             <td>{$vo.account}</td>
-            <td>{$vo.nickname}</td>
-            <td>{$vo.password}</td>
-            <td><span class="{$vo.enable|showEnable}">&nbsp;</span></td>
-            <td>[<a class="edit" href="javascript:;" data="{$vo.id}" title="Edit">Edit</a>]&nbsp;&nbsp;[<a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>]<br />[<a href="__URL__/product/uid/{$vo.id}" title="Products">Products</a>]</td>
+            <!-- <td>{$vo.nickname}</td>
+            <td>{$vo.password}</td> -->
+            <td>{$vo.enable|showEnable}</td>
+            <td><a class="edit" href="javascript:;" data="{$vo.id}" title="Edit">Edit</a>&nbsp;/&nbsp;<a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a><!-- <br />[<a href="__URL__/product/uid/{$vo.id}" title="Products">Products</a>] --></td>
         </tr>
         </volist>
         </tbody>

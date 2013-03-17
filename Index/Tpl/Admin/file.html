@@ -3,38 +3,34 @@
 <div class="rowbox box960">
     <include file="Public:submenu" />
     <include file="Public:admintop" />
-    
-    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-30 mt-30" cellpadding="0" cellspacing="0" border="0">
+    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-20 mt-15" cellpadding="0" cellspacing="0" border="0">
         <thead>
         <tr>
-            <th width="5%">ID</th>
-            <th width="15%">Onwer</th>
-            <th width="20%">Title</th>
-            <th width="15%">Product</th>
-            <th width="13%">Project</th>
-            <th width="12%">Status</th>
-            <th width="15%">Operation</th>
+            <th width="25%">File Name</th>
+            <th width="20%">Folder Name</th>
+            <th width="20%">Product Name</th>
+            <th width="20%">Client Name</th>
+            <!-- <th width="10%">Status</th> -->
+            <th width="15%">Manage</th>
         </tr>
         </thead>
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.id}</td>
-            <td>{$vo.account}</td>
             <td>{$vo.title}</td>
-            <td>{$vo.product_name}</td>
             <td>{$vo.project_name}</td>
-            <td>
+            <td>{$vo.product_name}</td>
+            <td>{$vo.account}</td>
+            <!-- <td>
                 <if condition="$vo.status eq 1">New</if>
                 <if condition="$vo.status eq 2">Checking</if>
                 <if condition="$vo.status eq 3">Pass</if>
                 <if condition="$vo.status eq 4">No Pass</if>
-            </td>
+            </td> -->
             <td>
             <if condition="$userType eq 1">
-            [<a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>]&nbsp;&nbsp;
-            </if>
-            [<a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a>]</td>
+            <a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>&nbsp;/&nbsp;
+            </if><a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a></td>
         </tr>
         </volist>
         </tbody>

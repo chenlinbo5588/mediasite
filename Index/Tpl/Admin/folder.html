@@ -2,22 +2,24 @@
 <div class="rowbox box960">
     <include file="Public:submenu" />
     <include file="Public:admintop" />
-    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-30 mt-30" cellpadding="0" cellspacing="0" border="0">
+    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-20 mt-15" cellpadding="0" cellspacing="0" border="0">
         <thead>
         <tr>
-            <th width="15%">ID</th>
-            <th width="20%">Name</th>
-            <th width="15%">Status</th>
-            <th width="15%">Operation</th>
+            <th width="30%">Folder Name</th>
+            <th width="25%">Product Name</th>
+            <th width="25%">Client Name</th>
+            <!-- <th width="10%">Status</th> -->
+            <th width="20%">Manage</th>
         </tr>
         </thead>
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.id}</td>
-            <td>{$vo.name}</td>
-            <td>{$vo.enable}</td>
-            <td>[<a class="edit" href="javascript:;" data="{$vo.id}" title="Edit">Edit</a>]&nbsp;&nbsp;[<a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>]</td>
+            <td>{$vo.Name}</td>
+            <td>{$vo.ProductName}</td>
+            <td>{$vo.Account}</td>
+            <!-- <td>{$vo.Enable|showEnable}</td> -->
+            <td><a class="edit" href="javascript:;" data="{$vo.ID}" title="Edit">Edit</a>&nbsp;/&nbsp;<a class="delete" href="javascript:;" data="{$vo.ID}" title="Delete">Delete</a></td>
         </tr>
         </volist>
         </tbody>

@@ -22,7 +22,7 @@ class LoginAction extends CommonAction {
                     $url = __APP__ . '/Admin/file';
                     break;
                 case '1':
-                    $url = __APP__ . '/Admin/client';
+                    $url = __APP__ . '/Admin/user';
                     break;
                 default:
                     $url = __APP__ . '/Index';

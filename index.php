@@ -7,9 +7,9 @@ define('APP_DEBUG',TRUE);
 
 define('ROOT_PATH',  realpath(dirname(__FILE__)));
 
-define('UPLOAD_DOMAIN',$_SERVER['SERVER_NAME']);
-//define('UPLOAD_DOMAIN','www.mediasite.com');
-define('UPLOAD_TARGET','http://'.UPLOAD_DOMAIN.'/Upload/upload');
+define('UPLOAD_DOMAIN',$_SERVER['SERVER_NAME'].'/gooapp');
+//define('UPLOAD_DOMAIN','www.thegoomedia.com');
+define('UPLOAD_TARGET','http://'.UPLOAD_DOMAIN.'/index.php/Upload/upload');
 /**
  * 修复 swfupload 中固有的 cookie bug 
  */
