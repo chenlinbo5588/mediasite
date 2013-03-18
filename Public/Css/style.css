@@ -69,7 +69,7 @@ input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:1
 .menu_content li {position:relative;}
 .menu_content label.field-label { position: absolute;display:block; width: 200px; height:30px;text-align:left;line-height:30px; left: 0;top:0;font-size:16px;font-weight:bold; }
 .menu_content .field-box {position: relative;left:220px; display: block; text-indent: 0;text-align:left;font-size:12px;}
-.menu_content .field-box input{width:256px;height:26px;background:url("../images/input-bg.png") 0 0 no-repeat;border:0px;}
+.menu_content .field-box input{width:256px;height:26px;background:url("../Images/input-bg.png") 0 0 no-repeat;border:0px;}
 .menu_content .field-box select {width:255px;height:26px;}
 
 /** 定制box */
@@ -174,13 +174,13 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .select-box .select-input-box {
 	height: 26px;
 	line-height: 26px;
-	background: #ededee url("../images/select/select-bg.png") 0 0 no-repeat;
+	background: #ededee url("../Images/select/select-bg.png") 0 0 no-repeat;
 }
 .select-box .select-input-box .select-input {
 	padding: 0 16px 0 6px;
 	height: 26px;
 	line-height: 26px;
-	background: url(../images/select/pulldown.png) no-repeat center right;
+	background: url(../Images/select/pulldown.png) no-repeat center right;
 	/*overflow: hidden; note: firefox has bug*/
 	white-space:nowrap;
 }
