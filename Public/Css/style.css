@@ -33,14 +33,14 @@ body a {font-style:normal;color:#666;}
 .menu_title .expand , .menu_title .folder {position:absolute;display:block;float:left;width:29px;height:29px;background:url("../Images/add.png") no-repeat;top:25px;left:10px;}
 .menu_title .folder {background:url("../Images/sub.png") no-repeat;width:19px;height:6px;top:36px;}
 
-.menu_content {font-size:21px;background-color:#fff; padding:20px;margin:15px 0;}
+.menu_content {font-size:21px;background-color:#fff; padding:10px;margin:15px 0;}
 .menu_content li {margin-top:10px;display:block;}
 .menu_content label {color:#6d6e71;display:inline-block;width:180px;text-indent:2em;text-align:right;}
 .menu_content input {width: 260px; height:30px;font-size:21px;}
 .menu_content li .dl {background:url("../Images/delete.png") no-repeat; text-indent:2em; display:block; height:22px;}
 
-.menu_content ul.upload input {width: 236px; color:#BEBEBE;}
-.menu_content ul.upload select {width:300px; height:25px;}
+.menu_content ul.upload input {width: 200px; color:#BEBEBE;}
+/*.menu_content ul.upload select {width:300px; height:25px;}*/
 
 input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:18px;}
 .handlerArea {position:relative;padding-top:15px;}
@@ -66,11 +66,11 @@ input.submitBtn {border:none;width:150px;height:40px;background:#fff;font-size:1
 .box960 .desc {font-size:18px;font-weight:bold;line-height:35px;padding:27px 0px;}
 .row {margin:5px;margin: 12px 5px\9; /* for ie 9 */text-align: left;}
 .line-2 {border-top:2px solid #f3f3f3;}
-.menu_content li {position:relative;width: 500px;}
-.menu_content label.field-label { position: absolute;display:block; width: 200px; height:30px;text-align:right;padding-right:15px;line-height:30px; left: 0;top:0; }
+.menu_content li {position:relative;}
+.menu_content label.field-label { position: absolute;display:block; width: 200px; height:30px;text-align:left;line-height:30px; left: 0;top:0;font-size:16px;font-weight:bold; }
 .menu_content .field-box {position: relative;left:220px; display: block; text-indent: 0;text-align:left;font-size:12px;}
-.menu_content .field-box input, .menu_content .field-box select {height:30px;line-height:30px;}
-.menu_content .field-box select {width:265px;height:30px;}
+.menu_content .field-box input{width:256px;height:26px;background:url("../images/input-bg.png") 0 0 no-repeat;border:0px;}
+.menu_content .field-box select {width:255px;height:26px;}
 
 /** 定制box */
 .box960x540 {height:540px;}
@@ -147,18 +147,20 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .dialog {display:none;}
 .dialog .confirm-body {font-size:16px;}
 .dialog .button {display:inline-block;font-weight:bold;}
-.dialog .button a {display:block;color:#bebebe;padding: .4em 1em;line-height: 1.4;font-size:22px;}
-.dialog .button-bar {text-align:left;padding-left:20px;}
+.dialog .button a {display:block;color:#6d6e71;padding: .4em 1em;line-height: 1.4;font-size:22px;}
+.dialog .button-bar {}
 .dialog input, .dialog select {font-size:12px;}
 /*overwrite ui*/
-.ui-widget-header {border:0px;background: none;}
+.ui-widget-header {border:0px;background: none;margin-top:10px;margin-bottom:5px;}
 .ui-widget-content {border:0px;overflow: hidden;}
-.ui-dialog .ui-dialog-titlebar-close{width:30px;height:24px}
+.ui-dialog .ui-dialog-titlebar-close{width:14px;height:14px;right:10px;}
 .ui-widget-header .ui-icon {width:14px;height:14px;background:url("../Images/close.png") 0 0 no-repeat;}
 .ui-widget-header .ui-state-hover {background-image:none;border:0px;}
-.ui-dialog .ui-dialog-title {font-size:16px;color:#6d6e71;}
+.ui-dialog .ui-dialog-title {font-size:20px;color:#6d6e71;}
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {float:none;text-align:left;padding-left:50px;}
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {background:none;border:0px;font-size:22px;color:#bebebe;font-weight:bold;}
+.ui-dialog .ui-dialog-content {border-top:1px solid #d2d2d2;}
+.ui-dialog .menu_content {margin-top:0px;width:100%;padding:0 0 20px 0;overflow:hidden;}
 
 .select-box {
 	position: relative;
@@ -170,18 +172,15 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 }
 
 .select-box .select-input-box {
-	height: 24px;
-	line-height: 24px;
-	border-color: #bbb #ddd #ddd #bbb;
-	border-style:solid;
-	border-width:1px;
-	background: #fff url(Images/Form/bg_input.png) repeat-x 0 0;
+	height: 26px;
+	line-height: 26px;
+	background: #ededee url("../images/select/select-bg.png") 0 0 no-repeat;
 }
 .select-box .select-input-box .select-input {
 	padding: 0 16px 0 6px;
-	height: 24px;
-	line-height: 24px;
-	background: url(Images/Select/arrow-down.png) no-repeat center right;
+	height: 26px;
+	line-height: 26px;
+	background: url(../images/select/pulldown.png) no-repeat center right;
 	/*overflow: hidden; note: firefox has bug*/
 	white-space:nowrap;
 }
@@ -191,7 +190,7 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 	display: block;
 	top: 26px;
 	left: 0;
-	width: 161px;
+	width: 250px;
 	background: #fff;
 	border-top: 1px solid #bbb;
 	border-left: 1px solid #bbb;
@@ -203,7 +202,7 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 }
 .select-box .select-list li {
 	display:block;
-	/*padding: 0 0 0 16px;*/
+	width:251px;
 	padding: 0 0 0 5px;
 	height: 24px;
 	text-decoration: none;
@@ -211,12 +210,12 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 	overflow: hidden;
 	color: #79A2BD;
 	white-space:nowrap;
+	margin:0px;
 }
 .select-box .select-list li.option-over {
 	background-color: #f4f8fb;
 }
 .select-box .select-list li.selected {
-	/*background: url(Images/Select/selected.png) no-repeat center left;*/
 	background-color: #e5e5e5;
 	color: #0000ff;
 }

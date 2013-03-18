@@ -1,8 +1,6 @@
 <link href="__PUBLIC__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
 <div class="menu_content">
     <form name="fileForm" id="fileForm" action="__APP__/File/submitFile/" method="post" onsubmit="return validationForm(this);">
-	
-	
 	<ul class="upload">
 	    <li><label class="field-label">File Type:</label>
                 <div class="field-box"><select name="file_type" id="file_type">
@@ -109,6 +107,7 @@ var sid = '{$sid}';
 $(function(){
     $(".Uploader").each(function(index){	
         uploads.push(createSwfUpload(index + 1,$(this).attr("allowSize"),$(this).attr("allowFile")));
+        initSelectBox();
     });
     
     /*
@@ -224,8 +223,8 @@ function createSwfUpload(index,allowSize, allowFile){
 	// Button Settingsimg/fee
 	button_image_url : "__PUBLIC__/Images/XPButtonUploadText_61x22.png",
 	button_placeholder_id : "UploaderPlaceholder_" + index,
-	button_width: 61,
-	button_height: 22,
+	button_width: 62,
+	button_height: 26,
 	/*button_text: '<span class="theFont">Hello</span>',
 	//button_text_style: ".theFont { font-size: 16; }",	
 	//button_text : '<span class="redText">上传文件</span>',
