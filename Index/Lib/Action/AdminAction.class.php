@@ -288,84 +288,38 @@ class AdminAction extends CommonAction {
         $this->assign('list',$list);
         $this->assign("page", $page);
         $this->assign("userType", $userType);
-        $this->display();
+        if($userType == 1) {
+            $tplName = 'file';
+        }
+        else {
+            $tplName = 'clientFile';
+        }
+        $this->display($tplName);
         
     }
-/*
-    public function folder(){
-        $search = $_POST['search'];
-        $model = M('Folder');
-        $page     = 1;
-        $pageSize = 10;
-        $total    = 0;
-        $list = array();
-        $con = array('enable=1');
-        if($search != '') {
-            $scon = array();
-            $scon[] = "id like '%{$search}%'";
-            $scon[] = "account like '%{$search}%'";
-            $scon[] = "nickname like '%{$search}%'";
-            $con[] = '('.implode(' OR ',$scon).')';
-        }
-        $where = implode(' AND ',$con);
-        $total = $model->where($where)->count();
-        $pageObj = new Page($total,$pageSize);
-        $list   = $model->where($where)
-                        ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
-                        ->order('id desc')
-                        ->select();
-        $page = $this->showPage($pageObj,$search);
-        $this->assign('list',$list);
-        $this->assign("page", $page);
-        $this->display();
-    }
 
-    public function editFolder() {
-        $editId = $_GET['id'] ? $_GET['id'] : 0;
-        if($editId) {
-            $model = M('Product');
-            $client = $model->where("id={$editId}")->limit(0,1)->select();
-            if(isset($client[0])) {
-                $clientMsg = $client[0];
-                $this->assign('vo',$clientMsg);
+    public function share() {
+        $editId   = $_GET['id'] ? $_GET['id'] : 0;
+        $tplName   = $_GET['down'] == 1 ? 'download' : 'share';
+        $userType = $this->_user['Type'];
+        $account  = $this->_user['Account'];
+        if($editId > 0) {
+            $fileTypeModel = M('Files');
+            $con   = array();
+            $con[] = "id={$editId}";
+            if($userType != 1) {
+                $con[]    = "account = '{$account}'";
+            }
+            $where = implode(' AND ',$con);
+            $fileMsg  = $fileTypeModel->where($where)->select();
+            $this->assign('fileMsg',$fileMsg[0]);
+
+            if($_GET['down'] != 1) {
+                $encodeStr = $this->encodeInfo($editId);
+                $fileUrl = 'http://'.UPLOAD_DOMAIN."/Work/play/share/{$encodeStr}";
+                $this->assign('fileUrl',$fileUrl);
             }
         }
-        $this->display();
+        $this->display($tplName);
     }
-
-    public function submitFolder() {
-        $retAry = array('status' => false);
-        if(isset($_POST['id']) && ($_POST['id'] != '')) {
-            $con['id']      = $_POST['id'];
-            $data = $_POST;
-            unset($data['id']);
-            $retAry = $this->_update('User',$con,$data);
-        } else {
-            $data  = $_POST;
-            $data['enable'] = 1;
-            $data['createtime'] = date('Y-m-d H:i:s');
-            $retAry = $this->_add('User',$data);
-        }
-        $this->sendJson($retAry);
-    }
-
-    public function delFolder() {
-        $retAry = array('status' => false);
-        $userId = $_POST['uid'];
-        $con['id']      = $userId;
-        $data['enable'] = 2;
-        $retAry = $this->_update('User',$con,$data);
-        if($retAry['status']) {
-            $pcon['user_id'] = $userId;
-            $this->_update('Prudcut',$pcon,$data);
-            $this->_update('Project',$pcon,$data);
-            $this->_update('Folder',$pcon,$data);
-        }
-        $this->sendJson($retAry);
-    }
-
-    public function user(){
-        $this->display();
-    }
-*/
 }

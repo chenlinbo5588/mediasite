@@ -17,7 +17,7 @@ class WorkAction extends CommonAction {
         $con      = array();
         if($userType != 1) {
             $con[]    = "account = '{$account}'";
-            $con[]    = "status = 3";
+            //$con[]    = "status = 3";
         }
         if($search != '') {
             $scon = array();
@@ -114,6 +114,7 @@ class WorkAction extends CommonAction {
 
     public function share() {
         $editId   = $_GET['id'] ? $_GET['id'] : 0;
+        $tplName   = $_GET['down'] == 1 ? 'download' : 'share';
         $userType = $this->_user['Type'];
         $account  = $this->_user['Account'];
         if($editId > 0) {
@@ -127,8 +128,14 @@ class WorkAction extends CommonAction {
             $where = implode(' AND ',$con);
             $fileMsg  = $fileTypeModel->where($where)->select();
             $this->assign('fileMsg',$fileMsg[0]);
+
+            if($_GET['down'] != 1) {
+                $encodeStr = $this->encodeInfo($editId);
+                $fileUrl = 'http://'.UPLOAD_DOMAIN."/Work/play/share/{$encodeStr}";
+                $this->assign('fileUrl',$fileUrl);
+            }
         }
-        $this->display();
+        $this->display($tplName);
     }
 
     public function saveFiles() {
@@ -212,7 +219,7 @@ class WorkAction extends CommonAction {
         $fileDir  = ROOT_PATH . '/Public/Files/'; 
         $filePath = $fileDir . $fileName;
         if (!file_exists($filePath)) {
-            die("File is not exist"); 
+            die("File is not exist:".$filePath); 
         } else {
             $file = fopen($filePath,"r");
             Header("Content-type: application/octet-stream"); 

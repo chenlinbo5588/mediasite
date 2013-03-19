@@ -1,0 +1,17 @@
+<div class="menu_content">
+    <form name="downloadForm" action="http://{$Think.const.UPLOAD_DOMAIN}/Work/download" method="POST">
+        <ul>
+            <li>
+                <label class="field-label" style="text-align:right;">File Name:</label>
+                <div class="field-box fb">
+                <label class="field-label">{$fileMsg.title}</label>
+                </div>
+            </li>
+        </ul>
+        <input type="hidden" name="id" value="{$fileMsg.id}" />
+        <div class="button-bar pt-20">
+            <div class="button"><a id="save-btn" href="javascript:;">Download</a></div>
+            <div class="button"><a id="cancel-btn" href="javascript:;">Cancel</a></div>
+        </div>
+    </form>
+</div>

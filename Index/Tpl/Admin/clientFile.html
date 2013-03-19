@@ -1,0 +1,84 @@
+<include file="Public:header" />
+<div class="rowbox box960">
+    <include file="Public:submenu" />
+    <include file="Public:admintop" />
+    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-20 mt-15" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+        <tr>
+            <th width="20%">Product<br />
+            - Folder
+            </th>
+            <th width="25%">File Name</th>
+            <th width="20%">View</th>
+            <th width="20%">Download</th>
+            <th width="15%">Share</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo">
+        <tr>
+            <td>{$vo.product_name}<br />
+            - {$vo.project_name}
+            </td>
+            <td>{$vo.title}</td>
+            <td><a href="__APP__/Work/play/id/{$vo.id}" target="_blank" title="View">View</a></td>
+            <td><a class="download-btn" href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
+            <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
+        </tr>
+        </volist>
+        </tbody>
+    </table>
+    {$page}
+</div>
+<div id="upload-dialog" class="dialog"></div>
+<div id="download-dialog" class="dialog"></div>
+<script type="text/javascript">
+    
+$(function() {
+    $('.share-btn').click(function(){
+        openShare($(this).attr('data'));
+    });
+    $('.download-btn').click(function(){
+        download($(this).attr('data'));
+    });
+});
+
+function download(id) {
+    $dialog  = $('#download-dialog');
+    if((typeof (id) == 'undefined') || (id == ''))return;
+    var url     = '__URL__/share/down/1/id/'+id;
+    var title   = 'Download';
+    $options = {title:title,width:600,height:210,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            $form.submit();
+            $form.empty();
+            $dialog.dialog( "close" );
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
+}
+
+function openShare(id) {
+    $dialog  = $('#upload-dialog');
+    if((typeof (id) == 'undefined') || (id == ''))return;
+    var url     = '__URL__/share/id/'+id;
+    var title   = 'Share';
+    $options = {title:title,width:600,height:220,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            $('input[name="url"]',$form).css('color','blue');
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
+}
+</script>
+<include file="Public:footer" />

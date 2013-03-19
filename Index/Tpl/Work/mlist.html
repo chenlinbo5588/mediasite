@@ -38,7 +38,7 @@
     {$page}
 </div>
 <div id="upload-dialog" class="dialog"></div>
-<form id="download-form" action="__URL__/download" method="POST"></form>
+<div id="download-dialog" class="dialog"></div>
 <script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Javascript/swfup/swfupload.queue.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Javascript/swfup/fileprogress.js"></script>
@@ -99,44 +99,36 @@ function openUpload(id) {
 }
 
 function download(id) {
+    $dialog  = $('#download-dialog');
     if((typeof (id) == 'undefined') || (id == ''))return;
-    var $form       = $("#download-form");
-    $form.append('<input type="hidden" name="id" value="' + id + '" />');
-    $form.submit();
-    $form.empty();
+    var url     = '__URL__/share/down/1/id/'+id;
+    var title   = 'Download';
+    $options = {title:title,width:600,height:210,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            $form.submit();
+            $form.empty();
+            $dialog.dialog( "close" );
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
 }
 
 function openShare(id) {
     $dialog  = $('#upload-dialog');
     if((typeof (id) == 'undefined') || (id == ''))return;
     var url     = '__URL__/share/id/'+id;
-    var title   = 'Share File';
-    $options = {title:title,width:800,height:400,modal:true};
+    var title   = 'Share';
+    $options = {title:title,width:600,height:220,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
         $('#save-btn').click(function(){
             var $form   = $dialog.find('form').eq(0);
-            var subUrl  = '__URL__/submitShare';
-            var options = {
-                dataType        : 'json',
-                url             : subUrl,
-                success         : function(response) {
-                    if(response.status) {
-                        $dialog.dialog( "close" );
-                        window.location.reload();
-                    }
-                    else {
-                        if(response.error) {
-                            App.alert(title,response.error);
-                        }
-                        else {
-                            App.alert(title,'Operate fail.');
-                        }
-                    }
-                }
-            };
-            $form.ajaxForm(options); 
-            $form.submit();
+            $('input[name="url"]',$form).css('color','blue');
         });
         $('#cancel-btn').click(function(){
             $dialog.dialog( "close" );
