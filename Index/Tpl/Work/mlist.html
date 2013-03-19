@@ -1,6 +1,9 @@
 <include file="Public:header" />
+<script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
 <div class="box960x540">
-    <img src="__PUBLIC__/Images/top/work-top.jpg" width="960" height="540"/>
+    <div id="videoCanvas">
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
+    </div>
 </div>
 
 <div class="rowbox box960">
@@ -183,5 +186,21 @@ function createSwfUpload(index,allowSize, allowFile){
     });
     return upload;
 }
+</script>
+<script type="text/javascript">
+    var playervars = {
+    contentpath: "",
+    video: "http://www.whoisgoo.com/goo_demo.mp4",
+    preview: "http://{$Think.const.UPLOAD_DOMAIN}/Public/Images/work_top.jpg",
+    skin: "skin-videoflash.swf",
+    skincolor: "0x000000",
+    autoscale:false,
+    autoplay: false,
+    videowidth:960,
+    videoheight:505
+};
+var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor: "#ffffff", base: "."};
+var attributes = { align: "center" };
+swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
 </script>
 <include file="Public:footer" />
