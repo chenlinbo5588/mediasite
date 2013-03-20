@@ -1,0 +1,99 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
+<div class="rowbox box960">
+    <include file="Public:submenu" />
+    <include file="Public:admintop" />
+    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-20 mt-15" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+        <tr>
+            <th width="25%">File Name</th>
+            <th width="20%">Folder Name</th>
+            <th width="20%">Product Name</th>
+            <th width="20%">Client Name</th>
+            <!-- <th width="10%">Status</th> -->
+            <th width="15%">Manage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="vo">
+        <tr>
+            <td>{$vo.title}</td>
+            <td>{$vo.project_name}</td>
+            <td>{$vo.product_name}</td>
+            <td>{$vo.account}</td>
+            <!-- <td>
+                <if condition="$vo.status eq 1">New</if>
+                <if condition="$vo.status eq 2">Checking</if>
+                <if condition="$vo.status eq 3">Pass</if>
+                <if condition="$vo.status eq 4">No Pass</if>
+            </td> -->
+            <td>
+            <if condition="$userType eq 1">
+            <a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>&nbsp;/&nbsp;
+            </if><a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a></td>
+        </tr>
+        </volist>
+        </tbody>
+    </table>
+    {$page}
+</div>
+<div id="dialog" class="dialog"></div>
+<script type="text/javascript">
+    
+$('.specify').click(function(){
+    var data = $(this).attr('data');
+    var action = $(this).attr('action');
+    var title = $(this).attr('title');
+    
+    var url = action + '/id/' + data;    
+    loadDialog(title,url);
+});
+
+
+$('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
+    loadDialog('Add {$Think.ACTION_NAME|strtolower|ucfirst}',"__APP__/File/add");
+});
+
+
+function loadDialog(title,url) {
+    $dialog  = $('#dialog');
+    $options = {title:title,width:800,height:500,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            var subUrl  = $form.attr("action");
+            var options = {
+                dataType        : 'json',
+                url             : subUrl,
+                success         : function(response) {
+                   
+                    if(response.status) {
+                        $dialog.dialog( "close" );
+                        window.location.reload();
+                    }
+                    else {
+                        if(response.error) {
+                            App.alert(title,response.error);
+                        }
+                        else {
+                            App.alert(title,'Operate fail.');
+                        }
+                    }
+                }
+            };
+            $form.ajaxForm(options); 
+            if(validationForm($form)){
+                $form.submit();
+            }
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+    }, false);
+}
+    
+
+  
+</script>
+<include file="Public:footer" />
