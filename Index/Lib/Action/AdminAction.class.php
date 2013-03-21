@@ -297,7 +297,7 @@ class AdminAction extends CommonAction {
         $this->display($tplName);
         
     }
-
+    
     public function share() {
         $editId   = $_GET['id'] ? $_GET['id'] : 0;
         $tplName   = $_GET['down'] == 1 ? 'download' : 'share';
@@ -321,5 +321,11 @@ class AdminAction extends CommonAction {
             }
         }
         $this->display($tplName);
+    }
+    
+    public function image(){
+	
+	
+	$this->display();
     }
 }

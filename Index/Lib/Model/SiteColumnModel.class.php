@@ -1,9 +1,9 @@
 <?php
-class ShareFilesModel extends CommonModel {
-
+class SiteColumnModel extends CommonModel {
+    protected $trueTableName = 'site_column';
+    
     public $_auto = array(
-        array('createtime','currDateTime',self::MODEL_INSERT,'function'),
-        array('enable',1,self::MODEL_INSERT)
+ 
     );
 }
 ?>

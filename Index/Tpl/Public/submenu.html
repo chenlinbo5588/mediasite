@@ -24,6 +24,11 @@
     <else />
     <li><a href="__URL__/file">File</a></li>
     </if>
+    <if condition="strtolower($Think.const.ACTION_NAME) eq 'Image'">
+    <li class="current">Image</li>
+    <else />
+    <li><a href="__URL__/image">Image</a></li>
+    </if>
     </ul>
 </div>
 </if>

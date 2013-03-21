@@ -194,3 +194,18 @@ CREATE TABLE `user` (
 
 
 INSERT INTO `user` VALUES ('1', 'admin', 'Admin', 'point9*', '', '', '2012-12-15 12:17:00', '0000-00-00 00:00:00', '1', '1');
+
+CREATE TABLE `site_column` (
+  `code` varchar(50) NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `url` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`code`),
+  UNIQUE KEY `u_title_idx` (`title`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `site_column` VALUES ('home_page', 'Home Page', '/');
+INSERT INTO `site_column` VALUES ('about_page', 'About Page', '/About/');
+INSERT INTO `site_column` VALUES ('work_page', 'Work Page', '/Work/');
+INSERT INTO `site_column` VALUES ('services_page', 'Services Page', '/Services/');
+INSERT INTO `site_column` VALUES ('contact_page', 'Contact Page', '/Contact/');
+
