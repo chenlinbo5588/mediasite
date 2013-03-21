@@ -3,27 +3,18 @@
 <div class="rowbox box960">
     <include file="Public:submenu" />
     <include file="Public:admintop" />
-    <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-20 mt-15" cellpadding="0" cellspacing="0" border="0">
-        <thead>
-        <tr>
-            <th width="25%">Column Title</th>
-            <th width="20%">Column Image</th>
-            
-        </tr>
-        </thead>
-        <tbody>
-        <volist name="list" id="vo">
-        <tr>
-            <td>{$vo.title}</td>
-            <td>{$vo.project_name}</td>
-            
-           
-            
-        </tr>
-        </volist>
-        </tbody>
-    </table>
-    {$page}
+    
+    <volist name="siteColumnList" id="vo">
+    <ul id="columnMenu">
+	<li <if condition="$currentPage eq $vo['code']">class="current"</if>><a href="/Admin/image/column_code/{$vo.code}" title="Click To Show Column Images">{$vo.title}</a></li>
+    </ul>
+	
+    </volist>
+    <ul id="columnImg">
+	<volist name="imgList" id="img">
+	<li id="img{$img['aid']}"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$img['path_name']}" width="600" height="450"/><a href="javascript:void(0);" onclick="DeleteImage({$img['aid']})" title="Click To Delete Image" alt="Click To Delete Image">Delete</a></li>
+	</volist>
+    </ul>
 </div>
 <div id="dialog" class="dialog"></div>
 <script type="text/javascript">
@@ -32,6 +23,23 @@ $('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
     loadDialog('Add {$Think.ACTION_NAME|strtolower|ucfirst}',"__APP__/Image/add");
 });
 
+$(function(){
+    $("#columnImg li img").hover(function(){
+	$(this).css({border:"1px solid black"});
+    },function(){
+	$(this).css({border:"none"});
+    });
+});
+
+function DeleteImage(img_id){
+    if(confirm("Are you sure to delete ?")){
+	$.post("/Admin/delImage/",{id:img_id},function(data){
+	    if(data.status == true){
+		$("#img" + img_id).fadeOut("normal");
+	    }
+	},'json');
+    }
+}
 
 function loadDialog(title,url) {
     $dialog  = $('#dialog');
@@ -70,8 +78,7 @@ function loadDialog(title,url) {
         });
     }, false);
 }
-    
 
-  
+
 </script>
 <include file="Public:footer" />

@@ -10,49 +10,29 @@ class ImageAction extends CommonAction {
      */
     public function submitImage() {
         $retAry = array('status' => false);
-
-	$data = array();
-        if(1 == $this->_user['Type']){
-            $data['account'] = substr($_POST['client'],strpos($_POST['client'],',') + 1);
-        }else{
-            // 普通账户只能给自己加
-            $data['account']  = $this->_user['Account'];
-        }
-	$data['title'] = $_POST['Uploader_Show_Value_2'];
-	$data['file_name'] = $_POST['Uploader_Show_Value_2'];
-	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_2'],strrpos($_POST['Uploader_Show_Value_2'],'.'));
 	
-	/**
-	 * 如果 magic_quotes_gpc = On ,则需要处理 
-	 */
-	if(MAGIC_QUOTES_GPC){
-	    $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
-	    $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
+	$imageId = array() ;
+	for($i = 1; $i <= 5 ; $i++){
+	    if(!empty($_POST['Uploader_Value_'.$i])){
+		
+		if(MAGIC_QUOTES_GPC){
+		   $_POST['Uploader_Value_'.$i] = stripslashes($_POST['Uploader_Value_'.$i]);
+		}
+		$tmp = json_decode($_POST['Uploader_Value_'.$i],true);
+		$imageId[] = $tmp['id'];
+	    }
 	}
-	$image = json_decode($_POST['Uploader_Value_1'],true);
 	
-	$data['img_path'] = $image['path'];
-	$data['img_size'] = $image['size'];
-	$data['img_width'] = $image['width'];
-	$data['img_height'] = $image['height'];
-	
-	/*
-	$now = date('Y-m-d H:i:s');
-	
-        if(isset($_POST['id']) && ($_POST['id'] != 0)) {
-            $con['id']      = $_POST['id'];
-	    $data['updatetime'] = $now;
-	    $data['update_user'] = $this->_user['Account'];
-            $retAry = $this->_update('Files',$con,$data);
-        } else {
-            $data['createtime'] = $now;
-            $data['updatetime'] = $now;
-	    $data['create_user'] = $this->_user['Account'];
-            $retAry = $this->_add('Files',$data);
+        if(!empty($imageId) && !empty($_POST['column_code'])) {
+	    if(count($imageId) > 1){
+		$condition = "aid IN (" . implode(',',$imageId) . ")";
+	    }else{
+		$condition = "aid = " .$imageId[0];
+	    }
+	    $data['remark'] = $_POST['column_code'];
+            $retAry = $this->_update('Attachment',$condition,$data);
         }
         $this->sendJson($retAry);
-	 * 
-	 */
     }
     
     public function add(){

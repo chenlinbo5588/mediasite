@@ -328,7 +328,36 @@ class AdminAction extends CommonAction {
     
     public function image(){
 	
+	$siteColumnModel = M('SiteColumn');
+	$siteColumnList =  $siteColumnModel->select();
+	$attachmentModel = M('Attachment');
 	
+	$img = array();
+	
+	$defaultColumn = empty($_GET['column_code']) == true ? 'Home Page' : $_GET['column_code'];
+	
+	//foreach($siteColumnList as $key => $value){
+	   //$img[$value['code']] = $attachmentModel->where(" remark = '" . $value['code'] . "' and is_delete = 0")->select();
+	//}
+	$img = $attachmentModel->where(" remark = '" . $defaultColumn . "' and is_delete = 0")->select();
+	//print_r($img);
+	$this->assign('siteColumnList',$siteColumnList);
+	$this->assign('imgList',$img);
+	$this->assign('currentPage',$defaultColumn);
 	$this->display();
+    }
+    
+    /**
+     * 删除图片 
+     */
+    public function delImage(){
+	$retAry = array('status' => false);
+        $con['aid'] = $_POST['id'];
+        $data['is_delete'] = 1;
+	if(!empty($con['aid']) && $this->_user['Type'] == 1){
+	    $retAry = $this->_update('Attachment',$con,$data);
+	}
+        
+        $this->sendJson($retAry);
     }
 }

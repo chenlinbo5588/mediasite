@@ -203,9 +203,10 @@ CREATE TABLE `site_column` (
   UNIQUE KEY `u_title_idx` (`title`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `site_column` VALUES ('home_page', 'Home Page', '/');
-INSERT INTO `site_column` VALUES ('about_page', 'About Page', '/About/');
-INSERT INTO `site_column` VALUES ('work_page', 'Work Page', '/Work/');
-INSERT INTO `site_column` VALUES ('services_page', 'Services Page', '/Services/');
-INSERT INTO `site_column` VALUES ('contact_page', 'Contact Page', '/Contact/');
+INSERT INTO `site_column` VALUES ('Home Page', 'Home Page', '/');
+INSERT INTO `site_column` VALUES ('About Page', 'About Page', '/About/');
+INSERT INTO `site_column` VALUES ('Work Page', 'Work Page', '/Work/');
+INSERT INTO `site_column` VALUES ('Services Page', 'Services Page', '/Services/');
+INSERT INTO `site_column` VALUES ('Contact Page', 'Contact Page', '/Contact/');
 
+alter table attachment add index  sit_column_key (remark) ;

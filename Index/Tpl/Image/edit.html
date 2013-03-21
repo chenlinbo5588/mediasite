@@ -1,12 +1,12 @@
 <link href="__PUBLIC__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
 <div class="menu_content">
-    <form name="fileForm" id="fileForm" action="__APP__/File/submitFile/" method="post" onsubmit="return validationForm(this);">
+    <form name="fileForm" id="fileForm" action="__APP__/Image/submitImage/" method="post" onsubmit="return validationForm(this);">
 	<ul class="upload">
 	    <li><label class="field-label">Site Column:</label>
                 <div class="field-box"><select name="column_code" id="column_code">
 		    <option value="">Please Select</option>
 		    <volist name="siteColumn" id="vo">
-		    <option value="{$vo.code},{$vo.title}">{$vo.title}</option>
+		    <option value="{$vo.code}">{$vo.title}</option>
 		    </volist>
 		</select></div>
 	    </li>
@@ -55,28 +55,29 @@ $(function(){
 function validationForm(form){
     if('' == $("#column_code").val()){
 	alert("Please Choose Site Column");
+	return false;
+    }
+    var i = 1;
+    var fileFlag = false;
+    for(i = 1; i < 6; i++){
+	if('' != $("#Uploader_Value_" + i).val()){
+	    fileFlag = true;
+	}
     }
     
-    /*
-    if('' == $("#Uploader_Value_1").val()){
-	alert("Please Choose Image File");
+    if(false == fileFlag){
+	alert('Please upload a picture at least !');
 	$("#Uploader_Show_Value_1").focus();
 	return false;
     }
     
-    if('' == $("#Uploader_Value_2").val()){
-	alert("Please Choose File");
-	$("#Uploader_Show_Value_2").focus();
-	return false;
-    }*/
-
     return true;
 }
 
 function createSwfUpload(index,allowSize, allowFile){
     var upload = new SWFUpload({
 	// Backend Settings
-	upload_url: "__APP__/Upload/upload",
+	upload_url: "{$Think.const.UPLOAD_TARGET}",
 	post_params: {"PHPSESSID" : sid},
 	// File Upload Settings
 	//file_size_limit : "50MB",

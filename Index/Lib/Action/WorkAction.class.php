@@ -2,6 +2,12 @@
 import("@.ORG.Util.Page");
 class WorkAction extends CommonAction {
     public function index(){
+		
+	$attachmentModel = M('Attachment');
+	$img = $attachmentModel->where(" remark = 'Work Page' and is_delete = 0")->select();
+
+	$this->assign('imgList',$img);
+	$this->assign('imgCount',count($img));
         $this->display();
     }
 
@@ -219,12 +225,15 @@ class WorkAction extends CommonAction {
         $fileMsg  = $fileMsg[0];
         $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
 
-        $fileName = $fileMsg['video_path']; 
+	/*
         $fileDir  = 'http://'.UPLOAD_DOMAIN . '/Public/Files/'; 
         $filePath = $fileDir . $fileName;
         import('@.ORG.Net.Http');
         $downHttp = new Http();
         $downHttp->fsockopenDownload($filePath);
+	 * 
+	 */
+	downloadFile($downloadName,ROOT_PATH.'/Public/Files/'.$fileMsg['video_path']);
     }
-
+    
 }

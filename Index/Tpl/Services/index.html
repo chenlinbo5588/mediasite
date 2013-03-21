@@ -1,6 +1,14 @@
 <include file="Public:header" />
     <div class="box960x540">
-    <img src="__PUBLIC__/Images/careers_top.jpg" width="960" height="540"/>
+	<ul id="gallery-home" style="display:none;">
+	    <if condition="$imgCount eq 0">
+	    <li><a href="#"><img src="__PUBLIC__/Images/careers_top.jpg" width="960" height="540" border="0" alt="Work" /></a><span></span></li>
+	    <else/>
+	    <volist name="imgList" id="img">
+	    <li><a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$img['path_name']}" width="960" height="540" border="0" alt=""/></a></li>
+	    </volist>
+	    </if>
+	</ul>
     </div>
 
     <div class="rowbox box960">

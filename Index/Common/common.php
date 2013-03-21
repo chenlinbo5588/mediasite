@@ -107,4 +107,73 @@
         curl_close($ch);
         return $html;
     }
+    
+    /**
+     *
+     * @param type $filename  下载时显示的文件名称
+     * @param type $filePath  文件绝对路径
+     * @return boolean 
+     */
+    function downloadFile($filename = '默认名称',$filePath = ''){
+	if ($filename == '' OR $filePath == '')
+	{
+		return FALSE;
+	}
+
+	// Try to determine if the filename includes a file extension.
+	// We need it in order to set the MIME type
+	if (FALSE === strpos($filename, '.'))
+	{
+		return FALSE;
+	}
+
+	// Grab the file extension
+	$x = explode('.', $filename);
+	$extension = end($x);
+
+	// Load the mime types
+	$mimes = require_once(ROOT_PATH . '/Index/Conf/mimes.php');
+	/*var_dump(file_exists($filePath)) ;
+echo filesize($filePath);die();*/
+	// Set a default mime if we can't find it
+	if ( ! isset($mimes[$extension]))
+	{
+		$mime = 'application/octet-stream';
+	}
+	else
+	{
+		$mime = (is_array($mimes[$extension])) ? $mimes[$extension][0] : $mimes[$extension];
+	}
+
+	ob_end_clean();
+
+	// Generate the server headers
+	if (strpos($_SERVER['HTTP_USER_AGENT'], "MSIE") !== FALSE)
+	{
+		$encoded_filename = urlencode($filename);
+		$encoded_filename = str_replace("+", "%20", $encoded_filename);
+
+		header('Content-Type: "'.$mime.'"');
+		header('Content-Disposition: attachment; filename="'.$encoded_filename.'"');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header("Content-Transfer-Encoding: binary");
+		header('Pragma: public');
+		header("Content-Length: ".@filesize($filePath));
+	}
+	else
+	{
+		header('Content-Type: "'.$mime.'"');
+		header('Content-Disposition: attachment; filename="'.$filename.'"');
+		header("Content-Transfer-Encoding: binary");
+		header('Expires: 0');
+		header('Pragma: no-cache');
+		header("Content-Length: ".@filesize($filePath));
+	}
+
+	readfile($filePath);
+
+	exit(0);
+    
+    }
 ?>
