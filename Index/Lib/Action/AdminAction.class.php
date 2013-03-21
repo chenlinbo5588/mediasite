@@ -311,13 +311,16 @@ class AdminAction extends CommonAction {
                 $con[]    = "account = '{$account}'";
             }
             $where = implode(' AND ',$con);
-            $fileMsg  = $fileTypeModel->where($where)->select();
-            $this->assign('fileMsg',$fileMsg[0]);
+            $fileMsg  = $fileMsg[0];
+            $this->assign('fileMsg',$fileMsg);
 
             if($_GET['down'] != 1) {
                 $encodeStr = $this->encodeInfo($editId);
-                $fileUrl = 'http://'.UPLOAD_DOMAIN."/Work/play/share/{$encodeStr}";
+                $fileUrl = 'http://'.ROOT_APP_URL."/Work/play/share/{$encodeStr}";
                 $this->assign('fileUrl',$fileUrl);
+            } else {
+                $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
+                $this->assign('downloadName',$downloadName);
             }
         }
         $this->display($tplName);

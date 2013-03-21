@@ -127,12 +127,16 @@ class WorkAction extends CommonAction {
             }
             $where = implode(' AND ',$con);
             $fileMsg  = $fileTypeModel->where($where)->select();
-            $this->assign('fileMsg',$fileMsg[0]);
+            $fileMsg  = $fileMsg[0];
+            $this->assign('fileMsg',$fileMsg);
 
             if($_GET['down'] != 1) {
                 $encodeStr = $this->encodeInfo($editId);
-                $fileUrl = 'http://'.UPLOAD_DOMAIN."/Work/play/share/{$encodeStr}";
+                $fileUrl = 'http://'.ROOT_APP_URL."/Work/play/share/{$encodeStr}";
                 $this->assign('fileUrl',$fileUrl);
+            } else {
+                $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
+                $this->assign('downloadName',$downloadName);
             }
         }
         $this->display($tplName);
@@ -208,7 +212,7 @@ class WorkAction extends CommonAction {
         $con[] = "id={$editId}";
         if($userType != 1) {
             $con[]    = "account = '{$account}'";
-            $con[]    = "status = 3";
+            //$con[]    = "status = 3";
         }
         $where = implode(' AND ',$con);
         $fileMsg  = $fileTypeModel->where($where)->select();
@@ -216,20 +220,11 @@ class WorkAction extends CommonAction {
         $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
 
         $fileName = $fileMsg['video_path']; 
-        $fileDir  = ROOT_PATH . '/Public/Files/'; 
+        $fileDir  = 'http://'.UPLOAD_DOMAIN . '/Public/Files/'; 
         $filePath = $fileDir . $fileName;
-        if (!file_exists($filePath)) {
-            die("File is not exist:".$filePath); 
-        } else {
-            $file = fopen($filePath,"r");
-            Header("Content-type: application/octet-stream"); 
-            Header("Accept-Ranges: bytes"); 
-            Header("Accept-Length: ".filesize($filePath)); 
-            Header("Content-Disposition: attachment; filename=" . $downloadName);
-            echo fread($file,filesize($filePath)); 
-            fclose($file); 
-            die;
-        }
+        import('@.ORG.Net.Http');
+        $downHttp = new Http();
+        $downHttp->fsockopenDownload($filePath);
     }
 
 }

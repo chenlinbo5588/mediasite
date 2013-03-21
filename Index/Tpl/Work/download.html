@@ -1,11 +1,9 @@
 <div class="menu_content">
-    <form name="downloadForm" action="http://{$Think.const.UPLOAD_DOMAIN}/Work/download" method="POST">
+    <form name="downloadForm" action="__URL__/download" method="POST">
         <ul>
             <li>
                 <label class="field-label" style="text-align:right;">File Name:</label>
-                <div class="field-box fb">
-                <label class="field-label">{$fileMsg.title}</label>
-                </div>
+                <div class="field-box"><span style="font-size:16px;">{$downloadName}</span></div>
             </li>
         </ul>
         <input type="hidden" name="id" value="{$fileMsg.id}" />
