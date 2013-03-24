@@ -48,15 +48,16 @@
                     <if condition="$isLogon eq true" >
                     Welcome!<span class="pl-5 login-name">{$nickName}</span>
                     <a class="pl-10" href="__APP__/Login/logout/">Logout</a>
-                    <else />
+                    </if>
+                    <a href="#"><span class="pl-10">EN/CH</span></a>
+                </li>
+                <if condition="$isLogon neq true" >
                     <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">
                     <li class="mw ml"><a href="__APP__/Login"><span>Admin Login</span></a></li>
                     <else />
                     <li class="mw ml"><a href="__APP__/Login"><span>Client Login</span></a></li>
                     </if>
-                    </if>
-                    <a href="#"><span>EN/CH</span></a>
-                </li>
+                </if>
             </ul>
             <div class="clear"></div>
         </div>

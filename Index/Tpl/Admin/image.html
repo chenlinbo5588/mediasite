@@ -33,7 +33,7 @@ $(function(){
 
 function DeleteImage(img_id){
     if(confirm("Are you sure to delete ?")){
-	$.post("/Admin/delImage/",{id:img_id},function(data){
+	$.post("__URL__/delImage/",{id:img_id},function(data){
 	    if(data.status == true){
 		$("#img" + img_id).fadeOut("normal");
 	    }

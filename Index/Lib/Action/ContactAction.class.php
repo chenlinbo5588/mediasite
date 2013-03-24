@@ -1,6 +1,6 @@
 <?php
 class ContactAction extends CommonAction {
-    public function index(){
+    /*public function index(){
 		
 	$attachmentModel = M('Attachment');
 	$img = $attachmentModel->where(" remark = 'Contact Page' and is_delete = 0")->select();
@@ -9,6 +9,6 @@ class ContactAction extends CommonAction {
 	$this->assign('imgCount',count($img));
 	
         $this->display();
-    }
+    }*/
 
 }

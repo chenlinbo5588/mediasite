@@ -44,6 +44,13 @@ class CommonAction extends Action {
         
     }
 
+    public function index(){
+        $img = readTopImg(strtolower(MODULE_NAME));
+        $this->assign('imgList',$img);
+        $this->assign('imgCount',count($img));
+        $this->display();
+    }
+
     /**
     *user login
     *

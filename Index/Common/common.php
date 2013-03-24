@@ -186,4 +186,18 @@ echo filesize($filePath);die();*/
         }
         exit(0);
     }
+
+    function readTopImg($moduleName = 'index') {
+        $fileList = array();
+        $moduleName = strtolower(MODULE_NAME);
+        $dir = opendir(ROOT_PATH.'/Public/Images/top');
+        while(($file = readdir($dir))!=false){
+          if ($file!="." && $file!="..") { 
+            $ns = explode('-', $file);
+            if($moduleName == $ns[0]) $fileList[] = $file;
+          } 
+        }
+        closedir($dir);
+        return $fileList;
+    }
 ?>
