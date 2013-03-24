@@ -136,6 +136,7 @@
 	/*var_dump(file_exists($filePath)) ;
 echo filesize($filePath);die();*/
 	// Set a default mime if we can't find it
+    /*
 	if ( ! isset($mimes[$extension]))
 	{
 		$mime = 'application/octet-stream';
@@ -171,9 +172,18 @@ echo filesize($filePath);die();*/
 		header("Content-Length: ".@filesize($filePath));
 	}
 
-	readfile($filePath);
-
-	exit(0);
-    
+	readfile($filePath);*/
+        if (!file_exists($filePath)) {
+            die("File is not exist"); 
+        } else {
+            $file = fopen($filePath,"r");
+            Header("Content-type: application/octet-stream"); 
+            Header("Accept-Ranges: bytes"); 
+            Header("Accept-Length: ".filesize($filePath)); 
+            Header("Content-Disposition: attachment; filename=" . $filename);
+            echo fread($file,filesize($filePath)); 
+            fclose($file);
+        }
+        exit(0);
     }
 ?>

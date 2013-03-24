@@ -6,7 +6,7 @@
     
     <volist name="siteColumnList" id="vo">
     <ul id="columnMenu">
-	<li <if condition="$currentPage eq $vo['code']">class="current"</if>><a href="/Admin/image/column_code/{$vo.code}" title="Click To Show Column Images">{$vo.title}</a></li>
+	<li <if condition="$currentPage eq $vo['code']">class="current"</if>><a href="__URL__/image/column_code/{$vo.code}" title="Click To Show Column Images">{$vo.title}</a></li>
     </ul>
 	
     </volist>

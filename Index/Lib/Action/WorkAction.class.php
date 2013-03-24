@@ -58,7 +58,7 @@ class WorkAction extends CommonAction {
             $con[] = "id={$editId}";
             if($userType != 1) {
                 $con[]    = "account = '{$account}'";
-                $con[]    = "status = 3";
+                //$con[]    = "status = 3";
             }
         } else if($share) {
             $shareId = $this->decodeInfo($share);
@@ -81,7 +81,7 @@ class WorkAction extends CommonAction {
             $con      = array();
             if($userType != 1) {
                 $con[]    = "account = '{$account}'";
-                $con[]    = "status = 3";
+                //$con[]    = "status = 3";
             }
             $con[] = "category_name='{$category}'";
             $where = implode(' AND ',$con);
@@ -108,7 +108,7 @@ class WorkAction extends CommonAction {
             $con[] = "id={$editId}";
             if($userType != 1) {
                 $con[]    = "account = '{$account}'";
-                $con[]    = "status = 3";
+                //$con[]    = "status = 3";
             }
             $where = implode(' AND ',$con);
             $fileMsg  = $fileTypeModel->where($where)->select();
@@ -129,11 +129,14 @@ class WorkAction extends CommonAction {
             $con[] = "id={$editId}";
             if($userType != 1) {
                 $con[]    = "account = '{$account}'";
-                $con[]    = "status = 3";
+                //$con[]    = "status = 3";
             }
             $where = implode(' AND ',$con);
             $fileMsg  = $fileTypeModel->where($where)->select();
             $fileMsg  = $fileMsg[0];
+            if($userType == 1) {
+                $account = $fileMsg['account'];
+            }
             $this->assign('fileMsg',$fileMsg);
 
             if($_GET['down'] != 1) {
@@ -143,6 +146,7 @@ class WorkAction extends CommonAction {
             } else {
                 $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
                 $this->assign('downloadName',$downloadName);
+                $this->assign('userAccount',$account);
             }
         }
         $this->display($tplName);
@@ -185,7 +189,7 @@ class WorkAction extends CommonAction {
         $shareID    = $_POST['id'];
         if($shareID <= 0) {$this->sendJson($retAry);}
         $encodeStr = $this->encodeInfo($shareID);
-        $fileUrl = 'http://'.$_SERVER['HTTP_HOST'].__ROOT__."/Work/play/share/{$encodeStr}";
+        $fileUrl = 'http://'.ROOT_APP_URL."/Work/play/share/{$encodeStr}";
         $targetMail = $_POST['target_email'];
         $mail       = $_POST['email'];
         $message    = $_POST['message'];
@@ -210,9 +214,8 @@ class WorkAction extends CommonAction {
 
     public function download() {
         $editId   = $_POST['id'] ? $_POST['id'] : 0;
-        $userType = $this->_user['Type'];
-        $account  = $this->_user['Account'];
-        if($editId <= 0)die;
+        $account  = trim($_POST['user-account']);
+        if($editId <= 0 || ($account == ''))exit(0);
         $fileTypeModel = M('Files');
         $con   = array();
         $con[] = "id={$editId}";
@@ -225,15 +228,14 @@ class WorkAction extends CommonAction {
         $fileMsg  = $fileMsg[0];
         $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
 
-	/*
-        $fileDir  = 'http://'.UPLOAD_DOMAIN . '/Public/Files/'; 
-        $filePath = $fileDir . $fileName;
-        import('@.ORG.Net.Http');
-        $downHttp = new Http();
-        $downHttp->fsockopenDownload($filePath);
-	 * 
-	 */
-	downloadFile($downloadName,ROOT_PATH.'/Public/Files/'.$fileMsg['video_path']);
+        /*
+            $fileDir  = 'http://'.UPLOAD_DOMAIN . '/Public/Files/'; 
+            $filePath = $fileDir . $fileName;
+            import('@.ORG.Net.Http');
+            $downHttp = new Http();
+            $downHttp->fsockopenDownload($filePath);
+        */
+        downloadFile($downloadName,ROOT_PATH.'/Public/Files/'.$fileMsg['video_path']);
     }
     
 }

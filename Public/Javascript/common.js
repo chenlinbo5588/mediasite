@@ -50,7 +50,7 @@ App.confirm = function(title, body, fn, options) {
 		modal: true,
 		title: title,
 		width: 400,
-		height: 170,
+		height: 200,
 		open: function(){
 			var thisCloseObj = $(this).prev('.ui-dialog-titlebar').find('.ui-dialog-titlebar-close');
 			thisCloseObj.hide();

@@ -298,34 +298,6 @@ class AdminAction extends CommonAction {
         
     }
     
-    public function share() {
-        $editId   = $_GET['id'] ? $_GET['id'] : 0;
-        $tplName   = $_GET['down'] == 1 ? 'download' : 'share';
-        $userType = $this->_user['Type'];
-        $account  = $this->_user['Account'];
-        if($editId > 0) {
-            $fileTypeModel = M('Files');
-            $con   = array();
-            $con[] = "id={$editId}";
-            if($userType != 1) {
-                $con[]    = "account = '{$account}'";
-            }
-            $where = implode(' AND ',$con);
-            $fileMsg  = $fileMsg[0];
-            $this->assign('fileMsg',$fileMsg);
-
-            if($_GET['down'] != 1) {
-                $encodeStr = $this->encodeInfo($editId);
-                $fileUrl = 'http://'.ROOT_APP_URL."/Work/play/share/{$encodeStr}";
-                $this->assign('fileUrl',$fileUrl);
-            } else {
-                $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
-                $this->assign('downloadName',$downloadName);
-            }
-        }
-        $this->display($tplName);
-    }
-    
     public function image(){
 	
 	$siteColumnModel = M('SiteColumn');
