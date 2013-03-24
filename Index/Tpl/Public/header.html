@@ -40,23 +40,23 @@
                 <li><a href="__APP__/Contact" <if condition="strtolower($Think.const.MODULE_NAME) eq 'contact'">class="current"</if> >Contact</a></li>
                 <if condition="$isLogon eq true" >
                     <li><a href="__APP__/Admin/index" <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">class="current"</if> >Manage</a></li>
-                    <li class="header-sub-a"></li>
+                    <!-- <li class="header-sub-a"></li> -->
                 <else />
-                    <li class="header-sub"></li>
+                    <!-- <li class="header-sub"></li> -->
                 </if>
-                <if condition="$isLogon eq true">
-                    <li class="mw">
-                        Welcome!<span class="pl-5">{$nickName}</span>
-                        <a class="pl-10" href="__APP__/Login/logout/">Logout</a> 
-                    </li>
-                <else />
-                    <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">
-                    <li class="mw"><a href="__APP__/Login"><span>Admin Login</span></a></li>
+                <li class="mw ml pr-10" style="width:auto;">
+                    <if condition="$isLogon eq true" >
+                    Welcome!<span class="pl-5 login-name">{$nickName}</span>
+                    <a class="pl-10" href="__APP__/Login/logout/">Logout</a>
                     <else />
-                    <li class="mw"><a href="__APP__/Login"><span>Client Login</span></a></li>
+                    <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">
+                    <li class="mw ml"><a href="__APP__/Login"><span>Admin Login</span></a></li>
+                    <else />
+                    <li class="mw ml"><a href="__APP__/Login"><span>Client Login</span></a></li>
                     </if>
-                </if>
-                <li class="mw ml"><a href="#"><span>EN/CH</span></a></li>
+                    </if>
+                    <a href="#"><span>EN/CH</span></a>
+                </li>
             </ul>
             <div class="clear"></div>
         </div>
