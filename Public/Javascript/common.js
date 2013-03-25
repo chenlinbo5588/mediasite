@@ -15,7 +15,7 @@ App.alert = function(title, body, fn, options) {
 		modal: true,
 		title: title,
 		width: 400,
-		height: 170,
+		height: 200,
 		msgType: 'alert'
 	}, options);
 
