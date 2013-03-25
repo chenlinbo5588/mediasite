@@ -1,7 +1,7 @@
 <?php
 class ProjectModel extends CommonModel {
     public $_validate = array(
-        array('name','require','name must')
+        array('name','folder name already exists','',0,'unique',self::MODEL_INSERT)
     );
 
     public $_auto = array(

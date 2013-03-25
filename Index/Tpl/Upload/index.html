@@ -122,28 +122,29 @@ $(function(){
     });*/
     
     $("#client").change(function(e){
-	if('' == $("#client").val()){
-	    return;
-	}
-	
-	$.getJSON("__APP__/Product/getUserProduct",{user_id: $("#client").val()},function(data){
-	    $("#product").html(data.body);
-	    
-	    if($("#product").val() != ''){
-		$.getJSON("__APP__/Project/getUserProject",{user_id: $("#client").val(),product_id : $("#product").val()},function(data){
-		    $("#project").html(data.body);
-		});
-	    }
-	});
+        if('' == $("#client").val()){
+            return;
+        }
+        
+        $.getJSON("__APP__/Product/getUserProduct",{user_id: $("#client").val()},function(data){
+            $("#product").html(data.body);
+            initSelectBox();
+            if($("#product").val() != ''){
+            $.getJSON("__APP__/Project/getUserProject",{user_id: $("#client").val(),product_id : $("#product").val()},function(data){
+                $("#project").html(data.body);
+            });
+            }
+        });
     })
     
     $("#product").change(function(e){
-	if('' == $("#client").val() || '' == $("#product").val()){
-	    return;
-	}
-	$.getJSON("__APP__/Project/getUserProject",{user_id: $("#client").val(),product_id : $("#product").val()},function(data){
-	    $("#project").html(data.body);
-	});
+        if('' == $("#client").val() || '' == $("#product").val()){
+            return;
+        }
+        $.getJSON("__APP__/Project/getUserProject",{user_id: $("#client").val(),product_id : $("#product").val()},function(data){
+            $("#project").html(data.body);
+            initSelectBox();
+        });
     })
 });
 

@@ -15,15 +15,15 @@ class ProductAction extends CommonAction {
 	$html = array();
 	
 	if(!isset($_GET['user_id'])){
-	    $html[] = "<option value=\"\">No Product</option>";
+	    $html[] = "<option value=\"\"></option>";
 	    $this->sendFormatJson(200,implode('',$html));
 	    die();
 	}
-	
-	$_GET['user_id'] = substr($_GET['user_id'],0,strpos($_GET['user_id'],','));
+	if(strpos($_GET['user_id'],',') !== false)
+	    $_GET['user_id'] = substr($_GET['user_id'],0,strpos($_GET['user_id'],','));
 	
 	$where[] = "enable = 1";
-	$where[] = "user_id = " .intval($_GET['user_id']);
+	$where[] = "user_id IN ( " .$_GET['user_id'].')';
 	$userProduct = $productModel->where(implode(' AND ',$where))->select();
 	
 	if(!empty($userProduct)){
@@ -31,7 +31,7 @@ class ProductAction extends CommonAction {
 		$html[] = "<option value=\"{$value['id']},{$value['name']}\">{$value['name']}</option>";
 	    }
 	}else{
-	    $html[] = "<option value=\"\">No Product</option>";
+	    $html[] = "<option value=\"\"></option>";
 	}
 	
 	$this->sendFormatJson(200,implode('',$html));

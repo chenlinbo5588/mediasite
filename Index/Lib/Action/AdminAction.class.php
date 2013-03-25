@@ -219,18 +219,18 @@ class AdminAction extends CommonAction {
         }
         $this->assign('vo',$editMsg);
         $this->assign('editId',$editId);
-        $userMod = M('Product');
-        $list   = $userMod->field('id,name')
-                          ->where('enable=1')
-                          ->order('id desc')
-                          ->select();
-        $this->assign('productList',$list);
         $userMod = M('User');
         $list   = $userMod->field('id,nickname,account')
                           ->where('enable=1 AND type=0')
                           ->order('id desc')
                           ->select();
         $this->assign('userList',$list);
+        $userMod = M('Product');
+        $list   = $userMod->field('id,name')
+                          ->where('enable=1 AND user_id='.$list[0]['id'])
+                          ->order('id desc')
+                          ->select();
+        $this->assign('productList',$list);
         $this->display();
     }
 
@@ -245,6 +245,9 @@ class AdminAction extends CommonAction {
             $data  = $_POST;
             $data['enable'] = 1;
             $retAry = $this->_add('Project',$data);
+        }
+        if(isset($retAry['error'])) {
+            $retAry['error'] = str_replace('project','folder',$retAry['error']);
         }
         $this->sendJson($retAry);
     }

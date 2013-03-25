@@ -28,3 +28,15 @@
 </div>
 <include file="Public:admin" />
 <include file="Public:footer" />
+<script type="text/javascript">
+<!--
+    function refProduct(cid) {
+        if(cid<=0)return;
+        $.get('__APP__/Product/getUserProduct',{'user_id':cid},function(response){
+            var $product = $('#product-slt');
+            $product.html(response.body);
+            initSelectBox('product-slt');
+        });
+    }
+//-->
+</script>

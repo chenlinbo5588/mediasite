@@ -7,7 +7,7 @@
                 <if condition="$editId gt 0">
                 {$vo.Nickname}({$vo.Account})
                 <else />
-                <select name="user_id">
+                <select name="user_id" onchange="refProduct(this.value)">
                     <volist name="userList" id="row">
                         <option value="{$row.id}">{$row.nickname}({$row.account})</option>
                     </volist>
@@ -21,7 +21,7 @@
                 <if condition="$editId gt 0">
                 {$vo.ProductName}
                 <else />
-                <select name="product_id">
+                <select name="product_id" id="product-slt">
                     <volist name="productList" id="row">
                         <option value="{$row.id}">{$row.name}</option>
                     </volist>

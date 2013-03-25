@@ -1,7 +1,7 @@
 <?php
 class ProductModel extends CommonModel {
     public $_validate = array(
-        array('name','name already exists','',0,'unique',self::MODEL_INSERT)
+        array('name','require','name already exists',0,'unique')
     );
 
     public $_auto = array(

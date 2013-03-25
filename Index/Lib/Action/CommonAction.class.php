@@ -152,6 +152,13 @@ class CommonAction extends Action {
     protected function _add($modelName,$data) {
         $retAry = array('status' => false);
         $model = M($modelName);
+        if(isset($data['name'])) {
+            $count = $model->where("name='".$data['name']."'")->count();
+            if($count > 0) {
+                $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
+                return $retAry;
+            }
+        } 
         $model->create($data);
         $error = $model->getError();
         if(!empty($error)) {
@@ -215,6 +222,13 @@ class CommonAction extends Action {
         $model 	= D($modelName);
 
         if(is_numeric($con)) {
+            if(isset($data['name'])) {
+                $count = $model->where("id!='{$con}' AND name='".$data['name']."'")->count();
+                if($count > 0) {
+                    $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
+                    return $retAry;
+                }
+            }
             $where = "id='{$con}'";
         }
         else {
