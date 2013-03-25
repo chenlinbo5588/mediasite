@@ -158,7 +158,14 @@ class CommonAction extends Action {
                 $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
                 return $retAry;
             }
-        } 
+        }
+        if(($modelName == 'Files') && isset($data['title'])) {
+            $count = $model->where("title='".$data['title']."'")->count();
+            if($count > 0) {
+                $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
+                return $retAry;
+            }
+        }
         $model->create($data);
         $error = $model->getError();
         if(!empty($error)) {
@@ -224,6 +231,13 @@ class CommonAction extends Action {
         if(is_numeric($con)) {
             if(isset($data['name'])) {
                 $count = $model->where("id!='{$con}' AND name='".$data['name']."'")->count();
+                if($count > 0) {
+                    $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
+                    return $retAry;
+                }
+            }
+            if(($modelName == 'Files') && isset($data['title'])) {
+                $count = $model->where("id!='{$con}' AND title='".$data['title']."'")->count();
                 if($count > 0) {
                     $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
                     return $retAry;
