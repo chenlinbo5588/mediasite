@@ -18,7 +18,7 @@ class CommonAction extends Action {
         $modName      = strtolower(MODULE_NAME);
         $actionName   = strtolower(ACTION_NAME);
         $loginMod     = array('admin');
-        $adminAction = array('user','product','project');
+        $adminAction = array('user','product','project','file');
         $script = '';
         if(!$this->_user['IsLogon'] && in_array($modName,$loginMod)) {
             Session::set('User','');

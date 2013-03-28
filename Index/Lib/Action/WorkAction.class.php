@@ -32,6 +32,7 @@ class WorkAction extends CommonAction {
                         ->select();
         $page = $this->showPage($pageObj,$search);
         $this->assign('list',$list);
+        $this->assign("userType", $userType);
         $this->assign("page", $page);
         $this->display();
     }

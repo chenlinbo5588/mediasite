@@ -38,7 +38,7 @@
                     </div> -->
                 </li>
                 <li><a href="__APP__/Contact" <if condition="strtolower($Think.const.MODULE_NAME) eq 'contact'">class="current"</if> >Contact</a></li>
-                <if condition="$isLogon eq true" >
+                <if condition="($isLogon eq true) and ($userType eq 1)" >
                     <li><a href="__APP__/Admin/index" <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">class="current"</if> >Manage</a></li>
                     <!-- <li class="header-sub-a"></li> -->
                 <else />

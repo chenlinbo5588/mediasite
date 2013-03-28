@@ -4,7 +4,7 @@ class AdminAction extends CommonAction {
         if($this->_user['Type'] == 1) {
             redirect(__URL__ . '/user');
         } else {
-            redirect(__URL__ . '/file');
+            redirect(__APP__ . '/Index');
         }
     }
 

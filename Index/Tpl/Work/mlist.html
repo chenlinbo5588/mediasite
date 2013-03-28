@@ -19,7 +19,9 @@
             <th width="15%">Download</th>
             <th width="15%">Share</th>
             <th width="15%">View</th>
+            <eq name="userType" value="1">
             <th width="15%">Upload</th>
+            </eq>
         </tr>
         </thead>
         <tbody>
@@ -30,7 +32,9 @@
             <td><a class="download-btn" href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
             <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
             <td><a href="__URL__/play/id/{$vo.id}" target="_blank" title="View">View</a></td>
+            <eq name="userType" value="1">
             <td><a class="upload-btn" href="javascript:;" title="Upload" data="{$vo.id}">Upload</a></td>
+            </eq>
         </tr>
         </volist>
         </tbody>
@@ -46,9 +50,11 @@
 <script type="text/javascript">
 var uploads = [],sid = '';
 $(function() {
+    <eq name="userType" value="1">
     $('.upload-btn').click(function(){
         openUpload($(this).attr('data'));
     });
+    </eq>
     $('.share-btn').click(function(){
         openShare($(this).attr('data'));
     });
