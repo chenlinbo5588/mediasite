@@ -1,7 +1,7 @@
 <?php
 class FolderModel extends CommonModel {
     public $_validate = array(
-        array('name','require','name must'),
+        array('name','folder name already exists','',0,'unique',self::MODEL_INSERT)
         array('project_id','require','project id must'),
         array('user_id','require','user id must')
     );

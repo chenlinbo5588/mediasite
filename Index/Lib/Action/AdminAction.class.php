@@ -243,7 +243,7 @@ class AdminAction extends CommonAction {
             $con['id']      = $_POST['id'];
             $data = $_POST;
             unset($data['id']);
-            $retAry = $this->_update('Project',$con,$data);
+            $retAry = $this->_update('Project',$_POST['id'],$data);
         } else {
             $data  = $_POST;
             $data['enable'] = 1;

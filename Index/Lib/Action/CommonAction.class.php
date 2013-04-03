@@ -153,7 +153,7 @@ class CommonAction extends Action {
         $retAry = array('status' => false);
         $model = M($modelName);
         if(isset($data['name'])) {
-            $count = $model->where("name='".$data['name']."'")->count();
+            $count = $model->where("name='".$data['name']."' AND enable IN (0,1)")->count();
             if($count > 0) {
                 $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
                 return $retAry;
@@ -230,14 +230,14 @@ class CommonAction extends Action {
 
         if(is_numeric($con)) {
             if(isset($data['name'])) {
-                $count = $model->where("id!='{$con}' AND name='".$data['name']."'")->count();
+                $count = $model->where("id!='{$con}' AND name='".$data['name']."' AND enable IN (0,1)")->count();
                 if($count > 0) {
                     $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
                     return $retAry;
                 }
             }
-            if(($modelName == 'Files') && isset($data['title'])) {
-                $count = $model->where("id!='{$con}' AND title='".$data['title']."'")->count();
+            if(($modelName == 'Files') && isset($data['file_name'])) {
+                $count = $model->where("id!='{$con}' AND file_name='".$data['file_name']."' AND is_delete<>1")->count();
                 if($count > 0) {
                     $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
                     return $retAry;
