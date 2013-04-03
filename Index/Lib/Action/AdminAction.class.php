@@ -239,7 +239,7 @@ class AdminAction extends CommonAction {
 
     public function submitFolder() {
         $retAry = array('status' => false);
-        if(isset($_POST['id']) && ($_POST['id'] != '')) {
+        if(isset($_POST['id']) && ($_POST['id'] != '0')) {
             $con['id']      = $_POST['id'];
             $data = $_POST;
             unset($data['id']);
@@ -247,6 +247,7 @@ class AdminAction extends CommonAction {
         } else {
             $data  = $_POST;
             $data['enable'] = 1;
+            unset($data['id']);
             $retAry = $this->_add('Project',$data);
         }
         if(isset($retAry['error'])) {

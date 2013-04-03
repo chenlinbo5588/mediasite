@@ -160,7 +160,7 @@ class CommonAction extends Action {
             }
         }
         if(($modelName == 'Files') && isset($data['file_name'])) {
-            $count = $model->where("file_name='".$data['file_name']."' and is_delete<>1")->count();
+            $count = $model->where("file_name='".$data['file_name']."' AND is_delete<>1")->count();
             if($count > 0) {
                 $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
                 return $retAry;
