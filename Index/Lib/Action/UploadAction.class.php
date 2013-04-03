@@ -36,8 +36,8 @@ class UploadAction extends CommonAction {
             $isImage = 1;
         }
         
-        $width  = $_POST['width'];
-        $height = $_POST['height'];
+        $width = true == empty($_POST['width']) ? 960 : intval($_POST['width']);
+        $height = true == empty($_POST['height']) ? 540 : intval($_POST['height']);
         if(1 == $isImage){
             list($width, $height, $type, $attr) = getimagesize($_FILES['Filedata']['tmp_name']);
         }
