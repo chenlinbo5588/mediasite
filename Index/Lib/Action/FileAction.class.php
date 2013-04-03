@@ -4,10 +4,10 @@ class FileAction extends CommonAction {
         $id = $_GET['id'];
         $fileModel = M('Files');
         $files = $fileModel->where("  id = {$id}")->select();
-        
-        foreach($files as $key => $data){
-            $this->assign('video',$data);
-        }
+        $video = $files[0];
+        if($video['video_width'] == 0)$video['video_width'] = '600';
+        if($video['video_height'] == 0)$video['video_width'] = '400';
+        $this->assign('video',$video);
         $this->display();
     }
     

@@ -30,7 +30,7 @@
             <td>
             <if condition="$userType eq 1">
             <a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>&nbsp;/&nbsp;
-            </if><a class="specify" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a></td>
+            </if><a class="view" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a></td>
         </tr>
         </volist>
         </tbody>
@@ -44,7 +44,14 @@ $('.specify').click(function(){
     var data = $(this).attr('data');
     var action = $(this).attr('action');
     var title = $(this).attr('title');
-    
+    var url = action + '/id/' + data;    
+    loadDialog(title,url,600,300);
+});
+
+$('.view').click(function(){
+    var data = $(this).attr('data');
+    var action = $(this).attr('action');
+    var title = $(this).attr('title');
     var url = action + '/id/' + data;    
     loadDialog(title,url);
 });
@@ -55,9 +62,11 @@ $('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
 });
 
 
-function loadDialog(title,url) {
+function loadDialog(title,url,w,h) {
     $dialog  = $('#dialog');
-    $options = {title:title,width:800,height:500,modal:true};
+    if(typeof (w) == 'undefined')w = 800;
+    if(typeof (h) == 'undefined')h = 400;
+    $options = {title:title,width:w,height:h,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
         $('#save-btn').click(function(){
@@ -90,6 +99,7 @@ function loadDialog(title,url) {
         $('#cancel-btn').click(function(){
             $dialog.dialog( "close" );
         });
+        initSelectBox();
     }, false);
 }
     
