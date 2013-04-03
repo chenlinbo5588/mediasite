@@ -159,8 +159,8 @@ class CommonAction extends Action {
                 return $retAry;
             }
         }
-        if(($modelName == 'Files') && isset($data['title'])) {
-            $count = $model->where("title='".$data['title']."'")->count();
+        if(($modelName == 'Files') && isset($data['file_name'])) {
+            $count = $model->where("file_name='".$data['file_name']."' and is_delete<>1")->count();
             if($count > 0) {
                 $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
                 return $retAry;
