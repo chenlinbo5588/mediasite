@@ -14,40 +14,34 @@ class UploadAction extends CommonAction {
      * 上传处理 
      */
     public function upload(){
-        /**
-         * 上传处理
-         */
-        
         $attachment = array(
             'filename'  => $_FILES['Filedata']['name'],
             'filesize'  => $_FILES['Filedata']['size'],
             'type'		=> $_FILES["Filedata"]["type"]
         );
-        
         $suffix = substr($attachment['filename'],strrpos($attachment['filename'],'.'));
         $suffix = strtolower($suffix);
+
+        $imgTypes = array(
+            "image/jpeg",
+            "image/pjpeg",
+            "image/png",
+            "image/x-png",
+            "image/gif",
+            "image/bmp"
+        );
+
+        $isImage = 0;
+        if(in_array($_FILES['Filedata']['type'],$imgTypes) || in_array($suffix,array('.jpg','.jpeg','.png','.gif','.bmp'))){
+            $isImage = 1;
+        }
         
+        $width  = $_POST['width'];
+        $height = $_POST['height'];
+        if(1 == $isImage){
+            list($width, $height, $type, $attr) = getimagesize($_FILES['Filedata']['tmp_name']);
+        }
 
-	$imgTypes = array(
-	    "image/jpeg",
-	    "image/pjpeg",
-	    "image/png",
-	    "image/x-png",
-	    "image/gif",
-	    "image/bmp"
-	);
-
-	$isImage = 0;
-	if(in_array($_FILES['Filedata']['type'],$imgTypes) || in_array($suffix,array('.jpg','.jpeg','.png','.gif','.bmp'))){
-	    $isImage = 1;
-	}
-	
-	$width = 0;
-	$height = 0;
-	if(1 == $isImage){
-	    list($width, $height, $type, $attr) = getimagesize($_FILES['Filedata']['tmp_name']);
-	}
-		
         $attachmentPath = ROOT_PATH.'/Public/Files/';
         
         $monthDir = date("Ym");
