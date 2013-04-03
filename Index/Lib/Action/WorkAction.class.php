@@ -12,6 +12,7 @@ class WorkAction extends CommonAction {
         $total    = 0;
         $list     = array();
         $con      = array();
+        $con[] = 'is_delete<>1';
         if($userType != 1) {
             $con[]    = "account = '{$account}'";
             //$con[]    = "status = 3";

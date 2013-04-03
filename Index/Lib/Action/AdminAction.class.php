@@ -271,6 +271,7 @@ class AdminAction extends CommonAction {
         $account  = $this->_user['Account'];
         $list = array();
         $con = array();
+        $con[] = 'is_delete<>1';
         if($userType != 1) {
             $con[]    = "account = '{$account}'";
         }

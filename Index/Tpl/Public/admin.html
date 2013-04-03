@@ -38,7 +38,7 @@ function loadEditDialog(title,id ,action) {
         var url     = '__URL__/edit{$Think.ACTION_NAME|strtolower|ucfirst}';
     }
     if(typeof (id) != 'undefined')url += '/id/'+id;
-    $options = {title:title,width:700,modal:true};
+    $options = {title:title,width:700,height:300,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
         $('#save-btn').click(function(){

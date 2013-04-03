@@ -6,12 +6,12 @@
     <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-20 mt-15" cellpadding="0" cellspacing="0" border="0">
         <thead>
         <tr>
-            <th width="25%">File Name</th>
+            <th width="20%">File Name</th>
             <th width="20%">Folder Name</th>
             <th width="20%">Product Name</th>
             <th width="20%">User Name</th>
             <!-- <th width="10%">Status</th> -->
-            <th width="15%">Manage</th>
+            <th width="20%">Manage</th>
         </tr>
         </thead>
         <tbody>
@@ -31,7 +31,9 @@
             <if condition="$userType eq 1">
             <a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>&nbsp;/&nbsp;
             </if>
-            <a class="view" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="Files">View</a></td>
+            <a class="view" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="View">View</a>&nbsp;/&nbsp;
+            <a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>
+            </td>
         </tr>
         </volist>
         </tbody>
@@ -61,6 +63,23 @@ $('.view').click(function(){
 $('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
     loadDialog('Add {$Think.ACTION_NAME|strtolower|ucfirst}',"__APP__/File/add");
 });
+
+var $table = $('#table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}');
+    $('.delete',$table).click(function(){
+        var editId = $(this).attr('data');
+        App.confirm('Delete {$Think.ACTION_NAME|strtolower|ucfirst}','Are you sure to delete this {$Think.ACTION_NAME|strtolower}?',function(){
+            var url = "http://{$Think.const.ROOT_APP_URL}/File/deleteFile";
+            $.post(url, {id:editId}, function(response) {
+                if(response.status) {
+                    window.location.reload();
+                } else {
+                    if(response.error) {
+                        App.alert('Delete {$Think.ACTION_NAME|strtolower|ucfirst}','Delete {$Think.ACTION_NAME|strtolower} fail.');
+                    }
+                }
+            });
+        });
+    });
 
 
 function loadDialog(title,url,w,h) {
