@@ -29,10 +29,9 @@
             </td> -->
             <td>
             <if condition="$userType eq 1">
-            <a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>&nbsp;/&nbsp;
+            <!-- <a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>&nbsp;/&nbsp; -->
             </if>
-            <a class="view" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="View">View</a>&nbsp;/&nbsp;
-            <a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>
+            <a class="view" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="View">View</a>&nbsp;/&nbsp;<a class="delete" href="javascript:;" data="{$vo.id}" title="Delete">Delete</a>
             </td>
         </tr>
         </volist>

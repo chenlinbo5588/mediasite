@@ -4,7 +4,7 @@ class FilesModel extends CommonModel {
     protected $trueTableName = 'files';
     
     public $_validate = array(
-        array('name','file name already exists','',0,'unique',self::MODEL_INSERT)
+        array('file_name','file name already exists','',0,'unique',self::MODEL_INSERT)
     );
 
     public $_auto = array(

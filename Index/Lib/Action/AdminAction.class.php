@@ -60,7 +60,7 @@ class AdminAction extends CommonAction {
             if(($data['enable'] == '0') && $retAry['status']) {
                 $pcon['enable'] = $data['enable'];
                 $pcon['user_id'] = $data['id'];
-                $this->_update('Pruduct',$pcon,$data);
+                $this->_update('Product',$pcon,$data);
                 $this->_update('Project',$pcon,$data);
             }
         } else {
@@ -76,11 +76,13 @@ class AdminAction extends CommonAction {
         $retAry = array('status' => false);
         $editId = $_POST['id'];
         $con['id']      = $editId;
+        $data['account'] = time();
         $data['enable'] = 2;
         $retAry = $this->_update('User',$con,$data);
         if($retAry['status']) {
             $pcon['user_id'] = $editId;
-            $this->_update('Pruduct',$pcon,$data);
+            $data['name'] = time();
+            $this->_update('Product',$pcon,$data);
             $this->_update('Project',$pcon,$data);
         }
         $this->sendJson($retAry);
@@ -162,6 +164,7 @@ class AdminAction extends CommonAction {
         $retAry = array('status' => false);
         $editId = $_POST['id'];
         $con['id']      = $editId;
+        $data['name'] = time();
         $data['enable'] = 2;
         $retAry = $this->_update('Product',$con,$data);
         if($retAry['status']) {
@@ -256,6 +259,7 @@ class AdminAction extends CommonAction {
         $retAry = array('status' => false);
         $editId = $_POST['id'];
         $con['id']      = $editId;
+        $data['name'] = time();
         $data['enable'] = 2;
         $retAry = $this->_update('Project',$con,$data);
         $this->sendJson($retAry);

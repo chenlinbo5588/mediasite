@@ -161,12 +161,13 @@ class FileAction extends CommonAction {
             $info = $ret[0];
             $deleteFile = ROOT_PATH.'/Public/Files/'.$info['video_path'];
             $isDelete = unlink($deleteFile);
+            if(!$isDelete) $this->sendJson($retAry);
             $deleteFile = ROOT_PATH.'/Public/Files/'.$info['img_path'];
             unlink($deleteFile);
-            if(!$isDelete) $this->sendJson($retAry);
             $now = date('Y-m-d H:i:s');
             $con['id']      = $_POST['id'];
             $data['is_delete'] = 1;
+            $data['file_name']  = time();
             $data['updatetime'] = $now;
             $data['update_user'] = $this->_user['Account'];
             $retAry = $this->_update('Files',$con,$data);
