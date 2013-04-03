@@ -20,9 +20,9 @@
     </if>
     </eq>
     <if condition="strtolower($Think.const.ACTION_NAME) eq 'file'">
-    <li class="current">File</li>
+    <li class="last current">File</li>
     <else />
-    <li><a href="__URL__/file">File</a></li>
+    <li class="last"><a href="__URL__/file">File</a></li>
     </if>
     <eq name="userType" value='1'>
     <if condition="strtolower($Think.const.ACTION_NAME) eq 'Image'">
