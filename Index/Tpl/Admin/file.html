@@ -9,7 +9,7 @@
             <th width="25%">File Name</th>
             <th width="20%">Folder Name</th>
             <th width="20%">Product Name</th>
-            <th width="20%">Client Name</th>
+            <th width="20%">User Name</th>
             <!-- <th width="10%">Status</th> -->
             <th width="15%">Manage</th>
         </tr>
@@ -54,7 +54,7 @@ $('.view').click(function(){
     var action = $(this).attr('action');
     var title = $(this).attr('title');
     var url = action + '/id/' + data;    
-    loadDialog(title,url);
+    loadDialog(title,url,980,560);
 });
 
 
@@ -65,7 +65,7 @@ $('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
 
 function loadDialog(title,url,w,h) {
     $dialog  = $('#dialog');
-    if(typeof (w) == 'undefined')w = 800;
+    if(typeof (w) == 'undefined')w = 620;
     if(typeof (h) == 'undefined')h = 400;
     $options = {title:title,width:w,height:h,modal:true};
     $dialog.dialog($options);
