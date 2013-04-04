@@ -5,7 +5,7 @@ return array(
 
     /* URL 模式 */
     'URL_DISPATCH_ON'		=> true,
-    'URL_MODEL' 			=> 2,
+    'URL_MODEL' 			=> 1,
 
     /* 数据库 */
     'DB_TYPE'				=> 'mysql',
@@ -28,6 +28,8 @@ return array(
 
     'USER_AUTH_ON'          => true,
     'VAR_PAGE'              => 'page',
+
+    'MEDIA_PLAY_EXT'        => 'avi,mp4,mpg,mpg4,wmv',
 
     //加密
     'SYSTEM_RSA_NUM'        => '256',

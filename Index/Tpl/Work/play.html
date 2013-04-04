@@ -1,9 +1,13 @@
 <include file="Public:header" />
     <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
     <div class="box960x540" >
+        <if condition="$mediaFlag eq 1">
+        <include file="media" />
+        <else />
         <div id="videoCanvas">
         <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
         </div>
+        </if>
     </div>
     
     <div class="rowbox box960">
@@ -35,7 +39,7 @@
     </div>
 <include file="Public:footer" />
 <script type="text/javascript">
-<if condition="$videoMsg['id'] gt 0">
+<if condition="($videoMsg['id'] gt 0) and ($mediaFlag neq 1)">
 var playervars = {
     contentpath: "",
     video: "http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}",
