@@ -13,7 +13,7 @@
             <ul class="tv-gallery-list">
                 <volist name="list" id="vo">
                 <li>
-                    <a href="__URL__/play/id/{$vo.id}" title="Project Title">
+                    <a href="__URL__/play/id/{$vo.id}/page/{$currPage}" title="Project Title">
                         <if condition="$vo['img_path'] neq ''">
                         <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['img_path']}" width="400" height="214" alt="{$vo.project_name}">
                         <else />

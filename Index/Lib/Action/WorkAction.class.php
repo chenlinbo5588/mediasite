@@ -87,6 +87,7 @@ class WorkAction extends CommonAction {
             $page = $this->showPage($pageObj,$search);
             $this->assign('list',$list);
             $this->assign("page", $page);
+            $this->assign("currPage", $_GET['page'] ? $_GET['page'] : 1);
         }
         $this->display();
     }
