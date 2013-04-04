@@ -5,11 +5,13 @@
             <li>
                 <label class="field-label">File Type:</label>
                 <div class="field-box">
+                    <input type="hidden" name="file_type" value="{$fileMsg.category_name}"/>
                     <span>{$fileMsg.category_name}&nbsp;</span>
                 </div>
             </li>
             
             <!-- when choose type movie -->
+        <if condition="$fileMsg.category_name eq Movie">
             <li id="uploadImageFile">
                 <label class="field-label">Cover Image:</label>
                 <div class="field-box">
@@ -26,7 +28,7 @@
                     <div id="UploaderFeedBack_1"></div>
                 </div>
             </li>
-            <li>
+            <li id="uploadMovieFile">
                 <label class="field-label">Video File:</label>
                 <div class="field-box">
                     <input type="hidden" name="Uploader_Value_2" id="Uploader_Value_2" value=""/>
@@ -41,6 +43,41 @@
                     <div id="UploaderFeedBack_2"></div>
                 </div>
             </li>
+        <elseif condition="$fileMsg.category_name eq Picture"/>
+            <li id="uploadImageFile">
+                <label class="field-label">Image File:</label>
+                <div class="field-box">
+                    <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
+                    <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="" readonly="readonly"/>
+                    <span id="UploaderPlaceholder_1"></span>
+                    <span class="Uploader" allowSize="512KB" allowFile="*.jpg;*.jpeg;*.png;" style="display:none;" >Please Choose Files</span>
+                </div>
+            </li>
+            <li>
+                <label class="field-label">&nbsp;</label>
+                <div class="field-box">
+                    <div id="UploaderProgress_1"></div>
+                    <div id="UploaderFeedBack_1"></div>
+                </div>
+            </li>  
+        <elseif condition="$fileMsg.category_name eq Document"/>
+            <li id="uploadDocFile">
+                <label class="field-label">Document File:</label>
+                <div class="field-box">
+                    <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
+                    <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="" readonly="readonly"/>
+                    <span id="UploaderPlaceholder_1"></span>
+                    <span class="Uploader" allowSize="10MB" allowFile="*.doc;*.docx;*.pdf;" style="display:none;" >Please Choose Files</span>
+                </div>
+            </li>
+            <li>
+                <label class="field-label">&nbsp;</label>
+                <div class="field-box">
+                    <div id="UploaderProgress_1"></div>
+                    <div id="UploaderFeedBack_1"></div>
+                </div>
+            </li>
+        </if>
         </ul>
         <div class="button-bar pt-20">
             <div class="button"><a id="save-btn" href="javascript:;">Save</a></div>

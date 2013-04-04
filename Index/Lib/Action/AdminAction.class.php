@@ -15,7 +15,7 @@ class AdminAction extends CommonAction {
         $pageSize = 10;
         $total    = 0;
         $list = array();
-        $con = array('enable=1');
+        $con = array();
         if($search != '') {
             $scon = array();
             $scon[] = "id like '%{$search}%'";

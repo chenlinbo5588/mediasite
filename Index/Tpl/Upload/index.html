@@ -171,9 +171,10 @@ $(function(){
             $("#product").html(data.body);
             initSelectBox();
             if($("#product").val() != ''){
-            $.getJSON("__APP__/Project/getUserProject",{user_id: $("#client").val(),product_id : $("#product").val()},function(data){
-                $("#project").html(data.body);
-            });
+                $.getJSON("__APP__/Project/getUserProject",{user_id: $("#client").val(),product_id : $("#product").val()},function(data){
+                    $("#project").html(data.body);
+                    initSelectBox();
+                });
             }
         });
     })

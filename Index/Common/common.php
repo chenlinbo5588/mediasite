@@ -1,15 +1,15 @@
 <?php
     function showEnable($key) {
-        $key = strval($key);
+        $key = intval($key);
         $show = '';
         switch($key) {
-            case '0':
+            case 0:
                 $show = 'Paused';
                 break;
-            case '1':
+            case 1:
                 $show = 'Valid';
                 break;
-            case '2':
+            case 2:
                 $show = 'Deleted';
                 break;
             default:

@@ -210,3 +210,4 @@ INSERT INTO `site_column` VALUES ('Services Page', 'Services Page', '/Services/'
 INSERT INTO `site_column` VALUES ('Contact Page', 'Contact Page', '/Contact/');
 
 alter table attachment add index  sit_column_key (remark) ;
+alter table files add index  file_name_idx (file_name) ;

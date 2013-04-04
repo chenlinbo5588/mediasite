@@ -34,28 +34,6 @@ class FileAction extends CommonAction {
 	$data['category_id'] = substr($_POST['file_type'],0,strpos($_POST['file_type'],','));
 	$data['category_name'] = substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1);
         
-        
-        $fileType = strtolower($data['category_name']);
-        
-        $titleIndex = 1;
-        switch($fileType){
-            case 'movie':
-                $titleIndex = 2;
-                break;
-            case 'document':
-                $titleIndex = 3;
-                break;
-            case 'picture':
-                $titleIndex = 1;
-                break;
-            default:
-                break;
-            
-        }
-	$data['title'] = $_POST['Uploader_Show_Value_'.$titleIndex];
-	$data['file_name'] = $_POST['Uploader_Show_Value_'.$titleIndex];
-	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_'.$titleIndex],strrpos($_POST['Uploader_Show_Value_'.$titleIndex],'.'));
-	
 	/**
 	 * 如果 magic_quotes_gpc = On ,则需要处理 
 	 */
@@ -65,23 +43,32 @@ class FileAction extends CommonAction {
             $_POST['Uploader_Value_3'] = stripslashes($_POST['Uploader_Value_3']);
 	}
         
+        $fileType = strtolower($data['category_name']);
+        $titleIndex = 1;
         switch($fileType){
             case 'movie':
+                $titleIndex = 2;
                 $image = json_decode($_POST['Uploader_Value_1'],true);
                 $video = json_decode($_POST['Uploader_Value_2'],true);
                 break;
             case 'document':
+                $titleIndex = 3;
                 //use video field to store document file
                 $video = json_decode($_POST['Uploader_Value_3'],true);
                 $image = array();
                 break;
             case 'picture':
+                $titleIndex = 1;
                 $image = json_decode($_POST['Uploader_Value_1'],true);
                 $video = $image;
                 break;
             default:
                 break;
         }
+        
+        $data['title'] = $_POST['Uploader_Show_Value_'.$titleIndex];
+	$data['file_name'] = $_POST['Uploader_Show_Value_'.$titleIndex];
+	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_'.$titleIndex],strrpos($_POST['Uploader_Show_Value_'.$titleIndex],'.'));
         
 	$data['video_path'] = $video['path'];
 	$data['video_size'] = $video['size'];
@@ -130,7 +117,8 @@ class FileAction extends CommonAction {
         $list = array();
         if(1 == $this->_user['Type']){//管理员 
             $userModel = M('User');
-            $userList = $userModel->where(" enable=1 ")->select();
+            $userList = $userModel->where('enable=1 AND type=0')
+                          ->order('id desc')->select();
             $this->assign('client',$userList);
             $this->assign('showClient',true);
         }else{

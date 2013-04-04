@@ -149,26 +149,56 @@ class WorkAction extends CommonAction {
         $retAry = array('status' => false);
         $editId        = $_POST['id'] ? $_POST['id'] : 0;
         if(!$editId)$this->sendJson($retAry);
-        $data['title']       = $_POST['Uploader_Show_Value_2'];
-        $data['file_name']   = $_POST['Uploader_Show_Value_2'];
-        $data['file_suffix'] = substr($_POST['Uploader_Show_Value_2'],strrpos($_POST['Uploader_Show_Value_2'],'.'));
-
+        
         if(MAGIC_QUOTES_GPC){
             $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
             $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
         }
-        $image = json_decode($_POST['Uploader_Value_1'],true);
-        $video = json_decode($_POST['Uploader_Value_2'],true);
-
+        
+        $fileType = $_POST['file_type'];
+        $titleIndex = 1;
+        
+        switch($fileType){
+            case 'movie':
+                $titleIndex = 2;
+                $image = json_decode($_POST['Uploader_Value_1'],true);
+                $video = json_decode($_POST['Uploader_Value_2'],true);
+                break;
+            case 'document':
+                $titleIndex = 1;
+                //use video field to store document file
+                $video = json_decode($_POST['Uploader_Value_1'],true);
+                $image = array();
+                break;
+            case 'picture':
+                $titleIndex = 1;
+                $image = json_decode($_POST['Uploader_Value_1'],true);
+                $video = $image;
+                break;
+            default:
+                break;
+        }
+        
+        $data['title']       = $_POST['Uploader_Show_Value_'.$titleIndex];
+        $data['file_name']   = $_POST['Uploader_Show_Value_'.$titleIndex];
+        $data['file_suffix'] = substr($_POST['Uploader_Show_Value_'.$titleIndex],strrpos($_POST['Uploader_Show_Value_'.$titleIndex],'.'));
+        
         $data['video_path'] = $video['path'];
         $data['video_size'] = $video['size'];
         $data['video_width'] = $_POST['width'];
         $data['video_height'] = $_POST['height'];
         
-        $data['img_path'] = $image['path'];
-        $data['img_size'] = $image['size'];
-        $data['img_width'] = $image['width'];
-        $data['img_height'] = $image['height'];
+        if(!empty($image)){
+            $data['img_path'] = $image['path'];
+            $data['img_size'] = $image['size'];
+            $data['img_width'] = $image['width'];
+            $data['img_height'] = $image['height'];
+        }else{
+            $data['img_path'] = '';
+            $data['img_size'] = 0;
+            $data['img_width'] = 0;
+            $data['img_height'] = 0;
+        }
         
         $now = date('Y-m-d H:i:s');
         $data['updatetime'] = $now;

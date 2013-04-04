@@ -15,10 +15,11 @@
         <thead>
         <tr>
             <th width="15%">Product</th>
-            <th width="25%">Folder</th>
-            <th width="15%">Download</th>
-            <th width="15%">Share</th>
-            <th width="15%">View</th>
+            <th width="20%">Folder</th>
+            <th width="35%">FileName</th>
+            <th width="10%">Download</th>
+            <th width="10%">Share</th>
+            <th width="10%">View</th>
             <eq name="userType" value="1">
             <th width="15%">Upload</th>
             </eq>
@@ -29,9 +30,18 @@
         <tr>
             <td>{$vo.product_name}</td>
             <td>{$vo.project_name}</td>
+            <td>{$vo.file_name}</td>
             <td><a class="download-btn" href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
             <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
-            <td><a href="__URL__/play/id/{$vo.id}" target="_blank" title="View">View</a></td>
+            <td>
+            <if condition="$vo.category_name eq Picture">
+                <a href="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo.img_path}" target="_blank">View</a>
+            <elseif condition="$vo.category_name eq Document"/>
+                <a href="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo.video_path}" target="_blank">View</a>
+            <else/>
+                <a href="__URL__/play/id/{$vo.id}" target="_blank" title="View">View</a>
+            </if>
+            </td>
             <eq name="userType" value="1">
             <td><a class="upload-btn" href="javascript:;" title="Upload" data="{$vo.id}">Upload</a></td>
             </eq>
