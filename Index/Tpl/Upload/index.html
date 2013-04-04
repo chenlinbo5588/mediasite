@@ -6,14 +6,14 @@
                 <div class="field-box"><select name="file_type" id="file_type">
 		    <option value="">Please Select</option>
 		    <volist name="fileType" id="vo">
-		    <option value="{$vo.id},{$vo.name}">{$vo.title}</option>
+                        <option value="{$vo.id},{$vo.name}" <if condition="$vo.name eq 'Movie'">selected</if>>{$vo.title}</option>
 		    </volist>
 		</select></div>
 	    </li>
 	    
 	    <!-- when choose type movie -->
-	    <li id="uploadImageFile">
-                <label class="field-label">Cover Image:</label>
+            <li id="uploadImageFile">
+                <label class="field-label">Image File:</label>
                 <div class="field-box">
                     <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
                     <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="" readonly="readonly"/>
@@ -28,7 +28,7 @@
                 </div>
 	    </li>
 	    
-	    <li><label class="field-label">Video File:</label>
+	    <li id="uploadMovieFile"><label class="field-label">Video File:</label>
                 <div class="field-box">
                     <input type="hidden" name="Uploader_Value_2" id="Uploader_Value_2" value="" />
                     <input type="text" name="Uploader_Show_Value_2" id="Uploader_Show_Value_2" value="" readonly="readonly"/>
@@ -40,6 +40,20 @@
                 <div class="field-box">
                     <div id="UploaderProgress_2"></div>
                     <div id="UploaderFeedBack_2"></div>
+                </div>
+	    </li>
+            <li id="uploadDocFile" style="display: none;"><label class="field-label">Document File:</label>
+                <div class="field-box">
+                    <input type="hidden" name="Uploader_Value_3" id="Uploader_Value_3" value="" />
+                    <input type="text" name="Uploader_Show_Value_3" id="Uploader_Show_Value_3" value="" readonly="readonly"/>
+                    <span id="UploaderPlaceholder_3"></span>
+                    <span class="Uploader" allowSize="10MB" allowFile="*.doc;*.docx;*.pdf;" style="display:none;" >Please Choose Files</span>
+                </div>
+            </li>
+	    <li><label class="field-label">&nbsp;</label>
+                <div class="field-box">
+                    <div id="UploaderProgress_3"></div>
+                    <div id="UploaderFeedBack_3"></div>
                 </div>
 	    </li>
 	    <!-- <li><label class="field-label">Parameter:</label>
@@ -111,16 +125,42 @@ $(function(){
         initSelectBox();
     });
     
-    /*
+    
+    var mov = /movie/i;
+    var doc = /document/i;
+    var pic = /picture/i
+    
+    var isMov =false ;
+    var isDoc = false;
+    var isPic = false;
+    
+    isMov = mov.test($("#file_type").val());
+    isDoc = doc.test($("#file_type").val());
+    isPic = pic.test($("#file_type").val());
+    
     $("#file_type").change(function(e){
-	var mov = /movie/i;
-	
-	if(mov.test($(this).val())){
-	    $("#uploadImageFile").show();
-	}else{
-	    $("#uploadImageFile").hide();
-	}
-    });*/
+	isMov = mov.test($(this).val());
+	isDoc = doc.test($(this).val());
+	isPic = pic.test($(this).val());
+        
+        if(isMov){
+            $("#uploadDocFile").hide();
+            $("#uploadMovieFile").show();
+            $("#uploadImageFile").show();
+        }else if(isDoc){
+            $("#uploadDocFile").show();
+            $("#uploadMovieFile").hide();
+            $("#uploadImageFile").hide();
+        }else if(isPic){
+            $("#uploadDocFile").hide();
+            $("#uploadMovieFile").hide();
+            $("#uploadImageFile").show();
+        }else {
+            $("#uploadDocFile").hide();
+            $("#uploadMovieFile").hide();
+            $("#uploadImageFile").hide();
+        }
+    });
     
     $("#client").change(function(e){
         if('' == $("#client").val()){
@@ -156,22 +196,45 @@ function validationForm(form){
 	return false;
     }
     
-    /*
     var mov = /movie/i;
-    if(mov.test($("#file_type").val()) && '' == $("#Uploader_Value_1").val()){
-	alert("Please Choose Cover Image Type");
-	$("#Uploader_Show_Value_1").focus();
-	return false;
-    }*/
+    var doc = /document/i;
+    var pic = /picture/i
     
-    if('' == $("#Uploader_Value_1").val()){
+    var isMov =false ;
+    var isDoc = false;
+    var isPic = false;
+    
+    isMov = mov.test($("#file_type").val());
+    isDoc = doc.test($("#file_type").val());
+    isPic = pic.test($("#file_type").val());
+    
+    var up_check = {movie:false,picture:false,doc:false};
+    if(isMov){
+        up_check.movie = true;
+        up_check.picture = true;
+    }else if(isDoc){
+        up_check.doc = true;
+    }else if(isPic){
+        up_check.picture = true;
+    }
+    
+    if(up_check.picture && '' == $("#Uploader_Value_1").val()){
 	alert("Please Choose Image File");
+        $("#uploadImageFile").show();
 	$("#Uploader_Show_Value_1").focus();
 	return false;
     }
     
-    if('' == $("#Uploader_Value_2").val()){
-	alert("Please Choose File");
+    if(up_check.movie && '' == $("#Uploader_Value_2").val()){
+	alert("Please Choose Movie File");
+        $("#uploadMovieFile").show();
+	$("#Uploader_Show_Value_2").focus();
+	return false;
+    }
+    
+    if(up_check.doc && '' == $("#Uploader_Value_3").val()){
+	alert("Please Choose Document File");
+        $("#uploadDocFile").show();
 	$("#Uploader_Show_Value_2").focus();
 	return false;
     }

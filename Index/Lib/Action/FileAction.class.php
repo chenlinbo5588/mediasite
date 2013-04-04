@@ -24,32 +24,8 @@ class FileAction extends CommonAction {
             // 普通账户只能给自己加
             $data['account']  = $this->_user['Account'];
         }
-	$data['title'] = $_POST['Uploader_Show_Value_2'];
-	$data['file_name'] = $_POST['Uploader_Show_Value_2'];
-	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_2'],strrpos($_POST['Uploader_Show_Value_2'],'.'));
-	
-	/**
-	 * 如果 magic_quotes_gpc = On ,则需要处理 
-	 */
-	if(MAGIC_QUOTES_GPC){
-	    $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
-	    $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
-	}
-	$image = json_decode($_POST['Uploader_Value_1'],true);
-	$video = json_decode($_POST['Uploader_Value_2'],true);
-	
-	$data['video_path'] = $video['path'];
-	$data['video_size'] = $video['size'];
-	$data['video_width'] = $_POST['width'];
-	$data['video_height'] = $_POST['height'];
-	
-	$data['img_path'] = $image['path'];
-	$data['img_size'] = $image['size'];
-	$data['img_width'] = $image['width'];
-	$data['img_height'] = $image['height'];
-	
-	
-	$data['product_id'] = substr($_POST['product'],0,strpos($_POST['product'],','));
+        
+        $data['product_id'] = substr($_POST['product'],0,strpos($_POST['product'],','));
 	$data['product_name'] = substr($_POST['product'],strpos($_POST['product'],',') + 1);
 	
 	$data['project_id'] = substr($_POST['project'],0,strpos($_POST['project'],','));
@@ -57,6 +33,72 @@ class FileAction extends CommonAction {
 	
 	$data['category_id'] = substr($_POST['file_type'],0,strpos($_POST['file_type'],','));
 	$data['category_name'] = substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1);
+        
+        
+        $fileType = strtolower($data['category_name']);
+        
+        $titleIndex = 1;
+        switch($fileType){
+            case 'movie':
+                $titleIndex = 2;
+                break;
+            case 'document':
+                $titleIndex = 3;
+                break;
+            case 'picture':
+                $titleIndex = 1;
+                break;
+            default:
+                break;
+            
+        }
+	$data['title'] = $_POST['Uploader_Show_Value_'.$titleIndex];
+	$data['file_name'] = $_POST['Uploader_Show_Value_'.$titleIndex];
+	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_'.$titleIndex],strrpos($_POST['Uploader_Show_Value_'.$titleIndex],'.'));
+	
+	/**
+	 * 如果 magic_quotes_gpc = On ,则需要处理 
+	 */
+	if(MAGIC_QUOTES_GPC){
+	    $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
+	    $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
+            $_POST['Uploader_Value_3'] = stripslashes($_POST['Uploader_Value_3']);
+	}
+        
+        switch($fileType){
+            case 'movie':
+                $image = json_decode($_POST['Uploader_Value_1'],true);
+                $video = json_decode($_POST['Uploader_Value_2'],true);
+                break;
+            case 'document':
+                //use video field to store document file
+                $video = json_decode($_POST['Uploader_Value_3'],true);
+                $image = array();
+                break;
+            case 'picture':
+                $image = json_decode($_POST['Uploader_Value_1'],true);
+                $video = $image;
+                break;
+            default:
+                break;
+        }
+        
+	$data['video_path'] = $video['path'];
+	$data['video_size'] = $video['size'];
+	$data['video_width'] = $_POST['width'];
+	$data['video_height'] = $_POST['height'];
+	
+        if(!empty($image)){
+            $data['img_path'] = $image['path'];
+            $data['img_size'] = $image['size'];
+            $data['img_width'] = $image['width'];
+            $data['img_height'] = $image['height'];
+        }else{
+            $data['img_path'] = '';
+            $data['img_size'] = 0;
+            $data['img_width'] = 0;
+            $data['img_height'] = 0;
+        }
         
 	$now = date('Y-m-d H:i:s');
 	
@@ -160,10 +202,16 @@ class FileAction extends CommonAction {
             $ret = $fileModel->where(" id = ".$_POST['id'])->select();
             $info = $ret[0];
             $deleteFile = ROOT_PATH.'/Public/Files/'.$info['video_path'];
-            $isDelete = unlink($deleteFile);
+            if(file_exists($deleteFile)){
+                $isDelete = @unlink($deleteFile);
+            }else{
+                $isDelete = true;
+            }
             if(!$isDelete) $this->sendJson($retAry);
             $deleteFile = ROOT_PATH.'/Public/Files/'.$info['img_path'];
-            unlink($deleteFile);
+            if(file_exists($deleteFile)){
+                @unlink($deleteFile);
+            }
             $now = date('Y-m-d H:i:s');
             $con['id']      = $_POST['id'];
             $data['is_delete'] = 1;
