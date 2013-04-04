@@ -7,7 +7,13 @@ class FileAction extends CommonAction {
         $video = $files[0];
         if($video['video_width'] == 0)$video['video_width'] = '600';
         if($video['video_height'] == 0)$video['video_width'] = '400';
-        $this->assign('video',$video);
+        $this->assign('videoMsg',$video);
+
+        $mediaExt = explode(',',C('MEDIA_PLAY_EXT'));
+        $fileExt = substr(strtolower($video['file_suffix']),1);
+        $mediaFlag = in_array($fileExt,$mediaExt);
+        $this->assign('mediaFlag',$mediaFlag);
+
         $this->display();
     }
     

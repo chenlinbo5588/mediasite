@@ -67,7 +67,6 @@ class WorkAction extends CommonAction {
         }
         $this->assign('videoMsg',$infoMsg);
         $mediaExt = explode(',',C('MEDIA_PLAY_EXT'));
-        $this->assign('mediaExt',$mediaExt);
         $fileExt = substr(strtolower($infoMsg['file_suffix']),1);
         $mediaFlag = in_array($fileExt,$mediaExt);
         $this->assign('mediaFlag',$mediaFlag);
