@@ -17,10 +17,10 @@
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.title}</td>
-            <td>{$vo.project_name}</td>
-            <td>{$vo.product_name}</td>
-            <td>{$vo.account}</td>
+            <td><span title="{$vo.title}">{$vo.title|utf_substr=20}</span></td>
+            <td><span title="{$vo.project_name}">{$vo.project_name|utf_substr=25}</span></td>
+            <td><span title="{$vo.product_name}">{$vo.product_name|utf_substr=25}</span></td>
+            <td><span title="{$vo.account}">{$vo.account|utf_substr=20}</span></td>
             <!-- <td>
                 <if condition="$vo.status eq 1">New</if>
                 <if condition="$vo.status eq 2">Checking</if>

@@ -21,7 +21,7 @@
             <else />
             <td>Client User</td>
             </if>
-            <td>{$vo.account}</td>
+            <td><span title="{$vo.account}">{$vo.account|utf_substr=30}</span></td>
             <!-- <td>{$vo.nickname}</td>
             <td>{$vo.password}</td> -->
             <td>{$vo.enable|showEnable}</td>

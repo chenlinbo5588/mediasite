@@ -14,8 +14,8 @@
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.Name}</td>
-            <td>{$vo.Account}</td>
+            <td><span title="{$vo.Name}">{$vo.Name|utf_substr=30}</span></td>
+            <td><span title="{$vo.Account}">{$vo.Account|utf_substr=30}</span></td>
             <td>{$vo.Enable|showEnable}</td>
             <td><a class="edit" href="javascript:;" data="{$vo.ID}" title="Edit">Edit</a>&nbsp;/&nbsp;<a class="delete" href="javascript:;" data="{$vo.ID}" title="Delete">Delete</a></td>
         </tr>

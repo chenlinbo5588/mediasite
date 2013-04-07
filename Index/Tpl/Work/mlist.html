@@ -28,9 +28,9 @@
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.product_name}</td>
-            <td>{$vo.project_name}</td>
-            <td>{$vo.file_name}</td>
+            <td><span title="{$vo.product_name}">{$vo.product_name|utf_substr=20}</span></td>
+            <td><span title="{$vo.project_name}">{$vo.project_name|utf_substr=25}</span></td>
+            <td><span title="{$vo.file_name}">{$vo.file_name|utf_substr=40}</span></td>
             <td><a class="download-btn" href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
             <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
             <td>

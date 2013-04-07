@@ -200,4 +200,25 @@ echo filesize($filePath);die();*/
         closedir($dir);
         return $fileList;
     }
+
+    function utf_substr($str,$len,$dots=true) {
+        $newStrs = array();
+        $strLen  = strlen($str);
+        for($i=0;$i<$len;$i++) {
+            $temp_str=substr($str,0,1);
+            if(ord($temp_str) > 127) {
+                $i++;
+                if($i<$len) {
+                    $newStrs[]=substr($str,0,3);
+                    $str=substr($str,3);
+                }
+            } else {
+                $newStrs[]=substr($str,0,1);
+                $str=substr($str,1);
+            }
+        }
+        $lastStr = join($newStrs);
+        if($dots && ($strLen > $len))$lastStr .= '...';
+        return $lastStr;
+    }
 ?>
