@@ -143,6 +143,7 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .valid {display:inline-block;width:32px;height:32px;background:url("../Images/icon/check.png") no-repeat 0 0;}
 .paused {display:inline-block;width:32px;height:32px;background:url("../Images/icon/pause.png") no-repeat 0 0;}
 .deleted {display:inline-block;width:32px;height:32px;background:url("../Images/icon/trash.png") no-repeat 0 0;}
+.trash {display:inline-block;width:16px;height:16px;background:url("../Images/icon/trash-small.png") no-repeat 0 0;}
 
 /*pop*/
 .dialog {display:none;}
@@ -225,3 +226,5 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 #columnMenu li.current {font-weight:bold;}
 #columnImg li {display:block; height:500px; padding:5px;}
 #columnImg li a {border: 1px solid black; padding:3px;}
+.uploaded-list {height:22px;line-height:22px;width:220px;background-color:#EDEDEE;margin-top:2px;}
+.uploaded-list .trash {float:right;margin-top:3px;}

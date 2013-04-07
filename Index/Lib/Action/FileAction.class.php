@@ -23,92 +23,92 @@ class FileAction extends CommonAction {
     public function submitFile() {
         $retAry = array('status' => false);
 
-	$data = array();
-        if(1 == $this->_user['Type']){
-            $data['account'] = substr($_POST['client'],strpos($_POST['client'],',') + 1);
-        }else{
-            // 普通账户只能给自己加
-            $data['account']  = $this->_user['Account'];
-        }
-        
-        $data['product_id'] = substr($_POST['product'],0,strpos($_POST['product'],','));
-	$data['product_name'] = substr($_POST['product'],strpos($_POST['product'],',') + 1);
-	
-	$data['project_id'] = substr($_POST['project'],0,strpos($_POST['project'],','));
-	$data['project_name'] = substr($_POST['project'],strpos($_POST['project'],',') + 1);
-	
-	$data['category_id'] = substr($_POST['file_type'],0,strpos($_POST['file_type'],','));
-	$data['category_name'] = substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1);
-        
-	/**
-	 * 如果 magic_quotes_gpc = On ,则需要处理 
-	 */
-	if(MAGIC_QUOTES_GPC){
-	    $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
-	    $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
-            $_POST['Uploader_Value_3'] = stripslashes($_POST['Uploader_Value_3']);
-	}
-        
-        $fileType = strtolower($data['category_name']);
+        $fileType = strtolower(substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1));
         $titleIndex = 1;
+        $image = $video = array();
         switch($fileType){
             case 'movie':
                 $titleIndex = 2;
-                $image = json_decode($_POST['Uploader_Value_1'],true);
-                $video = json_decode($_POST['Uploader_Value_2'],true);
+                if(MAGIC_QUOTES_GPC){
+                    $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
+                    $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
+                }
+                $image[] = json_decode($_POST['Uploader_Value_1'],true);
+                $video[] = json_decode($_POST['Uploader_Value_2'],true);
                 break;
             case 'document':
                 $titleIndex = 3;
                 //use video field to store document file
-                $video = json_decode($_POST['Uploader_Value_3'],true);
-                $image = array();
+                foreach($_POST['Uploader_Value_3'] as $tmpFile) {
+                    if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
+                    $video[] = json_decode($tmpFile,true);
+                }
                 break;
             case 'picture':
-                $titleIndex = 1;
-                $image = json_decode($_POST['Uploader_Value_1'],true);
-                $video = $image;
+                $titleIndex = 4;
+                foreach($_POST['Uploader_Value_4'] as $tmpFile) {
+                    if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
+                    $video[] = json_decode($tmpFile,true);
+                }
                 break;
             default:
                 break;
         }
-        
-        $data['title'] = $_POST['Uploader_Show_Value_'.$titleIndex];
-	$data['file_name'] = $_POST['Uploader_Show_Value_'.$titleIndex];
-	$data['file_suffix'] = substr($_POST['Uploader_Show_Value_'.$titleIndex],strrpos($_POST['Uploader_Show_Value_'.$titleIndex],'.'));
-        
-	$data['video_path'] = $video['path'];
-	$data['video_size'] = $video['size'];
-	$data['video_width'] = $_POST['width'];
-	$data['video_height'] = $_POST['height'];
-	
-        if(!empty($image)){
-            $data['img_path'] = $image['path'];
-            $data['img_size'] = $image['size'];
-            $data['img_width'] = $image['width'];
-            $data['img_height'] = $image['height'];
-        }else{
-            $data['img_path'] = '';
-            $data['img_size'] = 0;
-            $data['img_width'] = 0;
-            $data['img_height'] = 0;
-        }
-        
-	$now = date('Y-m-d H:i:s');
-	
-        if(isset($_POST['id']) && ($_POST['id'] != 0)) {
-            $con['id']      = $_POST['id'];
-	    $data['updatetime'] = $now;
-	    $data['update_user'] = $this->_user['Account'];
-            $retAry = $this->_update('Files',$con,$data);
-        } else {
-            $data['createtime'] = $now;
-            $data['updatetime'] = $now;
-	    $data['create_user'] = $this->_user['Account'];
-            $retAry = $this->_add('Files',$data);
+
+        $now = date('Y-m-d H:i:s');
+        foreach($video as $key=>$tmpData) {
+            $data = array();
+            if(1 == $this->_user['Type']){
+                $data['account'] = substr($_POST['client'],strpos($_POST['client'],',') + 1);
+            }else{
+                // 普通账户只能给自己加
+                $data['account']  = $this->_user['Account'];
+            }
+            
+            $data['product_id'] = substr($_POST['product'],0,strpos($_POST['product'],','));
+            $data['product_name'] = substr($_POST['product'],strpos($_POST['product'],',') + 1);
+            
+            $data['project_id'] = substr($_POST['project'],0,strpos($_POST['project'],','));
+            $data['project_name'] = substr($_POST['project'],strpos($_POST['project'],',') + 1);
+            
+            $data['category_id'] = substr($_POST['file_type'],0,strpos($_POST['file_type'],','));
+            $data['category_name'] = substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1);
+            $data['title'] = $tmpData['source_filename'];
+            $data['file_name'] = $tmpData['source_filename'];
+            $data['file_suffix'] = substr($tmpData['source_filename'],strrpos($tmpData['source_filename'],'.'));
+
+            $data['video_path'] = $tmpData['path'];
+            $data['video_size'] = $tmpData['size'];
+            $data['video_width'] = $_POST['width'];
+            $data['video_height'] = $_POST['height'];
+
+            if(!empty($image[$key])){
+                $data['img_path'] = $image[$key]['path'];
+                $data['img_size'] = $image[$key]['size'];
+                $data['img_width'] = $image[$key]['width'];
+                $data['img_height'] = $image[$key]['height'];
+            }else{
+                $data['img_path'] = '';
+                $data['img_size'] = 0;
+                $data['img_width'] = 0;
+                $data['img_height'] = 0;
+            }
+            if(isset($_POST['id']) && ($_POST['id'] != 0)) {
+                $con['id']      = $_POST['id'];
+                $data['updatetime'] = $now;
+                $data['update_user'] = $this->_user['Account'];
+                $retAry = $this->_update('Files',$con,$data);
+            } else {
+                $data['createtime'] = $now;
+                $data['updatetime'] = $now;
+                $data['create_user'] = $this->_user['Account'];
+                $retAry = $this->_add('Files',$data);
+            }
+            if(!$retAry['status'])$this->sendJson($retAry);
         }
         $this->sendJson($retAry);
     }
-    
+
     public function add(){
         $this->edit();
     }

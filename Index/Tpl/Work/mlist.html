@@ -34,9 +34,9 @@
             <td><a class="download-btn" href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
             <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
             <td>
-            <if condition="$vo.category_name eq Picture">
+            <if condition="strtolower($vo.category_name) eq 'picture'">
                 <a href="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo.img_path}" target="_blank">View</a>
-            <elseif condition="$vo.category_name eq Document"/>
+            <elseif condition="strtolower($vo.category_name) eq 'document'"/>
                 <a href="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo.video_path}" target="_blank">View</a>
             <else/>
                 <a href="__URL__/play/id/{$vo.id}" target="_blank" title="View">View</a>

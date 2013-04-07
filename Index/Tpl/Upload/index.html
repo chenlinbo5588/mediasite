@@ -1,60 +1,84 @@
 <link href="__PUBLIC__/Css/swfupload.css" rev="stylesheet" rel="stylesheet" type="text/css" media="screen">
 <div class="menu_content">
     <form name="fileForm" id="fileForm" action="__APP__/File/submitFile/" method="post" onsubmit="return validationForm(this);">
-	<ul class="upload">
-	    <li><label class="field-label">File Type:</label>
-                <div class="field-box"><select name="file_type" id="file_type">
-		    <option value="">Please Select</option>
-		    <volist name="fileType" id="vo">
-                        <option value="{$vo.id},{$vo.name}" <if condition="$vo.name eq 'Movie'">selected</if>>{$vo.title}</option>
-		    </volist>
-		</select></div>
-	    </li>
-	    
-	    <!-- when choose type movie -->
-            <li id="uploadImageFile">
-                <label class="field-label">Image File:</label>
+    <ul class="upload">
+        <li>
+            <label class="field-label">File Type:</label>
+            <div class="field-box">
+                <select name="file_type" id="file_type">
+                    <option value="">Please Select</option>
+                    <volist name="fileType" id="vo">
+                    <option value="{$vo.id},{$vo.name}" <if condition="$vo.name eq 'Movie'">selected</if>>{$vo.title}</option>
+                    </volist>
+                </select>
+            </div>
+        </li>
+
+        <!-- when choose type movie -->
+        <li id="uploadImageFile"><label class="field-label">Image File:</label>
                 <div class="field-box">
                     <input type="hidden" name="Uploader_Value_1" id="Uploader_Value_1" value=""/>
                     <input type="text" name="Uploader_Show_Value_1" id="Uploader_Show_Value_1" value="" readonly="readonly"/>
                     <span id="UploaderPlaceholder_1"></span>
                     <span class="Uploader" allowSize="512KB" allowFile="*.jpg;*.jpeg;*.png;" style="display:none;" >Please Choose Files</span>
                 </div>
-            </li>
-	    <li><label class="field-label"></label>
-                <div class="field-box">
-                    <div id="UploaderProgress_1"></div>
-                    <div id="UploaderFeedBack_1"></div>
+        </li>
+        <li>
+            <label class="field-label"></label>
+            <div class="field-box">
+                <div id="UploaderProgress_1"></div>
+                <div id="UploaderFeedBack_1"></div>
+            </div>
+        </li>
+        <li id="uploadMovieFile">
+            <label class="field-label">Video File:</label>
+            <div class="field-box">
+                <input type="hidden" name="Uploader_Value_2" id="Uploader_Value_2" value="" />
+                <input type="text" name="Uploader_Show_Value_2" id="Uploader_Show_Value_2" value="" readonly="readonly"/>
+                <span id="UploaderPlaceholder_2"></span>
+                <span class="Uploader" allowSize="50MB" allowFile="*.flv;*.mp4;*.avi;" style="display:none;" >Please Choose Files</span>
+            </div>
+        </li>
+	    <li>
+            <label class="field-label">&nbsp;</label>
+            <div class="field-box">
+                <div id="UploaderProgress_2"></div>
+                <div id="UploaderFeedBack_2"></div>
+            </div>
+        </li>
+        <li id="uploadDocFile" style="display: none;">
+            <label class="field-label">Document File:</label>
+            <div class="field-box">
+                <div id="Uploader_Show_Value_3" style="width:258px;height:60px;overflow:auto;border:1px solid #878383;">
                 </div>
+                <span id="UploaderPlaceholder_3"></span>
+                <span class="Uploader" allowSize="10MB" allowFile="*.doc;*.docx;*.pdf;" style="display:none;" >Please Choose Files</span>
+            </div>
+        </li>
+	    <li>
+            <label class="field-label">&nbsp;</label>
+            <div class="field-box">
+                <div id="UploaderProgress_3"></div>
+                <div id="UploaderFeedBack_3"></div>
+            </div>
 	    </li>
-	    
-	    <li id="uploadMovieFile"><label class="field-label">Video File:</label>
-                <div class="field-box">
-                    <input type="hidden" name="Uploader_Value_2" id="Uploader_Value_2" value="" />
-                    <input type="text" name="Uploader_Show_Value_2" id="Uploader_Show_Value_2" value="" readonly="readonly"/>
-                    <span id="UploaderPlaceholder_2"></span>
-                    <span class="Uploader" allowSize="50MB" allowFile="*.flv;*.mp4;*.avi;" style="display:none;" >Please Choose Files</span>
+        <li id="uploadMultiImage" style="display:none;">
+            <label class="field-label">Image File:</label>
+            <div class="field-box">
+                <!-- <input type="hidden" name="Uploader_Value_4" id="Uploader_Value_4" value=""/>
+                <input type="text" name="Uploader_Show_Value_4" id="Uploader_Show_Value_4" value="" readonly="readonly"/> -->
+                <div id="Uploader_Show_Value_4" style="width:258px;height:60px;overflow:auto;border:1px solid #878383;">
                 </div>
-            </li>
-	    <li><label class="field-label">&nbsp;</label>
-                <div class="field-box">
-                    <div id="UploaderProgress_2"></div>
-                    <div id="UploaderFeedBack_2"></div>
-                </div>
-	    </li>
-            <li id="uploadDocFile" style="display: none;"><label class="field-label">Document File:</label>
-                <div class="field-box">
-                    <input type="hidden" name="Uploader_Value_3" id="Uploader_Value_3" value="" />
-                    <input type="text" name="Uploader_Show_Value_3" id="Uploader_Show_Value_3" value="" readonly="readonly"/>
-                    <span id="UploaderPlaceholder_3"></span>
-                    <span class="Uploader" allowSize="10MB" allowFile="*.doc;*.docx;*.pdf;" style="display:none;" >Please Choose Files</span>
-                </div>
-            </li>
-	    <li><label class="field-label">&nbsp;</label>
-                <div class="field-box">
-                    <div id="UploaderProgress_3"></div>
-                    <div id="UploaderFeedBack_3"></div>
-                </div>
+                <span id="UploaderPlaceholder_4"></span>
+                <span class="Uploader" allowSize="512KB" allowFile="*.jpg;*.jpeg;*.png;" style="display:none;" >Please Choose Files</span>
+            </div>
+        </li>
+        <li>
+            <label class="field-label">&nbsp;</label>
+            <div class="field-box">
+                <div id="UploaderProgress_4"></div>
+                <div id="UploaderFeedBack_4"></div>
+            </div>
 	    </li>
 	    <!-- <li><label class="field-label">Parameter:</label>
                 <div class="field-box">
@@ -63,48 +87,41 @@
                 </div>
         </li> -->
 
-	    <li>
-        <input type="hidden" name="width" value="960" />
-        <input type="hidden" name="height" value="540" />
-		<label class="field-label">User Name:</label>
-                <div class="field-box">
-                    <select name="client" id="client">
-                        <option value="">Please Choose</option>
-                        <volist name="client" id="vo">
-                        <option value="{$vo.id},{$vo.account}">{$vo.account}</option>
-                        </volist>
-                    </select>
-                </div>
-	    </li>
-	    <li>
-		<label class="field-label">Product:</label>
-                <div class="field-box">
-                    <select name="product" id="product">
-                        <option value="">Please Choose</option>
-                        <volist name="product" id="vo">
-                        <option value="{$vo.id}">{$vo.name}</option>
-                        </volist>
-                    </select>
-                </div>
-	    </li>
+        <li>
+            <input type="hidden" name="width" value="960" />
+            <input type="hidden" name="height" value="540" />
+            <label class="field-label">User Name:</label>
+            <div class="field-box">
+                <select name="client" id="client">
+                    <option value="">Please Choose</option>
+                    <volist name="client" id="vo">
+                    <option value="{$vo.id},{$vo.account}">{$vo.account}</option>
+                    </volist>
+                </select>
+            </div>
+        </li>
+        <li>
+            <label class="field-label">Product:</label>
+            <div class="field-box">
+                <select name="product" id="product">
+                    <option value="">Please Choose</option>
+                    <volist name="product" id="vo">
+                    <option value="{$vo.id}">{$vo.name}</option>
+                    </volist>
+                </select>
+            </div>
+        </li>
 
-	    <li>
-		<label class="field-label">Folder:</label>
-                <div class="field-box">
-                    <select name="project" id="project">
-                        <option value="" >Please Choose</option>
-                    </select>
-                </div>
-	    </li>
-	    <!--
-	    <li>
-		<label>Folder:</label><select name="folder" id="folder">
-		    <option value=""></option>
-		</select>
-	    </li>
-	    -->
-	</ul>
-	<input type="hidden" name="id" value="{$video_id}" />
+        <li>
+            <label class="field-label">Folder:</label>
+            <div class="field-box">
+                <select name="project" id="project">
+                    <option value="" >Please Choose</option>
+                </select>
+            </div>
+        </li>
+    </ul>
+    <input type="hidden" name="id" value="{$video_id}" />
         <div class="button-bar pt-20">
             <div class="button"><a id="save-btn" href="javascript:;">Save</a></div>
             <div class="button"><a id="cancel-btn" href="javascript:;">Cancel</a></div>
@@ -142,23 +159,26 @@ $(function(){
 	isMov = mov.test($(this).val());
 	isDoc = doc.test($(this).val());
 	isPic = pic.test($(this).val());
-        
         if(isMov){
             $("#uploadDocFile").hide();
             $("#uploadMovieFile").show();
             $("#uploadImageFile").show();
+            $("#uploadMultiImage").hide();
         }else if(isDoc){
             $("#uploadDocFile").show();
             $("#uploadMovieFile").hide();
             $("#uploadImageFile").hide();
+            $("#uploadMultiImage").hide();
         }else if(isPic){
             $("#uploadDocFile").hide();
             $("#uploadMovieFile").hide();
-            $("#uploadImageFile").show();
+            $("#uploadImageFile").hide();
+            $("#uploadMultiImage").show();
         }else {
             $("#uploadDocFile").hide();
             $("#uploadMovieFile").hide();
             $("#uploadImageFile").hide();
+            $("#uploadMultiImage").hide();
         }
     });
     
@@ -219,47 +239,44 @@ function validationForm(form){
         up_check.picture = true;
     }
     
-    if(up_check.picture && '' == $("#Uploader_Value_1").val()){
-	alert("Please Choose Image File");
-        $("#uploadImageFile").show();
-	$("#Uploader_Show_Value_1").focus();
-	return false;
+    if(up_check.picture && '' == $("#Uploader_Value_4").val()){
+        alert("Please Choose Image File");
+        $("#uploadMultiImage").show();
+        return false;
     }
     
     if(up_check.movie && '' == $("#Uploader_Value_2").val()){
-	alert("Please Choose Movie File");
+        alert("Please Choose Movie File");
         $("#uploadMovieFile").show();
-	$("#Uploader_Show_Value_2").focus();
-	return false;
+        $("#Uploader_Show_Value_2").focus();
+        return false;
     }
     
     if(up_check.doc && '' == $("#Uploader_Value_3").val()){
-	alert("Please Choose Document File");
+        alert("Please Choose Document File");
         $("#uploadDocFile").show();
-	$("#Uploader_Show_Value_2").focus();
-	return false;
+        $("#Uploader_Show_Value_2").focus();
+        return false;
     }
     
     
     if('' == $("#client").val()){
-	alert("Please Choose Client");
-	$("#client").focus();
-	return false;
+        alert("Please Choose Client");
+        $("#client").focus();
+        return false;
     }
     
     if('' == $("#product").val()){
-	alert("Please Choose Product");
-	$("#product").focus();
-	return false;
+        alert("Please Choose Product");
+        $("#product").focus();
+        return false;
     }
     
     if('' == $("#project").val()){
-	alert("Please Choose Project");
-	$("#project").focus();
-	return false;
+        alert("Please Choose Project");
+        $("#project").focus();
+        return false;
     }
-    
-
     return true;
 }
 
@@ -307,8 +324,14 @@ function createSwfUpload(index,allowSize, allowFile){
 		callback : function(file,serverData){
 			var tmp = eval("(" + serverData + ")");
 			if(1 == tmp.respcode){
-			    $("#Uploader_Value_" + index).val(serverData);
-			    $("#Uploader_Show_Value_" + index).val(tmp.source_filename);
+                debugger;
+                if(index < 3) {
+                    $("#Uploader_Value_" + index).val(serverData);
+                    $("#Uploader_Show_Value_" + index).val(tmp.source_filename);
+                } else {
+                    var upHtml = '<div id="upList_'+tmp.id+'" class="uploaded-list"><input type="hidden" name="Uploader_Value_'+index+'[]" value=\''+serverData+'\' />'+'<span>'+tmp.source_filename+'</span><a href="javascript:;" onclick="delUpFile(this)" class="trash"></a></div>';
+                    $("#Uploader_Show_Value_" + index).append(upHtml);
+                }
 			}else{
 			    alert('Attachment Upload Failed，Please try it again!');
 			}
@@ -320,6 +343,10 @@ function createSwfUpload(index,allowSize, allowFile){
     });
 
     return upload;
+}
+
+function delUpFile(self) {
+    $(self).parent().remove();
 }
 
 </script>

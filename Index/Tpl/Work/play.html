@@ -1,12 +1,18 @@
 <include file="Public:header" />
     <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
     <div class="box960x540" >
-        <if condition="$mediaFlag eq 1">
-        <include file="media" />
+        <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
+            <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}" width="960" height="540" />
+        <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
+            <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />
         <else />
-        <div id="videoCanvas">
-        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
-        </div>
+            <if condition="$mediaFlag eq 1">
+            <include file="media" />
+            <else />
+            <div id="videoCanvas">
+                <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
+            </div>
+            </if>
         </if>
     </div>
     
@@ -18,11 +24,17 @@
                 <volist name="list" id="vo">
                 <li>
                     <a href="__URL__/play/id/{$vo.id}/page/{$currPage}" title="Project Title">
+                    <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
+                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}" width="400" height="214" />
+                    <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
+                        <img src="__PUBLIC__/Files/work_top.jpg" width="400" height="214" />
+                    <else />
                         <if condition="$vo['img_path'] neq ''">
                         <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['img_path']}" width="400" height="214" alt="{$vo.project_name}">
                         <else />
                         <img src="__PUBLIC__/Files/work_top.jpg" width="400" height="214" alt="{$vo.project_name}">
                         </if>
+                    </if>
                     </a>
                     <p class="title">
                         <a href="#" title="Project Title" target="_blank" class="lh-18">{$vo.project_name}</a><br />
@@ -39,7 +51,7 @@
     </div>
 <include file="Public:footer" />
 <script type="text/javascript">
-<if condition="($videoMsg['id'] gt 0) and ($mediaFlag neq 1)">
+<if condition="($videoMsg['id'] gt 0) and ($mediaFlag neq 1) and (strtolower($vo.category_name) eq 'movie')">
 var playervars = {
     contentpath: "",
     video: "http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}",
