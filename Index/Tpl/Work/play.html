@@ -24,9 +24,9 @@
                 <volist name="list" id="vo">
                 <li>
                     <a href="__URL__/play/id/{$vo.id}/page/{$currPage}" title="Project Title">
-                    <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
-                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}" width="400" height="214" />
-                    <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
+                    <if condition="strtolower($vo['category_name']) eq 'picture'">
+                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="400" height="214" />
+                    <elseif condition="strtolower($vo['category_name']) eq 'document'" />
                         <img src="__PUBLIC__/Files/work_top.jpg" width="400" height="214" />
                     <else />
                         <if condition="$vo['img_path'] neq ''">
