@@ -228,3 +228,5 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 #columnImg li a {border: 1px solid black; padding:3px;}
 .uploaded-list {height:22px;line-height:22px;width:220px;background-color:#EDEDEE;margin-top:2px;}
 .uploaded-list .trash {float:right;margin-top:3px;}
+.tclass{cursor:pointer;display:inline;float:left;min-width:8px;min-height:6px;padding:5px;margin-right:10px;}
+.ac{border-bottom:#333 solid 1px;}#ssgThumbs{clear:both;}

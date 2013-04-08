@@ -66,53 +66,55 @@ class WorkAction extends CommonAction {
             }
         }
         $this->assign('videoMsg',$infoMsg);
-        $mediaExt = explode(',',C('MEDIA_PLAY_EXT'));
-        $fileExt = substr(strtolower($infoMsg['file_suffix']),1);
-        $mediaFlag = in_array($fileExt,$mediaExt);
-        $this->assign('mediaFlag',$mediaFlag);
-	
-	$this->assign('category_name',strtolower($category));
-	
-        if($category != '' && $editId) {
-	    $page     = 1;
-            $pageSize = 4;
-            $total    = 0;
-            $list     = array();
+
+        if($editId > 0) {
+            $imgList[] = $infoMsg;
             $con      = array();
             if($userType != 1) {
                 $con[]    = "account = '{$account}'";
                 //$con[]    = "status = 3";
             }
             $con[] = "category_name='{$category}'";
-	    $con[] = "product_id=".$infoMsg['product_id'];
-	    $con[] = "project_id=".$infoMsg['project_id'];
-	    $con[] = "is_delete=0";
-	    
+            $con[] = "id!='{$editId}'";
             $where = implode(' AND ',$con);
             $total = $model->where($where)->count();
-	    
-	    switch(strtolower($category)){
-		case 'picture':
-		    $list = $model->where($where)->order('createtime desc')
-                            ->select();
-		    break;
-		case 'movie':
-		case 'document':
-		    $pageObj = new Page($total,$pageSize);
-		    $list   = $model->where($where)
+            if($total > 0) {
+                $imgList   = $model->where($where)
+                                ->limit('0,4')
+                                ->order('createtime desc')
+                                ->select();
+                array_unshift($imgList,$infoMsg);
+            }
+            $this->assign('imgList',$imgList);
+        }
+
+        $mediaExt = explode(',',C('MEDIA_PLAY_EXT'));
+        $fileExt = substr(strtolower($infoMsg['file_suffix']),1);
+        $mediaFlag = in_array($fileExt,$mediaExt);
+        $this->assign('mediaFlag',$mediaFlag);
+
+        if($category != '' && $editId) {
+            $page     = 1;
+            $pageSize = 4;
+            $total    = 0;
+            $list     = array();
+            $con      = array();
+            $where    = '';
+            if($userType != 1) {
+                $con[]    = "account = '{$account}'";
+                //$con[]    = "status = 3";
+            }
+            $con[] = "category_name='{$category}'";
+            $where = implode(' AND ',$con);
+            $total = $model->where($where)->count();
+            $pageObj = new Page($total,$pageSize);
+            $list   = $model->where($where)
                             ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
                             ->order('createtime desc')
                             ->select();
-		    
-		    
-		    $page = $this->showPage($pageObj,$search);
-		    $this->assign("page", $page);
-		    break;
-		default:
-		    break;
-	    }
-	    
+            $page = $this->showPage($pageObj,$search);
             $this->assign('list',$list);
+            $this->assign("page", $page);
             $this->assign("currPage", $_GET['page'] ? $_GET['page'] : 1);
         }
         $this->display();

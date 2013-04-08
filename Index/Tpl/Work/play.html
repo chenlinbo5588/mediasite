@@ -1,61 +1,42 @@
 <include file="Public:header" />
     <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
-    
-    <if condition="$mediaFlag eq 1">
     <div class="box960x540" >
-	<include file="media" />
-	<div id="videoCanvas">
-	    <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
-	</div>
-     </div>
-     </if>
+    <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
+        <div id="gallery-play">
+            <volist name="imgList" id="vo">
+                <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="960" height="540" border="0" alt=""/><span></span></a>
+            </volist>
+        </div>
+    <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />
+    <else />
+        <if condition="$mediaFlag eq 1">
+        <include file="media" />
+        <else />
+        <div id="videoCanvas">
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
+        </div>
+        </if>
+    </if>
+    </div>
     
     <div class="rowbox box960">
         <div class="tv-gallery pt-20">
             <h3 class="mb-15">Selected Portfolio Work</h3>
             <if condition="$list|count gt 0">
-		<!-- play images -->
-		<if condition="$category_name eq 'picture'">
-		<link rel="stylesheet" href="__PUBLIC__/Css/galleriffic/basic.css" type="text/css" />
-		<link rel="stylesheet" href="__PUBLIC__/Css/galleriffic/galleriffic-1.css" type="text/css" />
-		<script type="text/javascript" src="__PUBLIC__/Javascript/jquery.galleriffic.js"></script>
-		
-		<!-- Start Minimal Gallery Html Containers -->
-		<div id="gallery" class="content">
-			<div id="controls" class="controls"></div>
-			<div class="slideshow-container">
-				<div id="loading" class="loader"></div>
-				<div id="slideshow" class="slideshow"></div>
-			</div>
-		</div>
-		<div id="thumbs" class="navigation">
-			<ul class="thumbs noscript">
-			    <volist name="list" id="vo">
-				<li>
-					<a class="thumb" href="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" title="{$vo.title}">{$vo.title}</a>
-				</li>
-			    </volist>
-			</ul>
-		</div>
-		<!-- End Minimal Gallery Html Containers -->
-		<div style="clear: both;"></div>
-
-		
-		<elseif condition="$category_name eq movie"/>
-		<!-- play vido -->
             <ul class="tv-gallery-list">
                 <volist name="list" id="vo">
                 <li>
                     <a href="__URL__/play/id/{$vo.id}/page/{$currPage}" title="Project Title">
                     <if condition="strtolower($vo['category_name']) eq 'picture'">
-                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="400" height="214" />
+                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="400" height="214" alt="{$vo.project_name}">
                     <elseif condition="strtolower($vo['category_name']) eq 'document'" />
-                        <img src="__PUBLIC__/Files/work_top.jpg" width="400" height="214" />
+                        <img src="__PUBLIC__/Images/work_top.jpg" width="400" height="214" alt="{$vo.project_name}">
                     <else />
                         <if condition="$vo['img_path'] neq ''">
                         <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['img_path']}" width="400" height="214" alt="{$vo.project_name}">
                         <else />
-                        <img src="__PUBLIC__/Files/work_top.jpg" width="400" height="214" alt="{$vo.project_name}">
+                        <img src="__PUBLIC__/Images/work_top.jpg" width="400" height="214" alt="{$vo.project_name}">
                         </if>
                     </if>
                     </a>
@@ -66,11 +47,6 @@
                 </li>
                 </volist>
             </ul>
-		<elseif condition="$category_name eq document"/>
-		
-		
-		<else/>
-		</if>
             </if>
             <div class="clear"></div>
         </div>
@@ -79,7 +55,7 @@
     </div>
 <include file="Public:footer" />
 <script type="text/javascript">
-<if condition="($videoMsg['id'] gt 0) and ($mediaFlag neq 1) and (strtolower($vo.category_name) eq 'movie')">
+<if condition="($videoMsg['id'] gt 0) and ($mediaFlag neq 1) and (strtolower($videoMsg['category_name']) eq 'movie')">
 var playervars = {
     contentpath: "",
     video: "http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}",
@@ -95,17 +71,10 @@ var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor:
 var attributes = { align: "center" };
 swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
 </if>
-
-<if condition="$category_name eq 'picture'">
-$('div.navigation').css({'width' : '250px', 'float' : 'left'});
-$('div.content').css('display', 'block');
-
-$(document).ready(function() {				
-	// Initialize Minimal Galleriffic Gallery
-	$('#thumbs').galleriffic({
-		imageContainerSel:      '#slideshow',
-		controlsContainerSel:   '#controls'
+<if condition="strtolower($videoMsg['category_name']) eq 'picture'">
+	$(document).ready(function() {
+		$("#gallery-play").coinslider({width:960,height:540,delay: 5000,effect: 'straight'});
 	});
-});
+
 </if>
 </script>

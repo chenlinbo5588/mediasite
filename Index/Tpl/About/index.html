@@ -1,16 +1,16 @@
 <include file="Public:header" />
     <div class="box960x540">
-            <ul id="gallery-home" style="display:none;">
-		<if condition="$imgCount eq 0">
-                <li><a href="#"><img src="__PUBLIC__/Images/top/home-top1.jpg" width="960" height="540" border="0" alt="" /></a><span></span></li>
-                <li><a href="#"><img src="__PUBLIC__/Images/top/home-top2.jpg" width="960" height="540" border="0" alt="" /></a><span></span></li>
-                <li><a href="#"><img src="__PUBLIC__/Images/top/home-top3.jpg" width="960" height="540" border="0" alt="" /></a><span></span></li>
-		<else/>
-		<volist name="imgList" id="img">
-		<li><a href="#"><img src="__PUBLIC__/Images/top/{$img}" width="960" height="540" border="0" alt=""/></a></li>
-		</volist>
-		</if>
-	    </ul>
+        <div id="gallery-home">
+        <if condition="$imgCount eq 0">
+                <a href="#"><img src="__PUBLIC__/Images/top/home-top1.jpg" width="960" height="540" border="0" alt="" /><span></span></a>
+                <a href="#"><img src="__PUBLIC__/Images/top/home-top2.jpg" width="960" height="540" border="0" alt="" /><span></span></a>
+                <a href="#"><img src="__PUBLIC__/Images/top/home-top3.jpg" width="960" height="540" border="0" alt="" /><span></span></a>
+        <else/>
+            <volist name="imgList" id="img">
+            <a href="#"><img src="__PUBLIC__/Images/top/{$img}" border="0" alt="" /><span></span></a>
+            </volist>
+        </if>
+        </div>
     </div>
     <div class="rowbox box960">
         <div class="desc">

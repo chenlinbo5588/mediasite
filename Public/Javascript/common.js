@@ -1,6 +1,6 @@
 $(function() {
 	var gallen = $("#gallery-home").length;
-	if(gallen>0)$("#gallery-home").PikaChoose();
+	if(gallen>0)$("#gallery-home").coinslider({width:960,height:540,delay: 5000,navigation: false,effect: 'straight'});
 	initSelectBox();
 });
 var App = {};
