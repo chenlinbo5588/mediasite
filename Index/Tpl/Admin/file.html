@@ -32,7 +32,7 @@
             <!-- <a class="specify" href="javascript:;" action="__APP__/File/verify" data="{$vo.id}" title="Verify">Verify</a>&nbsp;/&nbsp; -->
             </if>
             <if condition="$vo.category_name eq Picture">
-                <a href="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo.img_path}" target="_blank">View</a>
+                <a href="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo.video_path}" target="_blank">View</a>
             <elseif condition="$vo.category_name eq Document"/>
                 <a href="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo.video_path}" target="_blank">View</a>
             <else/>

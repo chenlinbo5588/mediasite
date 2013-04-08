@@ -49,6 +49,7 @@ class FileAction extends CommonAction {
                 foreach($_POST['Uploader_Value_4'] as $tmpFile) {
                     if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
                     $video[] = json_decode($tmpFile,true);
+		    $image[] = json_decode($tmpFile,true);
                 }
                 break;
             default:
