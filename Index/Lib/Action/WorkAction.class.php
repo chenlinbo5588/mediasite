@@ -67,7 +67,7 @@ class WorkAction extends CommonAction {
         }
         $this->assign('videoMsg',$infoMsg);
 
-        if($editId > 0) {
+        if($editId > 0 && (strtolower($category) == 'picture')) {
             $imgList[] = $infoMsg;
             $con      = array();
             if($userType != 1) {
@@ -75,6 +75,7 @@ class WorkAction extends CommonAction {
                 //$con[]    = "status = 3";
             }
             $con[] = "category_name='{$category}'";
+            $con[] = "project_id=".$infoMsg['project_id'];
             $con[] = "id!='{$editId}'";
             $where = implode(' AND ',$con);
             $total = $model->where($where)->count();
