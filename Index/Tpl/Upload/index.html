@@ -324,14 +324,14 @@ function createSwfUpload(index,allowSize, allowFile){
 		callback : function(file,serverData){
 			var tmp = eval("(" + serverData + ")");
 			if(1 == tmp.respcode){
-                debugger;
-                if(index < 3) {
-                    $("#Uploader_Value_" + index).val(serverData);
-                    $("#Uploader_Show_Value_" + index).val(tmp.source_filename);
-                } else {
-                    var upHtml = '<div id="upList_'+tmp.id+'" class="uploaded-list"><input type="hidden" name="Uploader_Value_'+index+'[]" value=\''+serverData+'\' />'+'<span>'+tmp.source_filename+'</span><a href="javascript:;" onclick="delUpFile(this)" class="trash"></a></div>';
-                    $("#Uploader_Show_Value_" + index).append(upHtml);
-                }
+                
+			    if(index < 3) {
+				$("#Uploader_Value_" + index).val(serverData);
+				$("#Uploader_Show_Value_" + index).val(tmp.source_filename);
+			    } else {
+				var upHtml = '<div id="upList_'+tmp.id+'" class="uploaded-list"><input type="hidden" name="Uploader_Value_'+index+'[]" value=\''+serverData+'\' />'+'<span>'+tmp.source_filename+'</span><a href="javascript:void(0);" onclick="delUpFile(this,' + tmp.id +')" class="trash">X</a></div>';
+				$("#Uploader_Show_Value_" + index).append(upHtml);
+			    }
 			}else{
 			    alert('Attachment Upload Failed，Please try it again!');
 			}
@@ -345,8 +345,25 @@ function createSwfUpload(index,allowSize, allowFile){
     return upload;
 }
 
-function delUpFile(self) {
-    $(self).parent().remove();
+function delUpFile(self,aid) {
+    App.confirm("Delete Quened File",'Are you sure to delete this queued file ?',function(){
+	var realDelete = true;
+	if(realDelete){
+	    var url = "http://{$Think.const.ROOT_APP_URL}/File/deleteQueuedFile";
+            $.post(url, {id:aid}, function(response) {
+                if(response.status) {
+                    $(self).parent().remove();
+                } else {
+                    if(response.error) {
+                        App.alert('Delete Notify','Delete fail,please try again a momemt later.');
+                    }
+                }
+            });
+	    
+	}else{
+	    $(self).parent().remove();
+	}
+    });
 }
 
 </script>

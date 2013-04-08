@@ -193,7 +193,10 @@ class FileAction extends CommonAction {
 
         if(1 == $this->_user['Type']){
             $fileModel = M('Files');
-            $ret = $fileModel->where(" id = ".$_POST['id'])->select();
+            $ret = $fileModel->where(" id = ".(empty($_POST['id']) == true ? 0 : $_POST['id']))->select();
+	    if(empty($ret[0])){
+		$this->sendJson($retAry);
+	    }
             $info = $ret[0];
             $deleteFile = ROOT_PATH.'/Public/Files/'.$info['video_path'];
             if(file_exists($deleteFile)){
@@ -215,5 +218,34 @@ class FileAction extends CommonAction {
             $retAry = $this->_update('Files',$con,$data);
         }
         $this->sendJson($retAry);
+    }
+    
+    /**
+     * 多文件删除时，用于删除队列中的文件 
+     */
+    public function deleteQueuedFile(){
+	
+	$retAry = array('status' => false);
+	
+	$attachment = M('Attachment');
+	$ret = $attachment->where(" aid = ".(empty($_POST['id']) == true ? 0 : $_POST['id']))->select();
+	if(empty($ret[0])){
+	    //找不到记录也试为删除成功
+	    $this->sendJson(array('status' => true));
+	}
+	$info = $ret[0];
+	$deleteFile = ROOT_PATH.'/Public/Files/'.$info['path_name'];
+	if(file_exists($deleteFile)){
+	    $isDelete = @unlink($deleteFile);
+	}else{
+	    $isDelete = true;
+	}
+	if(!$isDelete) $this->sendJson($retAry);
+	
+	$con['aid']      = $_POST['id'];
+	$data['is_delete'] = 1;
+
+	$retAry = $this->_update('Attachment',$con,$data);
+	$this->sendJson($retAry);
     }
 }
