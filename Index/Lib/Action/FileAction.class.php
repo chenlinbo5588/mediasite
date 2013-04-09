@@ -26,12 +26,15 @@ class FileAction extends CommonAction {
         $fileType = strtolower(substr($_POST['file_type'],strpos($_POST['file_type'],',') + 1));
         $titleIndex = 1;
         $image = $video = array();
+
         switch($fileType){
             case 'movie':
                 $titleIndex = 2;
+                $_POST['Uploader_Value_1'] = iconv('gbk','utf-8',$_POST['Uploader_Value_1']);
+                $_POST['Uploader_Value_2'] = iconv('gbk','utf-8',$_POST['Uploader_Value_2']);
                 if(MAGIC_QUOTES_GPC){
-                    $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
-                    $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
+                    //$_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
+                    //$_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
                 }
                 $image[] = json_decode($_POST['Uploader_Value_1'],true);
                 $video[] = json_decode($_POST['Uploader_Value_2'],true);
@@ -40,16 +43,16 @@ class FileAction extends CommonAction {
                 $titleIndex = 3;
                 //use video field to store document file
                 foreach($_POST['Uploader_Value_3'] as $tmpFile) {
-                    if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
-                    $video[] = json_decode($tmpFile,true);
+                    //if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
+                    $video[] = json_decode(iconv('gbk','utf-8',$tmpFile),true);
                 }
                 break;
             case 'picture':
                 $titleIndex = 4;
                 foreach($_POST['Uploader_Value_4'] as $tmpFile) {
-                    if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
-                    $video[] = json_decode($tmpFile,true);
-		    $image[] = json_decode($tmpFile,true);
+                    //if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
+                    $video[] = json_decode(iconv('gbk','utf-8',$tmpFile),true);
+                    $image[] = json_decode(iconv('gbk','utf-8',$tmpFile),true);
                 }
                 break;
             default:
@@ -94,6 +97,7 @@ class FileAction extends CommonAction {
                 $data['img_width'] = 0;
                 $data['img_height'] = 0;
             }
+
             if(isset($_POST['id']) && ($_POST['id'] != 0)) {
                 $con['id']      = $_POST['id'];
                 $data['updatetime'] = $now;

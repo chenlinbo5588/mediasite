@@ -63,15 +63,13 @@ class UploadAction extends CommonAction {
         
         $result = $this->_add('Attachment',$data);
         if(isset($result['error'])){
-            $this->sendJson(array('respcode' => 0,"source_filename" => $attachment['filename']));
+            $retAry = array('respcode' => 0,"error" => $result['error']);
         }else{
-            
             $retAry = array('respcode' => 1,'id'=> $result['insertid'] ,'width' => $width,'height'=> $height,'size' => $data['file_size'], 'path' => $newFilePath,"source_filename" => $attachment['filename']);
             if(!move_uploaded_file($_FILES['Filedata']['tmp_name'],$attachmentPath.$newFilePath)){
                 $retAry = array('respcode' => 0,"source_filename" => $attachment['filename']);
             }
-            
-            $this->sendJson($retAry);
         }
+        $this->sendJson($retAry);
     }
 }

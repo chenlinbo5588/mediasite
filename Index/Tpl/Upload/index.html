@@ -322,9 +322,8 @@ function createSwfUpload(index,allowSize, allowFile){
 		progressTarget : "UploaderProgress_" + index,
 		cancelButtonId : "UploaderCancelBtn_" + index,
 		callback : function(file,serverData){
-			var tmp = eval("(" + serverData + ")");
+            var tmp = $.parseJSON(serverData);
 			if(1 == tmp.respcode){
-                
 			    if(index < 3) {
 				$("#Uploader_Value_" + index).val(serverData);
 				$("#Uploader_Show_Value_" + index).val(tmp.source_filename);
@@ -333,7 +332,8 @@ function createSwfUpload(index,allowSize, allowFile){
 				$("#Uploader_Show_Value_" + index).append(upHtml);
 			    }
 			}else{
-			    alert('Attachment Upload Failed，Please try it again!');
+			    if(typeof (tmp.error) != 'undefined')App.alert(tmp.error);
+                else App.alert('Attachment Upload Failed，Please try it again!');
 			}
 		}
 	},
