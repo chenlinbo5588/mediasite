@@ -156,7 +156,8 @@ function createSwfUpload(index,allowSize, allowFile){
     var upload = new SWFUpload({
 	upload_url: "{$Think.const.UPLOAD_TARGET}",
 	post_params: {"PHPSESSID" : sid},
-	file_size_limit : allowSize ,
+	//file_size_limit : allowSize ,
+	file_size_limit : "50MB" ,
 	file_types : allowFile ,
 	file_types_description : "Choose Files",
 	file_upload_limit : "0",
