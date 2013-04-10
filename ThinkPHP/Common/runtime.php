@@ -22,20 +22,13 @@ if(version_compare(PHP_VERSION,'5.2.0','<'))  die('require PHP > 5.2.0 !');
 define('THINK_VERSION', '3.1');
 
 //   系统信息
-if(version_compare(PHP_VERSION,'5.3.0','<')) {
-    set_magic_quotes_runtime(0);
-    define('MAGIC_QUOTES_GPC',get_magic_quotes_gpc()?True:False);
-}else{
-    define('MAGIC_QUOTES_GPC',True);
-}
+define('MAGIC_QUOTES_GPC', function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc());
 
-if(false == MAGIC_QUOTES_GPC) {
-    $_GET = daddslashes($_GET);
-    $_POST = daddslashes($_POST);
-    $_COOKIE = daddslashes($_COOKIE);
-    $_SERVER = daddslashes($_SERVER);
-    $_FILES = daddslashes($_FILES);
-    $_REQUEST = daddslashes($_REQUEST);
+if(MAGIC_QUOTES_GPC) {
+    $_GET = dstripslashes($_GET);
+    $_POST = dstripslashes($_POST);
+    $_COOKIE = dstripslashes($_COOKIE);
+    $_FILES = dstripslashes($_FILES);
 }
 
 define('IS_CGI',substr(PHP_SAPI, 0,3)=='cgi' ? 1 : 0 );

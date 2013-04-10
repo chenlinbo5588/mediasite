@@ -15,9 +15,6 @@ class ImageAction extends CommonAction {
 	for($i = 1; $i <= 5 ; $i++){
 	    if(!empty($_POST['Uploader_Value_'.$i])){
 		
-		if(MAGIC_QUOTES_GPC){
-		   $_POST['Uploader_Value_'.$i] = stripslashes($_POST['Uploader_Value_'.$i]);
-		}
 		$tmp = json_decode($_POST['Uploader_Value_'.$i],true);
 		$imageId[] = $tmp['id'];
 	    }

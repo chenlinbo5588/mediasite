@@ -180,11 +180,7 @@ class WorkAction extends CommonAction {
         $editId        = $_POST['id'] ? $_POST['id'] : 0;
         if(!$editId)$this->sendJson($retAry);
         
-        if(MAGIC_QUOTES_GPC){
-            $_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
-            $_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
-        }
-        
+	
         $fileType = $_POST['file_type'];
         $titleIndex = 1;
         

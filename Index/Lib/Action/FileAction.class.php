@@ -30,10 +30,7 @@ class FileAction extends CommonAction {
         switch($fileType){
             case 'movie':
                 $titleIndex = 2;
-                if(MAGIC_QUOTES_GPC){
-                    //$_POST['Uploader_Value_1'] = stripslashes($_POST['Uploader_Value_1']);
-                    //$_POST['Uploader_Value_2'] = stripslashes($_POST['Uploader_Value_2']);
-                }
+
                 $image[] = json_decode($_POST['Uploader_Value_1'],true);
                 $video[] = json_decode($_POST['Uploader_Value_2'],true);
                 break;
@@ -41,14 +38,14 @@ class FileAction extends CommonAction {
                 $titleIndex = 3;
                 //use video field to store document file
                 foreach($_POST['Uploader_Value_3'] as $tmpFile) {
-                    //if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
+
                     $video[] = json_decode($tmpFile,true);
                 }
                 break;
             case 'picture':
                 $titleIndex = 4;
                 foreach($_POST['Uploader_Value_4'] as $tmpFile) {
-                    //if(MAGIC_QUOTES_GPC)$tmpFile = stripslashes($tmpFile);
+
                     $video[] = json_decode($tmpFile,true);
                     $image[] = json_decode($tmpFile,true);
                 }
