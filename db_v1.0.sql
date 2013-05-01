@@ -211,3 +211,13 @@ INSERT INTO `site_column` VALUES ('Contact Page', 'Contact Page', '/Contact/');
 
 alter table attachment add index  sit_column_key (remark) ;
 alter table files add index  file_name_idx (file_name) ;
+
+CREATE TABLE `file_auth` (
+  `auth_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT 'files 表中的 id 外键',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'user 表中 id 外键',
+  `auth_type` varchar(50) NOT NULL COMMENT '权授类型, view  share download 等等,按照|分隔多个权限',
+  PRIMARY KEY (`auth_id`),
+  KEY `rid_idx` (`rid`),
+  KEY `user_id_idx` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

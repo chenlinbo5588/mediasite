@@ -28,17 +28,29 @@ $(function() {
         loadEditDialog('Edit {$Think.ACTION_NAME|strtolower|ucfirst}',editId);
     });
     
+    
+    $('.auth',$table).click(function(){
+        var editId = $(this).attr('data');
+        var action = $(this).attr('title');
+
+        loadEditDialog('Edit User ' + action,editId,action, 1000,600);
+    });
+    
 });
 
-function loadEditDialog(title,id ,action) {
+function loadEditDialog(title,id ,action ,width, height) {
     $dialog  = $('#edit-dialog');
     if(action){
-        var url     = action;
+        var url     = '__URL__/' + action;
     }else{
         var url     = '__URL__/edit{$Think.ACTION_NAME|strtolower|ucfirst}';
     }
+    
+    width = width || 700;
+    height = height || 350;
+    
     if(typeof (id) != 'undefined')url += '/id/'+id;
-    $options = {title:title,width:700,height:300,modal:true};
+    $options = {title:title,width:width,height:height,modal:true};
     $dialog.dialog($options);
     $dialog.loadTpl(url,function(){
         $('#save-btn').click(function(){

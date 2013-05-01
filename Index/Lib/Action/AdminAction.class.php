@@ -56,16 +56,24 @@ class AdminAction extends CommonAction {
             $con['id']      = $_POST['id'];
             $data = $_POST;
             unset($data['id']);
+            //user type should not be edit
+            unset($date['type']);
             $retAry = $this->_update('User',$con,$data);
             if(($data['enable'] == '0') && $retAry['status']) {
                 $pcon['enable'] = $data['enable'];
-                $pcon['user_id'] = $data['id'];
+                $pcon['user_id'] = $con['id'];
                 $this->_update('Product',$pcon,$data);
                 $this->_update('Project',$pcon,$data);
             }
         } else {
             $data  = $_POST;
             $data['enable'] = 1;
+            
+            if(!in_array($date['type'],array(0,2))){
+                //default 0
+                $data['type'] = 0;
+            }
+            
             $data['createtime'] = date('Y-m-d H:i:s');
             $retAry = $this->_add('User',$data);
         }
@@ -340,5 +348,33 @@ class AdminAction extends CommonAction {
 	}
         
         $this->sendJson($retAry);
+    }
+    
+    /**
+     * 用于权限设置 
+     */
+    public function Authority(){
+        
+        $fileModel = M('Files');
+        $page = empty($_GET['page']) ? 1 : intval($_GET['page']);
+        $pageSize = 3;
+        
+        $total = $fileModel->where("is_delete != 0")->count();
+        $pageObj = new Page($total,$pageSize);
+        
+        /**
+         * 待授权数据
+         */
+        $data = $fileModel->join("file_auth ON id = file_auth.rid ")
+                ->where("files.is_delete = 0")
+                ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
+                ->order('files.id DESC ,files.product_id,files.project_id')
+                ->select();
+                 
+                
+        $this->assign('data',$data);
+        $this->assign('current_page',$page);
+        $this->assign('user_id',$_GET['id']);
+        $this->display();
     }
 }
