@@ -212,12 +212,25 @@ INSERT INTO `site_column` VALUES ('Contact Page', 'Contact Page', '/Contact/');
 alter table attachment add index  sit_column_key (remark) ;
 alter table files add index  file_name_idx (file_name) ;
 
+---------------------------------------------------------
+-- 2013-05-02
+---------------------------------------------------------
 CREATE TABLE `file_auth` (
   `auth_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `rid` int(10) unsigned NOT NULL COMMENT 'files 表中的 id 外键',
   `user_id` int(10) unsigned NOT NULL COMMENT 'user 表中 id 外键',
-  `auth_type` varchar(50) NOT NULL COMMENT '权授类型, view  share download 等等,按照|分隔多个权限',
+  `auth_type` varchar(50) NOT NULL COMMENT '权授类型, view,share,download,每一种授权用逗号分隔，在一行记录其所拥有的权限列表',
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  `updatetime` datetime NOT NULL COMMENT '后最更新时间',
+  `create_user` varchar(50) NOT NULL COMMENT '建创者',
+  `update_user` varchar(50) NOT NULL COMMENT '更新者',
+  `is_expired` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '0 表示当前生效值 , 1 表示过期',
   PRIMARY KEY (`auth_id`),
   KEY `rid_idx` (`rid`),
-  KEY `user_id_idx` (`user_id`)
+  KEY `user_id_idx` (`user_id`),
+  KEY `expired_idx` (`is_expired`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+alter table files add index  is_delete_idx (is_delete) ;
+alter table files add index  account_idx (account) ;
+alter table files add index  project_id_idx (project_id) ;

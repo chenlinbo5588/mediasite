@@ -2,6 +2,17 @@
 import("@.ORG.Util.Page");
 class WorkAction extends CommonAction {
 
+    public function index(){
+	$userType = $this->_user['Type'];
+	
+	if($userType != 2){
+	    $this->display();
+	}else{
+	    $script = "<script>window.top.location.href='".__APP__."/Work/Projects'</script>";
+	    die($script);
+	}
+    }
+    
     public function mlist() {
         $userType = $this->_user['Type'];
         $account  = $this->_user['Account'];
@@ -38,10 +49,60 @@ class WorkAction extends CommonAction {
         $this->display();
     }
 
+    public function projects(){
+	$userType = $this->_user['Type'];
+	
+	if($userType != 2){
+	    $this->index();
+	    exit();
+	}
+	
+	$userID = $this->_user['ID'];
+	$page     = 1;
+        $pageSize = 4;
+        $total    = 0;
+	$projectModel = M('Project');
+	$where = "user_id = {$userID} AND enable = 1";
+	$total = $projectModel->where($where)->count();
+	$pageObj = new Page($total,$pageSize);
+	
+	$list   = $projectModel->field('id,name')->where($where)
+			->limit($pageObj->firstRow. ',' . $pageObj->listRows)
+			->order('id DESC')
+			->select();
+	
+	
+	
+	//邮件中: "具体使用哪一个需要根据分配给他的第一个文件类型选择
+	// 获取该项目是什么类型的 Movie ,Document ,Picture
+	$filesModel = M('Files');
+	foreach($list as $key => $value){
+	    $firstFile = $filesModel->where("project_id = " . $value['id'] . " AND is_delete = 0")
+		    ->order(' id ASC')
+		    ->limit(1)
+		    ->select();
+	    
+	    if(!empty($firstFile[0])){
+		$list[$key]['firstFile'] = $firstFile[0];
+	    }else{
+		$list[$key]['firstFile'] = array();
+	    }
+	}
+	
+	$page = $this->showPage($pageObj);
+	$this->assign('list',$list);
+	$this->assign("page", $page);
+	$this->assign("currPage", $_GET['page'] ? $_GET['page'] : 1);
+
+        $this->display();
+
+    }
+    
     public function play() {
         $editId   = $_GET['id'] ? $_GET['id'] : 0;
         $share    = $_GET['share'] ? $_GET['share'] : '';
         $category = '';
+	$projectName = '';
         $infoMsg  = array();
         $model = M('Files');
         $userType = $this->_user['Type'];
@@ -63,8 +124,10 @@ class WorkAction extends CommonAction {
             if(isset($info[0])) {
                 $infoMsg  = $info[0];
                 $category = $infoMsg['category_name'];
+		$projectName = $infoMsg['project_name'];
             }
         }
+	$this->assign('projectName',$projectName);
         $this->assign('videoMsg',$infoMsg);
 
         if($editId > 0 && (strtolower($category) == 'picture')) {

@@ -57,7 +57,7 @@ class AdminAction extends CommonAction {
             $data = $_POST;
             unset($data['id']);
             //user type should not be edit
-            unset($date['type']);
+            unset($data['type']);
             $retAry = $this->_update('User',$con,$data);
             if(($data['enable'] == '0') && $retAry['status']) {
                 $pcon['enable'] = $data['enable'];
@@ -69,7 +69,7 @@ class AdminAction extends CommonAction {
             $data  = $_POST;
             $data['enable'] = 1;
             
-            if(!in_array($date['type'],array(0,2))){
+            if(!in_array($data['type'],array(0,2))){
                 //default 0
                 $data['type'] = 0;
             }
@@ -355,26 +355,117 @@ class AdminAction extends CommonAction {
      */
     public function Authority(){
         
-        $fileModel = M('Files');
-        $page = empty($_GET['page']) ? 1 : intval($_GET['page']);
-        $pageSize = 3;
+        //$fileModel = M('Files');
+        //$page = empty($_GET['page']) ? 1 : intval($_GET['page']);
+        //$pageSize = 3;
+        $userType = $this->_user['Type'];
         
-        $total = $fileModel->where("is_delete != 0")->count();
-        $pageObj = new Page($total,$pageSize);
+	$account  = '';
+	$user_id = $_GET['id'];
+	
+	if(!empty($user_id) && $userType == 1){
+	    //只有管理员才可以执行
+	    $userModel = M('User');
+	    $userInfo = $userModel->where("id = {$user_id}")->select(); 
+	    $account = $userInfo[0]['account'];
+	}
+	
+        //$total = $fileModel->where("is_delete != 0")->count();
+        //$pageObj = new Page($total,$pageSize);
         
         /**
          * 待授权数据
          */
+	
+	$model = new Model();
+	
+	$data = $model->query(
+		"SELECT * FROM 
+		    ( SELECT * FROM files WHERE account = '{$account}' AND is_delete = 0 ) AS a 
+		    LEFT JOIN 
+		    (
+			SELECT * FROM file_auth WHERE is_expired = 0 AND user_id = {$user_id}
+		    ) AS b
+		    ON a.id = b.rid 
+		    ORDER BY a.id DESC ,a.product_id,a.project_id "
+		);
+	
+	/*
         $data = $fileModel->join("file_auth ON id = file_auth.rid ")
-                ->where("files.is_delete = 0")
-                ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
+                ->where("files.account = '{$account}' AND  files.is_delete = 0 ")
+                //->limit($pageObj->firstRow. ',' . $pageObj->listRows)
                 ->order('files.id DESC ,files.product_id,files.project_id')
                 ->select();
-                 
-                
+	*/
+			
+			
         $this->assign('data',$data);
-        $this->assign('current_page',$page);
+        //$this->assign('current_page',$page);
         $this->assign('user_id',$_GET['id']);
         $this->display();
+    }
+    
+    public function submitAuth(){
+	$retAry = array('status' => false);
+	
+	/*
+	 * print_r($_POST);
+	 * Array
+	    (
+		[user_id] => 20
+		[auths] => Array
+		    (
+			[0] => 29,view
+			[1] => 29,share
+			[2] => 28,view
+			[3] => 28,share
+		    )
+	    )
+	 * 
+	 */
+	
+	if($this->_user['Type'] == 1 && !empty($_POST['auths'])){
+	    
+	    $fileAuth = M('FileAuth');
+	    
+	    $con['user_id'] = $_POST['user_id'];
+	    $con['is_expired'] = 0;
+	    
+	    $data['is_expired'] = 1;
+	    $data['updatetime']  = date("Y-m-d H:i:s");
+	    $data['update_user']  = $this->_user['Account'];
+
+	    $retAry = $fileAuth->where($con)->save($data);
+	    
+	    
+	    //扁平化
+	    $authArray = array();
+	    foreach($_POST['auths'] as $val){
+		$one = explode(',',$val);
+		
+		if(isset($authArray[$one[0]])){
+		   $authArray[$one[0]] .= ",".$one[1];
+		}else{
+		    $authArray[$one[0]] = $one[1];
+		}
+	    }
+	    
+	    //然后 insert
+	    foreach($authArray as $key => $value){
+		$d['rid'] = $key;
+		$d['user_id'] = $_POST['user_id'];
+		$d['auth_type'] = $value;
+		
+		$d['createtime'] = date("Y-m-d H:i:s");
+		$d['updatetime'] = date("Y-m-d H:i:s");
+		$d['create_user'] = $this->_user['Account'];
+		$d['update_user'] = $this->_user['Account'];
+		$d['is_expired'] = 0;
+		$fileAuth->add($d);
+	    }
+	    
+	    $retAry = array('status' => true);
+	}
+	$this->sendJson($retAry);
     }
 }

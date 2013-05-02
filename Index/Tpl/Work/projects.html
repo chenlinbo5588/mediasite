@@ -1,0 +1,58 @@
+<include file="Public:header" />
+    <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
+    <div class="box960x540" >
+    <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
+        <div id="gallery-play">
+            <volist name="imgList" id="vo">
+                <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="960" height="540" border="0" alt=""/><span></span></a>
+            </volist>
+        </div>
+    <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />
+    <else />
+        <if condition="$mediaFlag eq 1">
+        <include file="media" />
+        <else />
+        <div id="videoCanvas">
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
+        </div>
+        </if>
+    </if>
+    </div>
+    
+    <div class="rowbox box960">
+        <div class="tv-gallery pt-20">
+            <h3 class="mb-15">Selected Portfolio Work</h3>
+            <if condition="$list|count gt 0">
+            <ul class="tv-gallery-list">
+                <volist name="list" id="vo">
+                <li>
+                    <a <if condition="empty($vo['firstFile']) eq true">href="javascript:void(0);"<else/>href="__URL__/play/id/{$vo['firstFile']['id']}/page/1"</if> title="$vo.name">
+                    <if condition="strtolower($vo['firstFile']['category_name']) eq 'picture'">
+                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['firstFile']['video_path']}" width="400" height="214" alt="{$vo.name}">
+                    <elseif condition="strtolower($vo['firstFile']['category_name']) eq 'document'" />
+                        <img src="__PUBLIC__/Images/work_top.jpg" width="400" height="214" alt="{$vo.name}">
+                    <else />
+                        <if condition="$vo['firstFile']['img_path'] neq ''">
+                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['firstFile']['img_path']}" width="400" height="214" alt="{$vo.name}">
+                        <else />
+                        <img src="__PUBLIC__/Images/work_top.jpg" width="400" height="214" alt="{$vo.name}">
+                        </if>
+                    </if>
+                    </a>
+                    <p class="title">
+                        <a <if condition="empty($vo['firstFile']) eq true">href="javascript:void(0);"<else/>href="__URL__/play/id/{$vo['firstFile']['id']}/page/1"</if> title="{$vo.name}" class="lh-18">{$vo.name}</a><br />
+                        <i><if condition="empty($vo['firstFile']) eq true">No Files<else/>{$vo['firstFile']['category_name']}</if></i>
+                    </p>
+                </li>
+                </volist>
+            </ul>
+            </if>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        {$page}
+    </div>
+<include file="Public:footer" />
+<script type="text/javascript">
+</script>

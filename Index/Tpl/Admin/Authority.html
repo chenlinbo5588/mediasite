@@ -1,21 +1,20 @@
-<form name="authForm" action="" method="post">
+<form name="authForm" action="" method="post" id="authForm">
     <input type="hidden" name="user_id" value="{$user_id}"/>
-    <input type="hidden" name="currentPage" value="{$currentPage}"/>
-<table>
+<table width="95%">
     <thead>
         <tr>
             <th width="15%"></th>
             <th width="15%"></th>
-            <th width="20%"></th>
+            <th width="30%"></th>
             <th width="10%"></th>
             <th width="10%"></th>
-            <th width="10%"><input type="button" name="saveBtn" value="Save"/></th>
+            <th width="10%"><input type="button" name="saveBtn" id="saveBtn" value="Save"/></th>
 
         </tr>
         <tr>
             <th width="15%">Product</th>
             <th width="15%">Folder</th>
-            <th width="20%">File Name</th>
+            <th width="30%">File Name</th>
             <th width="10%">View</th>
             <th width="10%">Share</th>
             <th width="10%">Download</th>
@@ -28,11 +27,27 @@
             <td><span>{$vo.product_name}</span></td>
             <td><span>{$vo.project_name}</span></td>
             <td><span>{$vo.file_name}</span></td>
-            <td><span><input type="checkbox" value="{$vo.id},view" name="auths[]" <if condition="strpos(strtolower($vo.auth_type),'view') !== false ">checked="checked"</if>/></span></td>
-            <td><span><input type="checkbox" value="{$vo.id},share" name="auths[]" <if condition="strpos(strtolower($vo.auth_type),'share') !== false ">checked="checked"</if>/></span></td>
-            <td><span><input type="checkbox" value="{$vo.id},download" name="auths[]" <if condition="strpos(strtolower($vo.auth_type),'download') !== false ">checked="checked"</if>/></span></td>
+            <td><span><input type="checkbox" value="{$vo.id},view" name="auths[]" <if condition="strpos($vo['auth_type'],'view') !== false">checked="checked"</if>/></span></td>
+            <td><span><input type="checkbox" value="{$vo.id},share" name="auths[]" <if condition="strpos($vo['auth_type'],'share') !== false">checked="checked"</if>/></span></td>
+            <td><span><input type="checkbox" value="{$vo.id},download" name="auths[]" <if condition="strpos($vo['auth_type'],'download') !== false">checked="checked"</if>/></span></td>
         </tr>
         </volist>
 </volist>
 </table>
 </form>
+<script type="text/javascript">
+$(function(){
+    $("#saveBtn").click(function(){
+	$.post("__URL__/submitAuth",$("#authForm").serialize(), function(response) {
+	    if(response.status) {
+		App.alert('Auth','Save auth success.');
+	    } else {
+		if(response.error) {
+		    App.alert('Auth','Save auth fail.');
+		}
+	    }
+	});
+    });
+})
+
+</script>

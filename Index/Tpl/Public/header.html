@@ -20,7 +20,7 @@
             <ul>
                 <li class="first"><a href="__APP__/About" <if condition="strtolower($Think.const.MODULE_NAME) eq 'about'">class="current"</if> >About</a></li>
                 <if condition="$isLogon eq true">
-                    <li><a href="__APP__/Work/mlist" <if condition="strtolower($Think.const.MODULE_NAME) eq 'work'">class="current"</if> >Work</a></li>
+                    <li><a href="__APP__/Work" <if condition="strtolower($Think.const.MODULE_NAME) eq 'work'">class="current"</if> >Work</a></li>
                 <else />
                     <li><a href="__APP__/Work" <if condition="strtolower($Think.const.MODULE_NAME) eq 'work'">class="current"</if> >Work</a></li>
                 </if>

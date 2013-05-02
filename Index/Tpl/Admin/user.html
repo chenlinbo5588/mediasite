@@ -18,7 +18,9 @@
         <tr>
             <if condition="$vo['type'] eq '1'">
             <td>Power User</td>
-            <else />
+            <elseif condition="$vo['type'] eq '2'"/>
+	    <td>Normal User</td>
+	    <else/>
             <td>Client User</td>
             </if>
             <td><span title="{$vo.account}">{$vo.account|utf_substr=30}</span></td>

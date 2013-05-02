@@ -2,8 +2,8 @@
     <form action="__URL__/submitClient" name="clientForm" method="POST">
         <ul>
             <li>
-                <label class="field-label" for="user_type">User Type:</label>
-                <div class="field-box"><select name="user_type">
+                <label class="field-label" for="type">User Type:</label>
+                <div class="field-box"><select name="type">
                     <if condition="$vo.type eq 0">
                     <option value="0" selected>Client User</option>
                     <option value="2">Normal User</option>
