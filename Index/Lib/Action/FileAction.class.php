@@ -12,9 +12,10 @@ class FileAction extends CommonAction {
         $mediaExt = explode(',',C('MEDIA_PLAY_EXT'));
         $fileExt = substr(strtolower($video['file_suffix']),1);
         $mediaFlag = in_array($fileExt,$mediaExt);
+	$tplName = strtolower($video['category_name']).'_view';
         $this->assign('mediaFlag',$mediaFlag);
 
-        $this->display();
+        $this->display($tplName);
     }
     
     /**
@@ -123,7 +124,7 @@ class FileAction extends CommonAction {
         $list = array();
         if(1 == $this->_user['Type']){//管理员 
             $userModel = M('User');
-            $userList = $userModel->where('enable=1 AND type=0')
+            $userList = $userModel->where('enable=1 AND type !=1')
                           ->order('id desc')->select();
             $this->assign('client',$userList);
             $this->assign('showClient',true);
@@ -247,5 +248,34 @@ class FileAction extends CommonAction {
 
 	$retAry = $this->_update('Attachment',$con,$data);
 	$this->sendJson($retAry);
+    }
+    
+    public function checkAuth(){
+	$retAry = array('status' => false,'message' => 'No Authority');
+	
+	$fileId = empty($_POST['id']) ? 0 : $_POST['id'];
+	$authType = $_POST['auth_type'];
+	
+	if(empty($authType)){
+	    $this->sendJson($retAry);
+	}
+	
+	$user_id = empty($this->_user['ID']) ? 0 : $this->_user['ID'];
+	$fileAuthModel = M('FileAuth');
+	$dataRow = $fileAuthModel->where("rid = {$fileId} AND user_id = {$user_id}")->select();
+
+	if(!empty($dataRow)){
+	    $auths = explode(',',$dataRow[0]['auth_type']);	    
+	    foreach($auths as $v){
+		if($authType == $v){
+		    $retAry['status'] = true;
+		    $retAry['message'] = 'Check Authority Success';
+		    break;
+		}
+	    }
+	}
+	
+	$this->sendJson($retAry);
+	
     }
 }

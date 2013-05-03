@@ -145,7 +145,7 @@ class AdminAction extends CommonAction {
         $this->assign('editId',$editId);
         $userMod = M('User');
         $list   = $userMod->field('id,nickname,account')
-                          ->where('enable=1 AND type=0')
+                          ->where('enable=1 AND type != 1')
                           ->order('id desc')
                           ->select();
         $this->assign('userList',$list);
@@ -232,7 +232,7 @@ class AdminAction extends CommonAction {
         $this->assign('editId',$editId);
         $userMod = M('User');
         $list   = $userMod->field('id,nickname,account')
-                          ->where('enable=1 AND type=0')
+                          ->where('enable=1 AND type != 1')
                           ->order('id desc')
                           ->select();
         $this->assign('userList',$list);
@@ -398,7 +398,7 @@ class AdminAction extends CommonAction {
                 ->select();
 	*/
 			
-			
+	$this->assign('dateCount',count($data));
         $this->assign('data',$data);
         //$this->assign('current_page',$page);
         $this->assign('user_id',$_GET['id']);
@@ -428,15 +428,18 @@ class AdminAction extends CommonAction {
 	    
 	    $fileAuth = M('FileAuth');
 	    
-	    $con['user_id'] = $_POST['user_id'];
-	    $con['is_expired'] = 0;
+	    //保存历史模式
+	    //$con['user_id'] = $_POST['user_id'];
+	    //$con['is_expired'] = 0;
+	    //$data['is_expired'] = 1;
+	    //$data['updatetime']  = date("Y-m-d H:i:s");
+	    //$data['update_user']  = $this->_user['Account'];
 	    
-	    $data['is_expired'] = 1;
-	    $data['updatetime']  = date("Y-m-d H:i:s");
-	    $data['update_user']  = $this->_user['Account'];
-
-	    $retAry = $fileAuth->where($con)->save($data);
+	    //$retAry = $fileAuth->where($con)->save($data);
 	    
+	    //删除历史模式,这里用删除，防止记录膨胀
+	    $con['where'] = " user_id = " .$_POST['user_id'] ;
+	    $retAry = $fileAuth->delete($con);
 	    
 	    //扁平化
 	    $authArray = array();

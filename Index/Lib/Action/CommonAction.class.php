@@ -23,8 +23,12 @@ class CommonAction extends Action {
         if(!$this->_user['IsLogon'] && in_array($modName,$loginMod)) {
             Session::set('User','');
             $script = "<script>window.top.location.href='".__APP__."/Login'</script>";
-        }elseif(($userType != 1) && in_array($actionName,$adminAction)) {
+	}elseif(($userType != 1) && in_array($actionName,$adminAction)) {
             $script = "<script>window.top.location.href='".__APP__."/Index'</script>";
+        }
+	//client user,可以进入管理页面 中的file
+	if($this->_user['IsLogon'] && $userType == '0' && in_array($actionName,array('file'))) {
+	    $script = "";
         }
 	
 	if('' != $script){

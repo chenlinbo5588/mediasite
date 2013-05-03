@@ -22,6 +22,7 @@
         
     </thead>
     <tbody id="dataList">
+    <if condition="$dateCount neq 0">
         <volist name="data" id="vo">
         <tr>
             <td><span>{$vo.product_name}</span></td>
@@ -32,18 +33,25 @@
             <td><span><input type="checkbox" value="{$vo.id},download" name="auths[]" <if condition="strpos($vo['auth_type'],'download') !== false">checked="checked"</if>/></span></td>
         </tr>
         </volist>
+    <else/>
+	<tr>
+	    <td colspan="6">No Files , please upload file and assign to this user , <a href="__APP__/Admin/File">go to file manager now &gt;&gt;</a></td>
+	</tr>
+    </if>
 </volist>
 </table>
 </form>
 <script type="text/javascript">
 $(function(){
     $("#saveBtn").click(function(){
+	$("#saveBtn").attr("disabled",true);
 	$.post("__URL__/submitAuth",$("#authForm").serialize(), function(response) {
+	    $("#saveBtn").attr("disabled",false);
 	    if(response.status) {
-		App.alert('Auth','Save auth success.');
+		App.alert('Authority','Save authority success.');
 	    } else {
 		if(response.error) {
-		    App.alert('Auth','Save auth fail.');
+		    App.alert('Authority','Save authority fail.');
 		}
 	    }
 	});

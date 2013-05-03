@@ -28,12 +28,12 @@
             <li>
                 <label class="field-label" for="enable">Status:</label>
                 <div class="field-box"><select name="enable">
-                    <if condition="$vo.enable eq 0">
-                    <option value="0" selected>Invalid</option>
+                    <if condition="$vo.enable eq '0'">
                     <option value="1">Valid</option>
+		    <option value="0" selected>Invalid</option>
                     <else />
+		    <option value="1" selected>Valid</option>
                     <option value="0">Invalid</option>
-                    <option value="1" selected>Valid</option>
                     </if>
                 </select></div>
             </li>

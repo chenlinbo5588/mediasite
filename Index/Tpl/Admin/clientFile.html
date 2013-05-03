@@ -1,4 +1,5 @@
 <include file="Public:header" />
+<script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
 <div class="rowbox box960">
     <include file="Public:submenu" />
     <include file="Public:admintop" />
@@ -21,7 +22,7 @@
             - {$vo.project_name}
             </td>
             <td>{$vo.title}</td>
-            <td><a href="__APP__/Work/play/id/{$vo.id}" target="_blank" title="View">View</a></td>
+            <td><a class="view-btn" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="View">View</a></td>
             <td><a class="download-btn" href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
             <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
         </tr>
@@ -32,14 +33,62 @@
 </div>
 <div id="upload-dialog" class="dialog"></div>
 <div id="download-dialog" class="dialog"></div>
+<div id="dialog" class="dialog"></div>
 <script type="text/javascript">
-    
+
+/**
+ * 检查权限
+ */
+function checkAuth(fileId,callBack){
+    $.post("__APP__/File/checkAuth",{id:fileId},function(data){
+	if(data.status){
+	    callBack(fileId);
+	}else{
+	     App.alert("Auth Check",data.error);
+	}
+    })
+}
+
 $(function() {
+    $(".view-btn").click(function(){
+	var data = $(this).attr('data');
+	var action = $(this).attr('action');
+	var title = $(this).attr('title');
+	var url = action + '/id/' + data;
+	
+	$.post("__APP__/File/checkAuth",{id:data,auth_type:'view'},function(response){
+	    if(response.status){
+		loadDialog(title,url,990,620);
+	    }else{
+		App.alert("Authority Check",response.message);
+	    }
+	})
+    });
+    
     $('.share-btn').click(function(){
-        openShare($(this).attr('data'));
+	var data = $(this).attr('data');
+	
+	$.post("__APP__/File/checkAuth",{id:data,auth_type:'share'},function(response){
+	    if(response.status){
+		openShare(data);
+	    }else{
+		App.alert("Authority Check",response.message);
+	    }
+	})
     });
     $('.download-btn').click(function(){
-        download($(this).attr('data'));
+	var data = $(this).attr('data');
+	$.post("__APP__/File/checkAuth",{id:data,auth_type:'download'},function(response){
+	    if(response.status){
+		download(data);
+	    }else{
+		App.alert("Authority Check",response.message);
+	    }
+	})
+    });
+    
+    $('#add-{$Think.ACTION_NAME|strtolower}-btn').click(function(){
+	loadDialog('Add {$Think.ACTION_NAME|strtolower|ucfirst}',"__APP__/File/add");
     });
 });
 
@@ -78,6 +127,47 @@ function openShare(id) {
         $('#cancel-btn').click(function(){
             $dialog.dialog( "close" );
         });
+    }, false);
+}
+
+function loadDialog(title,url,w,h) {
+    $dialog  = $('#dialog');
+    if(typeof (w) == 'undefined')w = 620;
+    if(typeof (h) == 'undefined')h = 400;
+    $options = {title:title,width:w,height:h,modal:true};
+    $dialog.dialog($options);
+    $dialog.loadTpl(url,function(){
+        $('#save-btn').click(function(){
+            var $form   = $dialog.find('form').eq(0);
+            var subUrl  = $form.attr("action");
+            var options = {
+                dataType        : 'json',
+                url             : subUrl,
+                success         : function(response) {
+                   
+                    if(response.status) {
+                        $dialog.dialog( "close" );
+                        window.location.reload();
+                    }
+                    else {
+                        if(response.error) {
+                            App.alert(title,response.error);
+                        }
+                        else {
+                            App.alert(title,'Operate fail.');
+                        }
+                    }
+                }
+            };
+            $form.ajaxForm(options); 
+            if(validationForm($form)){
+                $form.submit();
+            }
+        });
+        $('#cancel-btn').click(function(){
+            $dialog.dialog( "close" );
+        });
+        initSelectBox();
     }, false);
 }
 </script>

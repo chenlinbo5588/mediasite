@@ -1,0 +1,24 @@
+<if condition="$mediaFlag eq 1">
+    <include file="Work:media" />
+<else />
+    <div id="videoCanvas">
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />
+    </div>
+    <script type="text/javascript">
+
+    var playervars = {
+    contentpath: "",
+    video: "http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}",
+    preview: "http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['img_path']}",
+    skin: "skin-videoflash.swf",
+    skincolor: "0x000000",
+    autoscale:false,
+    autoplay: true,
+    videowidth:960,
+    videoheight:505
+};
+var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor: "#ffffff", base: "."};
+var attributes = { align: "center" };
+swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
+    </script>
+</if>
