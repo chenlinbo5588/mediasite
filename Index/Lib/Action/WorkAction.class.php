@@ -8,7 +8,7 @@ class WorkAction extends CommonAction {
 	if($userType != 2){
 	    $this->display();
 	}else{
-	    $script = "<script>window.top.location.href='".__APP__."/Work/Projects'</script>";
+	    $script = "<script>window.top.location.href='".__APP__."/Work/userFolder'</script>";
 	    die($script);
 	}
     }
@@ -49,7 +49,7 @@ class WorkAction extends CommonAction {
         $this->display();
     }
 
-    public function projects(){
+    public function userFolder(){
 	$userType = $this->_user['Type'];
 	
 	if($userType != 2){
