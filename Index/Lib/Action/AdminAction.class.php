@@ -326,20 +326,21 @@ class AdminAction extends CommonAction {
                           ->order('auth_id desc')
                           ->select();
         $page = $this->showPage($pageObj);
-        foreach($authList as $key=>$auth) {
-            $fileIDs[] = $auth['rid'];
-            $authList[$key]['aType'] = explode(',',$auth['auth_type']);
+        if($total > 0) {
+            foreach($authList as $key=>$auth) {
+                $fileIDs[] = $auth['rid'];
+                $authList[$key]['aType'] = explode(',',$auth['auth_type']);
+            }
+            $fileModel =  M('Files');
+            $fList  = $fileModel->field('id,product_name,project_name,title')
+                                ->where('id IN ('.implode(',',$fileIDs).')')
+                                ->select();
+            foreach($fList as $tmp) {
+                $fileMap[$tmp['id']] = $tmp;
+            }
+            $this->assign('fileMap',$fileMap);
         }
-        $fileModel =  M('Files');
-        $fList  = $fileModel->field('id,product_name,project_name,title')
-                            ->where('id IN ('.implode(',',$fileIDs).')')
-                            ->select();
-        foreach($fList as $tmp) {
-            $fileMap[$tmp['id']] = $tmp;
-        }
-        $list = array();
         $this->assign('list',$authList);
-        $this->assign('fileMap',$fileMap);
         $this->assign("page", $page);
         $this->assign("userType", $userType);
         $this->display('clientFile');
