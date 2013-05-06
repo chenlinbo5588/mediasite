@@ -2,7 +2,9 @@
 <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
 <div class="rowbox box960">
     <include file="Public:submenu" />
+    <if condition="$userType eq 1">
     <include file="Public:admintop" />
+    </if>
     <table id="table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strtolower}" class="listdata ml-20 mt-15" cellpadding="0" cellspacing="0" border="0">
         <thead>
         <tr>
@@ -18,13 +20,31 @@
         <tbody>
         <volist name="list" id="vo">
         <tr>
-            <td>{$vo.product_name}<br />
-            - {$vo.project_name}
+            <td>{$fileMap[$vo['rid']]['product_name']}<br />
+            - {$fileMap[$vo['rid']]['project_name']}
             </td>
-            <td>{$vo.title}</td>
-            <td><a class="view-btn" href="javascript:;" action="__APP__/File/view" data="{$vo.id}" title="View">View</a></td>
-            <td><a class="download-btn" href="javascript:;" title="Download" data="{$vo.id}">Download</a></td>
-            <td><a class="share-btn" href="javascript:;" title="Share" data="{$vo.id}">Share</a></td>
+            <td>{$fileMap[$vo['rid']]['title']}</td>
+            <td>
+                <if condition="in_array('view',$vo['aType']) eq 1">
+                <a class="view-btn" href="javascript:;" action="__APP__/File/view" data="{$vo.rid}" title="View">View</a>
+                <else />
+                -
+                </if>
+            </td>
+            <td>
+                <if condition="in_array('download',$vo['aType']) eq 1">
+                <a class="download-btn" href="javascript:;" title="Download" data="{$vo.rid}">Download</a>
+                <else />
+                -
+                </if>
+            </td>
+            <td>
+                <if condition="in_array('share',$vo['aType']) eq 1">
+                <a class="share-btn" href="javascript:;" title="Share" data="{$vo.rid}">Share</a>
+                <else />
+                -
+                </if>
+            </td>
         </tr>
         </volist>
         </tbody>

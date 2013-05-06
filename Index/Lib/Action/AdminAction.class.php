@@ -275,13 +275,17 @@ class AdminAction extends CommonAction {
     }
     
     public function file(){
+        $userType = $this->_user['Type'];
+        $account  = $this->_user['Account'];
+        $this->assign("userType", $userType);
+        if($userType != 1) {
+            $this->cfile();die;
+        }
         $search = $_POST['search'];
         $model = M('Files');
         $page     = 1;
         $pageSize = 10;
         $total    = 0;
-        $userType = $this->_user['Type'];
-        $account  = $this->_user['Account'];
         $list = array();
         $con = array();
         $con[] = 'is_delete<>1';
@@ -304,15 +308,41 @@ class AdminAction extends CommonAction {
         $page = $this->showPage($pageObj,$search);
         $this->assign('list',$list);
         $this->assign("page", $page);
-        $this->assign("userType", $userType);
-        if($userType == 1) {
-            $tplName = 'file';
-        }
-        else {
-            $tplName = 'clientFile';
-        }
         $this->display($tplName);
         
+    }
+
+    public function cfile() {
+        $userID = $this->_user['ID'];
+        $page     = 1;
+        $pageSize = 10;
+        $total    = 0;
+        $model = M('FileAuth');
+        $where = "user_id='{$userID}'";
+        $total = $model->where($where)->count();
+        $pageObj = new Page($total,$pageSize);
+        $authList = $model->where($where)
+                          ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
+                          ->order('auth_id desc')
+                          ->select();
+        $page = $this->showPage($pageObj);
+        foreach($authList as $key=>$auth) {
+            $fileIDs[] = $auth['rid'];
+            $authList[$key]['aType'] = explode(',',$auth['auth_type']);
+        }
+        $fileModel =  M('Files');
+        $fList  = $fileModel->field('id,product_name,project_name,title')
+                            ->where('id IN ('.implode(',',$fileIDs).')')
+                            ->select();
+        foreach($fList as $tmp) {
+            $fileMap[$tmp['id']] = $tmp;
+        }
+        $list = array();
+        $this->assign('list',$authList);
+        $this->assign('fileMap',$fileMap);
+        $this->assign("page", $page);
+        $this->assign("userType", $userType);
+        $this->display('clientFile');
     }
     
     public function image(){
