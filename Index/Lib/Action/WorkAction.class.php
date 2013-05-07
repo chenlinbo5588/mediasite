@@ -8,7 +8,7 @@ class WorkAction extends CommonAction {
 	if($userType != 2){
 	    $this->display();
 	}else{
-	    $script = "<script>window.top.location.href='".__APP__."/Work/userFolder'</script>";
+	    $script = "<script>window.top.location.href='".__APP__."/Work/nlist'</script>";
 	    die($script);
 	}
     }
@@ -49,51 +49,59 @@ class WorkAction extends CommonAction {
         $this->display();
     }
 
-    public function userFolder(){
-	$userType = $this->_user['Type'];
-	
-	if($userType != 2){
-	    $this->index();
-	    exit();
-	}
-	
-	$userID = $this->_user['ID'];
-	$page     = 1;
+    public function nlist(){//work list for normal user
+        $editId   = $_GET['id'] ? $_GET['id'] : 0;
+        $userType = $this->_user['Type'];
+        if($userType != 2){
+            $this->index();
+            exit();
+        }
+        
+        $userID = $this->_user['ID'];
+        $page     = 1;
         $pageSize = 4;
         $total    = 0;
-	$projectModel = M('Project');
-	$where = "user_id = {$userID} AND enable = 1";
-	$total = $projectModel->where($where)->count();
-	$pageObj = new Page($total,$pageSize);
-	
-	$list   = $projectModel->field('id,name')->where($where)
-			->limit($pageObj->firstRow. ',' . $pageObj->listRows)
-			->order('id DESC')
-			->select();
-	
-	
-	
-	//邮件中: "具体使用哪一个需要根据分配给他的第一个文件类型选择
-	// 获取该项目是什么类型的 Movie ,Document ,Picture
-	$filesModel = M('Files');
-	foreach($list as $key => $value){
-	    $firstFile = $filesModel->where("project_id = " . $value['id'] . " AND is_delete = 0")
-		    ->order(' id ASC')
-		    ->limit(1)
-		    ->select();
-	    
-	    if(!empty($firstFile[0])){
-		$list[$key]['firstFile'] = $firstFile[0];
-	    }else{
-		$list[$key]['firstFile'] = array();
-	    }
-	}
-	
-	$page = $this->showPage($pageObj);
-	$this->assign('list',$list);
-	$this->assign("page", $page);
-	$this->assign("currPage", $_GET['page'] ? $_GET['page'] : 1);
+        $model = M('FileAuth');
+        $where = "user_id='{$userID}'";
+        $total = $model->where($where)->count();
+        $pageObj = new Page($total,$pageSize);
+        $authList = $model->where($where)
+                          ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
+                          ->order('auth_id ASC')
+                          ->select();
+        $page = $this->showPage($pageObj);
+        if($total > 0) {
+            foreach($authList as $key=>$auth) {
+                $fileIDs[] = $auth['rid'];
+                $authList[$key]['aType'] = explode(',',$auth['auth_type']);
+            }
+            $fileModel =  M('Files');
+            $fList  = $fileModel->where('id IN ('.implode(',',$fileIDs).')')
+                                ->select();
+            foreach($fList as $tmp) {
+                $fileMap[$tmp['id']] = $tmp;
+            }
+            $this->assign('fileMap',$fileMap);
+        }
 
+        if(!$editId) {
+            $videoMsg = $fileMap[$authList[0]['rid']];
+        } else {
+            $baseModel = new Model();
+            $tmpReg = $model->query(
+                "SELECT b.* FROM file_auth a,files b WHERE a.is_expired = 0 AND a.user_id = {$userID} AND a.rid='{$editId}' AND a.rid=b.id"
+                );
+            $videoMsg = $tmpReg[0];
+        }
+        $mediaExt = explode(',',C('MEDIA_PLAY_EXT'));
+        $fileExt = substr(strtolower($videoMsg['file_suffix']),1);
+        $mediaFlag = in_array($fileExt,$mediaExt);
+        $this->assign('mediaFlag',$mediaFlag);
+
+        $this->assign('list',$authList);
+        $this->assign('videoMsg',$videoMsg);
+        $this->assign("page", $page);
+        $this->assign("currPage", $_GET['page'] ? $_GET['page'] : 1);
         $this->display();
 
     }
@@ -102,7 +110,7 @@ class WorkAction extends CommonAction {
         $editId   = $_GET['id'] ? $_GET['id'] : 0;
         $share    = $_GET['share'] ? $_GET['share'] : '';
         $category = '';
-	$projectName = '';
+        $projectName = '';
         $infoMsg  = array();
         $model = M('Files');
         $userType = $this->_user['Type'];
@@ -124,10 +132,10 @@ class WorkAction extends CommonAction {
             if(isset($info[0])) {
                 $infoMsg  = $info[0];
                 $category = $infoMsg['category_name'];
-		$projectName = $infoMsg['project_name'];
+                $projectName = $infoMsg['project_name'];
             }
         }
-	$this->assign('projectName',$projectName);
+        $this->assign('projectName',$projectName);
         $this->assign('videoMsg',$infoMsg);
 
         if($editId > 0 && (strtolower($category) == 'picture')) {

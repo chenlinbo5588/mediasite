@@ -6,8 +6,10 @@
             <th width="15%"></th>
             <th width="15%"></th>
             <th width="30%"></th>
+            <if condition="$userMsg['type'] neq 2">
             <th width="10%"></th>
             <th width="10%"></th>
+            </if>
             <th width="10%"><input type="button" name="saveBtn" id="saveBtn" value="Save"/></th>
 
         </tr>
@@ -16,8 +18,10 @@
             <th width="15%">Folder</th>
             <th width="30%">File Name</th>
             <th width="10%">View</th>
+            <if condition="$userMsg['type'] neq 2">
             <th width="10%">Share</th>
             <th width="10%">Download</th>
+            </if>
         </tr>
         
     </thead>
@@ -29,8 +33,10 @@
             <td><span>{$vo.project_name}</span></td>
             <td><span>{$vo.file_name}</span></td>
             <td><span><input type="checkbox" value="{$vo.id},view" name="auths[]" <if condition="strpos($vo['auth_type'],'view') !== false">checked="checked"</if>/></span></td>
+            <if condition="$userMsg['type'] neq 2">
             <td><span><input type="checkbox" value="{$vo.id},share" name="auths[]" <if condition="strpos($vo['auth_type'],'share') !== false">checked="checked"</if>/></span></td>
             <td><span><input type="checkbox" value="{$vo.id},download" name="auths[]" <if condition="strpos($vo['auth_type'],'download') !== false">checked="checked"</if>/></span></td>
+            </if>
         </tr>
         </volist>
     <else/>

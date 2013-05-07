@@ -2,10 +2,7 @@
     <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
     <div class="box960x540" >
     <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
-        <div id="gallery-play">
-            <volist name="imgList" id="vo">
-                <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="960" height="540" border="0" alt=""/><span></span></a>
-            </volist>
+         <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="960" height="540" border="0" alt=""/><span></span></a>
         </div>
     <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
         <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />
@@ -26,7 +23,7 @@
             <if condition="$list|count gt 0">
             <ul class="tv-gallery-list">
                 <volist name="list" id="vo">
-                <li>
+                <!-- <li>
                     <a <if condition="empty($vo['firstFile']) eq true">href="javascript:void(0);"<else/>href="__URL__/play/id/{$vo['firstFile']['id']}/page/1"</if> title="$vo.name">
                     <if condition="strtolower($vo['firstFile']['category_name']) eq 'picture'">
                         <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['firstFile']['video_path']}" width="400" height="214" alt="{$vo.name}">
@@ -43,6 +40,25 @@
                     <p class="title">
                         <a <if condition="empty($vo['firstFile']) eq true">href="javascript:void(0);"<else/>href="__URL__/play/id/{$vo['firstFile']['id']}/page/1"</if> title="{$vo.name}" class="lh-18">{$vo.name}</a><br />
                         <i><if condition="empty($vo['firstFile']) eq true">No Files<else/>{$vo['firstFile']['category_name']}</if></i>
+                    </p>
+                </li> -->
+                <li>
+                    <a href="__URL__/nlist/id/{$vo.rid}/page/{$currPage}" title="Project Title">
+                    <if condition="strtolower($fileMap[$vo['rid']]['category_name']) eq 'picture'">
+                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$fileMap[$vo['rid']]['video_path']}" width="400" height="214" alt="{$fileMap[$vo['rid']]['project_name']}">
+                    <elseif condition="strtolower($fileMap[$vo['rid']]['category_name']) eq 'document'" />
+                        <img src="__PUBLIC__/Images/work_top.jpg" width="400" height="214" alt="{$fileMap[$vo['rid']]['project_name']}">
+                    <else />
+                        <if condition="$fileMap[$vo['rid']]['img_path'] neq ''">
+                        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$fileMap[$vo['rid']]['img_path']}" width="400" height="214" alt="{$vo.project_name}">
+                        <else />
+                        <img src="__PUBLIC__/Images/work_top.jpg" width="400" height="214" alt="{$fileMap[$vo['rid']]['project_name']}">
+                        </if>
+                    </if>
+                    </a>
+                    <p class="title">
+                        <a href="#" title="Project Title" target="_blank" class="lh-18">{$fileMap[$vo['rid']]['project_name']}</a><br />
+                        <i>{$fileMap[$vo['rid']]['category_name']}</i>
                     </p>
                 </li>
                 </volist>
