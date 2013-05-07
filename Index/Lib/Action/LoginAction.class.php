@@ -25,7 +25,7 @@ class LoginAction extends CommonAction {
                     $url = __APP__ . '/Admin/user';
                     break;
 		case '2':
-		    $url = __APP__ . '/Work/userFolder';
+		    $url = __APP__ . '/Work/nlist';
                     break;
                 default:
                     $url = __APP__ . '/Index';
