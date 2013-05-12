@@ -3,6 +3,8 @@ class AdminAction extends CommonAction {
     public function index(){
         if($this->_user['Type'] == 1) {
             redirect(__URL__ . '/user');
+        } else if($this->_user['Type'] == 0) {
+            redirect(__URL__ . '/file');
         } else {
             redirect(__APP__ . '/Index');
         }
