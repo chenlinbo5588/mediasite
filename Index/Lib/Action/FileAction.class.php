@@ -12,7 +12,7 @@ class FileAction extends CommonAction {
         $mediaExt = explode(',',C('MEDIA_PLAY_EXT'));
         $fileExt = substr(strtolower($video['file_suffix']),1);
         $mediaFlag = in_array($fileExt,$mediaExt);
-	$tplName = strtolower($video['category_name']).'_view';
+        $tplName = strtolower($video['category_name']).'_view';
         $this->assign('mediaFlag',$mediaFlag);
 
         $this->display($tplName);
