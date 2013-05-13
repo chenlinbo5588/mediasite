@@ -406,8 +406,8 @@ class AdminAction extends CommonAction {
 
         $editUserType = $userInfo['type'];
         
-            //$total = $fileModel->where("is_delete != 0")->count();
-            //$pageObj = new Page($total,$pageSize);
+        $page     = 1;
+        $pageSize = 15;
             
             /**
              * 待授权数据
@@ -416,8 +416,8 @@ class AdminAction extends CommonAction {
         $model = new Model();
         
         if($editUserType !=2 ) {
-            $data = $model->query(
-                "SELECT * FROM 
+            $reg = $model->query(
+                "SELECT count(*) AS tmp FROM 
                     ( SELECT * FROM files WHERE account = '{$account}' AND is_delete = 0 ) AS a 
                     LEFT JOIN 
                     (
@@ -426,7 +426,31 @@ class AdminAction extends CommonAction {
                     ON a.id = b.rid 
                     ORDER BY a.id DESC ,a.product_id,a.project_id "
                 );
+            $total = $reg[0]['tmp'];
+            $pageObj = new Page($total,$pageSize);
+            $data = $model->query(
+                "SELECT * FROM 
+                    ( SELECT * FROM files WHERE account = '{$account}' AND is_delete = 0 ) AS a 
+                    LEFT JOIN 
+                    (
+                    SELECT * FROM file_auth WHERE is_expired = 0 AND user_id = {$user_id}
+                    ) AS b
+                    ON a.id = b.rid 
+                    ORDER BY a.id DESC ,a.product_id,a.project_id limit  ".$pageObj->firstRow. "," . $pageObj->listRows
+                );
         } else {
+            $reg = $model->query(
+                "SELECT count(*) AS tmp FROM 
+                    ( SELECT * FROM files WHERE is_delete = 0 ) AS a 
+                    LEFT JOIN 
+                    (
+                    SELECT * FROM file_auth WHERE is_expired = 0 AND user_id = {$user_id}
+                    ) AS b
+                    ON a.id = b.rid 
+                    ORDER BY a.id DESC ,a.product_id,a.project_id"
+                );
+            $total = $reg[0]['tmp'];
+            $pageObj = new Page($total,$pageSize);
             $data = $model->query(
                 "SELECT * FROM 
                     ( SELECT * FROM files WHERE is_delete = 0 ) AS a 
@@ -435,16 +459,12 @@ class AdminAction extends CommonAction {
                     SELECT * FROM file_auth WHERE is_expired = 0 AND user_id = {$user_id}
                     ) AS b
                     ON a.id = b.rid 
-                    ORDER BY a.id DESC ,a.product_id,a.project_id "
+                    ORDER BY a.id DESC ,a.product_id,a.project_id limit  ".$pageObj->firstRow. "," . $pageObj->listRows
                 );
         }
-        /*
-            $data = $fileModel->join("file_auth ON id = file_auth.rid ")
-                    ->where("files.account = '{$account}' AND  files.is_delete = 0 ")
-                    //->limit($pageObj->firstRow. ',' . $pageObj->listRows)
-                    ->order('files.id DESC ,files.product_id,files.project_id')
-                    ->select();
-        */
+
+        $page = $this->showPage($pageObj);
+        $this->assign("page", $page);
 
         $this->assign('dateCount',count($data));
         $this->assign('data',$data);
