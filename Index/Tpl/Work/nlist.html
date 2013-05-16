@@ -2,7 +2,7 @@
     <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
     <div class="box960x540" >
     <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
-         <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="960" height="540" border="0" alt=""/><span></span></a>
+         <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}" width="960" height="540" border="0" alt=""/><span></span></a>
         </div>
     <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
         <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />
