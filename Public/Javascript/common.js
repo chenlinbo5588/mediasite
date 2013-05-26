@@ -2,6 +2,7 @@ $(function() {
 	var gallen = $("#gallery-home").length;
 	if(gallen>0)$("#gallery-home").coinslider({width:960,height:540,delay: 5000,navigation: false,effect: 'straight'});
 	initSelectBox();
+	setTimeout(function(){var $wait = $('#videowaiting');if($wait.length>0)$wait.hide();},500);
 });
 var App = {};
 /**
