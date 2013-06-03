@@ -40,7 +40,7 @@
                 </li>
                 <li><a href="__APP__/Contact" <if condition="strtolower($Think.const.MODULE_NAME) eq 'contact'">class="current"</if> >Contact</a></li>
 		<if condition="($isLogon eq true) and ($userType neq 2)" >
-                    <li><a <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">class="current" href="__APP__/Admin/index"<else/>href="__APP__/Admin/File"</if> >Manage</a></li>
+                    <li><a <if condition="strtolower($Think.const.MODULE_NAME) eq 'admin'">class="current" href="__APP__/Admin/index"<else/>href="__APP__/Admin/file"</if> >Manage</a></li>
                     <!-- <li class="header-sub-a"></li> -->
                 <else />
                     <!-- <li class="header-sub"></li> -->
