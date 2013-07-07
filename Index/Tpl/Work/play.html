@@ -2,11 +2,16 @@
     <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
     <div class="box960x540" >
     <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
+         
+        <if condition="$shareFlag eq ''">
         <div id="gallery-play">
             <volist name="imgList" id="vo">
-                <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['video_path']}" width="960" height="540" border="0" alt=""/><span></span></a>
+                <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['img_path']}" width="960" height="540" border="0" alt="" /><span></span></a>
             </volist>
         </div>
+        <else />
+        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['img_path']}" width="960" height="540" />
+        </if>
     <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
         <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />
     <else />
@@ -72,7 +77,7 @@ var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor:
 var attributes = { align: "center" };
 swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
 </if>
-<if condition="strtolower($videoMsg['category_name']) eq 'picture'">
+<if condition="(strtolower($videoMsg['category_name']) eq 'picture') and ($shareFlag eq '')">
 	$(document).ready(function() {
 		$("#gallery-play").coinslider({width:960,height:540,delay: 5000,effect: 'straight'});
 	});

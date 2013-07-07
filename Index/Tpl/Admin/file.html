@@ -72,12 +72,15 @@ var $table = $('#table-{$Think.MODULE_NAME|strtolower}-{$Think.ACTION_NAME|strto
     $('.delete',$table).click(function(){
         var editId = $(this).attr('data');
         App.confirm('Delete {$Think.ACTION_NAME|strtolower|ucfirst}','Are you sure to delete this {$Think.ACTION_NAME|strtolower}?',function(){
-            var url = "http://{$Think.const.ROOT_APP_URL}/File/deleteFile";
+            //var url = "http://{$Think.const.ROOT_APP_URL}/File/deleteFile";
+            var url = "__APP__/File/deleteFile";
             $.post(url, {id:editId}, function(response) {
                 if(response.status) {
                     window.location.reload();
                 } else {
-                    if(response.error) {
+                    if(response.error!=''){
+                        App.alert('Delete {$Think.ACTION_NAME|strtolower|ucfirst}',response.error);
+                    } else {
                         App.alert('Delete {$Think.ACTION_NAME|strtolower|ucfirst}','Delete {$Think.ACTION_NAME|strtolower} fail.');
                     }
                 }

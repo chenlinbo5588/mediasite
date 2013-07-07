@@ -124,7 +124,8 @@ class WorkAction extends CommonAction {
             }
         } else if($share) {
             $shareId = $this->decodeInfo($share);
-            $con[] = "id={$shareId}";
+            if($shareId!='')$con[] = "id={$shareId}";
+            $this->assign('shareFlag',$shareId);
         }
         if($con != '') {
             $where = implode(' AND ',$con);

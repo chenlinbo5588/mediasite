@@ -117,7 +117,7 @@ class AdminAction extends CommonAction {
         $total = $model->where($where)->count();
         $pageObj = new Page($total,$pageSize);
         $list   = $model->field('product.id AS ID,product.name AS Name,product.enable AS Enable,user.id AS UserID,user.nickname AS Nickname,user.account AS Account')
-                        ->join('user ON user.id = product.user_id')
+                        ->join('user ON user.id = product.user_id AND user.type=0')
                         ->where($where)
                         ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
                         ->order('product.id desc')
@@ -135,7 +135,7 @@ class AdminAction extends CommonAction {
             $model  = M('Product');
             $client = $model->field('product.name AS Name,product.enable AS Enable,user.nickname AS Nickname,user.account AS Account')
                             ->join('user ON user.id = product.user_id')
-                            ->where("product.id={$editId}")
+                            ->where("product.id={$editId} AND user.type=0")
                             ->limit(0,1)
                             ->select();
             if(isset($client[0])) {
@@ -147,7 +147,7 @@ class AdminAction extends CommonAction {
         $this->assign('editId',$editId);
         $userMod = M('User');
         $list   = $userMod->field('id,nickname,account')
-                          ->where('enable=1 AND type != 1')
+                          ->where('enable=1 AND type=0')
                           ->order('id desc')
                           ->select();
         $this->assign('userList',$list);
@@ -173,13 +173,19 @@ class AdminAction extends CommonAction {
     public function delProduct() {
         $retAry = array('status' => false);
         $editId = $_POST['id'];
-        $con['id']      = $editId;
-        $data['name'] = time();
-        $data['enable'] = 2;
-        $retAry = $this->_update('Product',$con,$data);
-        if($retAry['status']) {
-            $pcon['product_id'] = $editId;
-            $this->_update('Project',$pcon,$data);
+        $foldModel = M('Project');
+        $subCount = $foldModel->where("product_id={$editId} AND enable IN (0,1)")->count();
+        if($subCount > 0){
+            $retAry['error'] = "There are <U><B>$subCount</B></U> folders of this product,please delete these folders first.";
+        } else {
+            $con['id']      = $editId;
+            $data['name'] = time();
+            $data['enable'] = 2;
+            $retAry = $this->_update('Product',$con,$data);
+            if($retAry['status']) {
+                $pcon['product_id'] = $editId;
+                $this->_update('Project',$pcon,$data);
+            }
         }
         $this->sendJson($retAry);
     }
@@ -203,7 +209,7 @@ class AdminAction extends CommonAction {
         $pageObj = new Page($total,$pageSize);
         $list   = $model->field('project.id AS ID,project.name AS Name,project.enable AS Enable,product.name AS ProductName,user.nickname AS Nickname,user.account AS Account')
                             ->join('product ON product.id = project.product_id')
-                            ->join('user ON user.id = project.user_id')
+                            ->join('user ON user.id = project.user_id AND user.type=0')
                             ->where($where)
                             ->limit($pageObj->firstRow. ',' . $pageObj->listRows)
                             ->order('project.id desc')
@@ -221,7 +227,7 @@ class AdminAction extends CommonAction {
             $model  = M('Project');
             $client = $model->field('project.name AS Name,project.enable AS Enable,product.name AS ProductName,user.nickname AS Nickname,user.account AS Account')
                             ->join('product ON product.id = project.product_id')
-                            ->join('user ON user.id = project.user_id')
+                            ->join('user ON user.id = project.user_id AND user.type=0')
                             ->where("project.id={$editId}")
                             ->limit(0,1)
                             ->select();
@@ -234,7 +240,7 @@ class AdminAction extends CommonAction {
         $this->assign('editId',$editId);
         $userMod = M('User');
         $list   = $userMod->field('id,nickname,account')
-                          ->where('enable=1 AND type != 1')
+                          ->where('enable=1 AND type=0')
                           ->order('id desc')
                           ->select();
         $this->assign('userList',$list);
@@ -269,10 +275,16 @@ class AdminAction extends CommonAction {
     public function delFolder() {
         $retAry = array('status' => false);
         $editId = $_POST['id'];
-        $con['id']      = $editId;
-        $data['name'] = time();
-        $data['enable'] = 2;
-        $retAry = $this->_update('Project',$con,$data);
+        $fileModel = M('Files');
+        $subCount = $fileModel->where("project_id={$editId} AND is_delete<>1")->count();
+        if($subCount > 0){
+            $retAry['error'] = "There are <U><B>$subCount</B></U> files in this folder,please delete these files first.";
+        } else {
+            $con['id']      = $editId;
+            $data['name'] = time();
+            $data['enable'] = 2;
+            $retAry = $this->_update('Project',$con,$data);
+        }
         $this->sendJson($retAry);
     }
     

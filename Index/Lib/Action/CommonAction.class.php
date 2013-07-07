@@ -156,10 +156,17 @@ class CommonAction extends Action {
     protected function _add($modelName,$data) {
         $retAry = array('status' => false);
         $model = M($modelName);
+        if(isset($data['account']) && ('User'==$modelName)) {
+            $count = $model->where("account='".$data['account']."' AND enable IN (0,1)")->count();
+            if($count > 0) {
+                $retAry['error'] = 'Same account '.strtolower($modelName).' is existing.';
+                return $retAry;
+            }
+        }
         if(isset($data['name'])) {
             $count = $model->where("name='".$data['name']."' AND enable IN (0,1)")->count();
             if($count > 0) {
-                $retAry['error'] = 'Same '.strtolower($modelName).' is existing.';
+                $retAry['error'] = 'Same name '.strtolower($modelName).' is existing.';
                 return $retAry;
             }
         }

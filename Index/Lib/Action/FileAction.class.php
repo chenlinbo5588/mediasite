@@ -189,15 +189,14 @@ class FileAction extends CommonAction {
     }
 
     public function deleteFile(){
-        
         $retAry = array('status' => false);
 
         if(1 == $this->_user['Type']){
             $fileModel = M('Files');
             $ret = $fileModel->where(" id = ".(empty($_POST['id']) == true ? 0 : $_POST['id']))->select();
-	    if(empty($ret[0])){
-		$this->sendJson($retAry);
-	    }
+            if(empty($ret[0])){
+                $this->sendJson($retAry);
+            }
             $info = $ret[0];
             $deleteFile = ROOT_PATH.'/Public/Files/'.$info['video_path'];
             if(file_exists($deleteFile)){
@@ -217,6 +216,11 @@ class FileAction extends CommonAction {
             $data['updatetime'] = $now;
             $data['update_user'] = $this->_user['Account'];
             $retAry = $this->_update('Files',$con,$data);
+            if($retAry['status']){
+                $fileAuth = M('FileAuth');
+                $con['where'] = "rid = " .$_POST['id'];
+                $fileAuth->delete($con);
+            }
         }
         $this->sendJson($retAry);
     }

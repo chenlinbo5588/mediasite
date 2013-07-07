@@ -15,7 +15,9 @@ $(function() {
                 if(response.status) {
                     window.location.reload();
                 } else {
-                    if(response.error) {
+                    if(response.error!='') {
+                        App.alert('Delete {$Think.ACTION_NAME|strtolower|ucfirst}',response.error);
+                    } else {
                         App.alert('Delete {$Think.ACTION_NAME|strtolower|ucfirst}','Delete {$Think.ACTION_NAME|strtolower} fail.');
                     }
                 }
