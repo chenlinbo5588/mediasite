@@ -123,9 +123,8 @@ class WorkAction extends CommonAction {
                 //$con[]    = "status = 3";
             }
         } else if($share) {
-            $shareId = $this->decodeInfo($share);
-            if($shareId!='')$con[] = "id={$shareId}";
-            $this->assign('shareFlag',$shareId);
+            $sharePath = $this->decodeInfo($share);
+            $this->assign('sharePath',$sharePath);
         }
         if($con != '') {
             $where = implode(' AND ',$con);
@@ -137,6 +136,10 @@ class WorkAction extends CommonAction {
             }
         }
         $this->assign('projectName',$projectName);
+        $imgPath = FILE_SHOW_URL.'/'.$infoMsg['img_path'];
+        $filePath = FILE_SHOW_URL.'/'.$infoMsg['video_path'];
+        $this->assign("imgPath", $imgPath);
+        $this->assign("filePath", $filePath);
         $this->assign('videoMsg',$infoMsg);
 
         if($editId > 0 && (strtolower($category) == 'picture')) {
@@ -193,6 +196,25 @@ class WorkAction extends CommonAction {
         $this->display();
     }
 
+    public function shareplay() {
+        $share    = $_GET['show'] ? $_GET['show'] : '';
+        $shareStr = base64_decode($share);
+        $shareInfo = explode('|',$shareStr);
+        $category = strtolower($shareInfo[0]);
+        $imgPath = FILE_SHOW_URL.'/'.$shareInfo[1];
+        $filePath = FILE_SHOW_URL.'/'.$shareInfo[2];
+        $this->assign("fileType", $category);
+        $this->assign("imgPath", $imgPath);
+        $this->assign("filePath", $filePath);
+
+        $mediaExt = explode(',',C('MEDIA_PLAY_EXT'));
+        $fileExt = substr(strtolower($shareInfo[3]),1);
+        $mediaFlag = in_array($fileExt,$mediaExt);
+        $this->assign('mediaFlag',$mediaFlag);
+
+        $this->display();
+    }
+
     public function upload() {
         $editId   = $_GET['id'] ? $_GET['id'] : 0;
         $userType = $this->_user['Type'];
@@ -235,12 +257,17 @@ class WorkAction extends CommonAction {
             $this->assign('fileMsg',$fileMsg);
 
             if($_GET['down'] != 1) {
-                $encodeStr = $this->encodeInfo($editId);
-                $fileUrl = 'http://'.ROOT_APP_URL."/Work/play/share/{$encodeStr}";
+                //$encodeStr = $this->encodeInfo(base64_encode($fileMsg['category_name'].'|'.$fileMsg['video_path']));
+                $encodeStr = base64_encode($fileMsg['category_name'].'|'.$fileMsg['img_path'].'|'.$fileMsg['video_path'].'|'.$fileMsg['file_suffix']);
+                $fileUrl = 'http://'.ROOT_APP_URL."/Work/shareplay/show/{$encodeStr}";
                 $this->assign('fileUrl',$fileUrl);
             } else {
                 $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
                 $this->assign('downloadName',$downloadName);
+                $downMsg = $this->encodeInfo($downloadName.'|'.$fileMsg['video_path']);
+                $this->assign('downMsg',$downMsg);
+                $this->assign('filename',$downloadName);
+                $this->assign('filepath',$fileMsg['video_path']);
                 $this->assign('userAccount',$account);
             }
         }
@@ -334,7 +361,7 @@ class WorkAction extends CommonAction {
     }
 
     public function download() {
-        $editId   = $_POST['id'] ? $_POST['id'] : 0;
+        /*$editId   = $_POST['id'] ? $_POST['id'] : 0;
         $account  = trim($_POST['user-account']);
         if($editId <= 0 || ($account == ''))exit(0);
         $fileTypeModel = M('Files');
@@ -348,15 +375,13 @@ class WorkAction extends CommonAction {
         $fileMsg  = $fileTypeModel->where($where)->select();
         $fileMsg  = $fileMsg[0];
         $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];
-
-        /*
-            $fileDir  = 'http://'.UPLOAD_DOMAIN . '/Public/Files/'; 
-            $filePath = $fileDir . $fileName;
-            import('@.ORG.Net.Http');
-            $downHttp = new Http();
-            $downHttp->fsockopenDownload($filePath);
         */
-        downloadFile($downloadName,ROOT_PATH.'/Public/Files/'.$fileMsg['video_path']);
+        $postMsg = $_POST['download'];
+        $getMsg = $this->decodeInfo($postMsg);
+        $downMsg = explode('|',$getMsg);
+        $downloadName = $_POST['filename'];
+        $filePath = $downMsg[1];
+        downloadFile($downloadName,ROOT_PATH.'/Public/Files/'.$_POST['filepath']);
     }
     
 }

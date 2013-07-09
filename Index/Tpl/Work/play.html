@@ -3,14 +3,14 @@
     <div class="box960x540" >
     <if condition="strtolower($videoMsg['category_name']) eq 'picture'">
          
-        <if condition="$shareFlag eq ''">
+        <if condition="$sharePath eq ''">
         <div id="gallery-play">
             <volist name="imgList" id="vo">
                 <a href="#"><img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$vo['img_path']}" width="960" height="540" border="0" alt="" /><span></span></a>
             </volist>
         </div>
         <else />
-        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['img_path']}" width="960" height="540" />
+        <img src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$sharePath}" width="960" height="540" />
         </if>
     <elseif condition="strtolower($videoMsg['category_name']) eq 'document'" />
         <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />

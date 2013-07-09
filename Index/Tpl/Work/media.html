@@ -24,7 +24,7 @@
     <param name="EnablePositionControls" value="-1">
     <param name="EnableFullScreenControls" value="0">
     <param name="EnableTracker" value="-1">
-    <param name="Filename" value="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}">
+    <param name="Filename" value="{$filePath}">
     <param name="InvokeURLs" value="-1">
     <param name="Language" value="-1">
     <param name="Mute" value="0">
@@ -57,5 +57,5 @@
     <param name="VideoBorder3D" value="0">
     <param name="Volume" value="50">
     <param name="WindowlessVideo" value="0">
-    <embed type="application/x-mplayer2" pluginspage="http://www.microsoft.com/Windows/Downloads/Contents/Products/MediaPlayer/" name="MediaPlayer" src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}" mce_src="http://{$Think.const.UPLOAD_DOMAIN}/Public/Files/{$videoMsg['video_path']}" height="540" width="960" showcontrols="1" showpositioncontrols="0" showaudiocontrols="1" showtracker="0" showdisplay="0" showstatusbar="1" showgotobar="0" showcaptioning="0" autostart="1" autorewind="0" animationatstart="0" transparentatstart="0" allowchangedisplaysize="0" allowscan="0" enablecontextmenu="0" clicktoplay="0">
+    <embed type="application/x-mplayer2" pluginspage="http://www.microsoft.com/Windows/Downloads/Contents/Products/MediaPlayer/" name="MediaPlayer" src="{$filePath}" mce_src="{$filePath}" height="540" width="960" showcontrols="1" showpositioncontrols="0" showaudiocontrols="1" showtracker="0" showdisplay="0" showstatusbar="1" showgotobar="0" showcaptioning="0" autostart="1" autorewind="0" animationatstart="0" transparentatstart="0" allowchangedisplaysize="0" allowscan="0" enablecontextmenu="0" clicktoplay="0">
 </object>

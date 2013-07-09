@@ -6,7 +6,9 @@
                 <div class="field-box"><span style="font-size:16px;">{$downloadName}</span></div>
             </li>
         </ul>
-        <input type="hidden" name="id" value="{$fileMsg.id}" />
+        <input type="hidden" name="download" value="{$downMsg}" />
+        <input type="hidden" name="filename" value="{$downloadName}" />
+        <input type="hidden" name="filepath" value="{$filepath}" />
         <input type="hidden" name="user-account" value="{$userAccount}" />
         <div class="button-bar pt-20">
             <div class="button"><a id="save-btn" href="javascript:;">Download</a></div>

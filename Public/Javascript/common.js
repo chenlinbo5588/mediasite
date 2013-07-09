@@ -298,7 +298,7 @@ function initSelectBox(obj) {
 			var options 			= selectEl.getElementsByTagName('option');
 			if(options.length > 0) {
 				if(options.length > 6) { // 如果列表过长则自动高度
-					selectListEl.style.height		= '160px';
+					selectListEl.style.height		= '100px';
 					selectListEl.style.overflowY		= "auto";
 					selectListEl.style.overflowX		= "hidden";
 				}

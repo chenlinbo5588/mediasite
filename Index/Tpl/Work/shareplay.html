@@ -1,0 +1,37 @@
+<include file="Public:header" />
+    <script type="text/javascript" src="__PUBLIC__/flvplayer/swfobject.js"></script>
+    <div class="box960x540" >
+    <if condition="$fileType eq 'picture'">
+        <img src="{$filePath}" width="960" height="540" />
+    <elseif condition="$fileType eq 'document'" />
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540" />
+    <else />
+        <if condition="$mediaFlag eq 1">
+        <include file="media" />
+        <else />
+        <div id="videoCanvas">
+        <img src="__PUBLIC__/Images/work_top.jpg" width="960" height="540"/>
+        </div>
+        <div id="videowaiting"></div>
+        </if>
+    </if>
+    </div>
+<include file="Public:footer" />
+<script type="text/javascript">
+<if condition="($mediaFlag neq 1) and ($fileType eq 'movie')">
+var playervars = {
+    contentpath: "",
+    video: "{$filePath}",
+    preview: "{$imgPath}",
+    skin: "skin-videoflash.swf",
+    skincolor: "0x000000",
+    autoscale:false,
+    autoplay: true,
+    videowidth:960,
+    videoheight:505
+};
+var params = { scale: "noscale", allowfullscreen: "true", salign: "tl", bgcolor: "#ffffff", base: "."};
+var attributes = { align: "center" };
+swfobject.embedSWF("__PUBLIC__/flvplayer/flvplayer.swf", "videoCanvas", "960", "540", "9.0.28", "__PUBLIC__/flvplayer/expressInstall.swf", playervars, params, attributes);
+</if>
+</script>

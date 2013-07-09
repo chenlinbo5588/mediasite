@@ -99,6 +99,7 @@ class CommonAction extends Action {
     public function sendJson($data, $isJsonHead = true) {
         if($isJsonHead)
             header("Content-Type:application/json; charset=utf-8");
+            header('Access-Control-Allow-Origin: *'); 
          exit(json_encode($data));
     }
     
