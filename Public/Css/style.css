@@ -111,7 +111,9 @@ table.listad td a {background:url("../Images/delete.png") no-repeat;width:17px;h
 .pager span.first,.pager span.last,.pager span.prev,.pager span.next {font-size:14px;font-weight:bold;}
 .pager span.current {border:1px solid #A7A7AA;font-weight:bold;}
 
-#videowaiting {position:absolute;left:0;top:0;width:100%;height:100%;background:black url("../Images/waiting.gif") no-repeat center center;}
+#videowaiting {position:absolute;left:0;top:0;width:100%;height:100%;background:#000;}
+#videowaiting .processbar {margin:0 auto;margin-top:265px;width:490px;height:5px;background:#3f4040;}
+#videowaiting .percentbar {width:0px;height:100%;background:#fff;}
 /*tv gallery list*/
 .tv-gallery{width:906px;float:left;}
 .tv-gallery .h3{}

@@ -259,7 +259,7 @@ class WorkAction extends CommonAction {
             if($_GET['down'] != 1) {
                 //$encodeStr = $this->encodeInfo(base64_encode($fileMsg['category_name'].'|'.$fileMsg['video_path']));
                 $encodeStr = base64_encode($fileMsg['category_name'].'|'.$fileMsg['img_path'].'|'.$fileMsg['video_path'].'|'.$fileMsg['file_suffix']);
-                $fileUrl = 'http://'.ROOT_APP_URL."/Work/shareplay/show/{$encodeStr}";
+                $fileUrl = 'http://'.UPLOAD_SHOW_DOMAIN."/Work/shareplay/show/{$encodeStr}";
                 $this->assign('fileUrl',$fileUrl);
             } else {
                 $downloadName = $fileMsg['product_name'].'_'.$fileMsg['project_name'].$fileMsg['file_suffix'];

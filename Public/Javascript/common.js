@@ -2,8 +2,21 @@ $(function() {
 	var gallen = $("#gallery-home").length;
 	if(gallen>0)$("#gallery-home").coinslider({width:960,height:540,delay: 5000,navigation: false,effect: 'straight'});
 	initSelectBox();
-	setTimeout(function(){var $wait = $('#videowaiting');if($wait.length>0)$wait.hide();},1000);
+	startBar();
 });
+
+var runBar = function(num) {
+	if(num)$('#videowaiting .percentbar').css("width", String(num) + "%");
+}
+var barCount = 1;
+var startBar = function() {
+	if (barCount > 100) { $('#videowaiting').hide();return; }
+	if (barCount <= 100) { 
+		setTimeout("startBar()", 100); 
+		runBar(barCount); 
+		barCount += 2;
+	}
+}
 var App = {};
 /**
  * title: 弹出窗口的title body: 弹出窗口的body options: 参数
